@@ -5,6 +5,10 @@
 import React, { useContext} from "react"
 import { DobbleContext } from "../../api/context/DobbleContext";
 import { Picture } from "./Picture";
+import { lcg } from "../../api/lcg";
+
+
+const random = lcg()
 
 
 
@@ -20,7 +24,7 @@ export const Card = ({ index, hrefs, cx: cardX, cy: cardY, r: cardR }) => {
     cy *= ratio
     cy += cardY
     r *= ratio
-    const rotation = Math.random() * 360
+    const rotation = random() * 360
     const defId = `crop-circle-${index * 6 + imageIndex}`
 
     return (
