@@ -5,16 +5,9 @@
 
 import React, { createContext, useState } from 'react'
 import allImages from '../data/images.json'
-import layouts from '../data/layout.json'
+import { layouts, getSet } from './filterData'
 
-import allSets from '../data/shuffledSets.json'
-const sets = Object.values(allSets)
-.filter( value => Array.isArray(value))
-.sort(( a, b ) => a.length - b.length)
-const setLengths = sets.map( set => set.length )
-setLengths.push(9999)
-
-const DEFAULT_LAYOUT = 1
+const DEFAULT_LAYOUT = 0
 
 const VIEW_WIDTH = 2100
 const pageHeight = 2970
@@ -32,12 +25,8 @@ export const DobbleContext = createContext()
 
 export const DobbleProvider = ({ children }) => {
   const images = allImages["animals"].map( file => `animals/${file}`)
-  let imageCount = images.length
 
-  const setIndex = setLengths.findIndex( setLength => setLength > imageCount) - 1
-
-  const set = sets[setIndex]
-  imageCount = setLengths[setIndex]
+  const { set, imageCount } = getSet(images.length)
   
   const layoutsForThisSize = layouts[imageCount]
   const layoutNames = Object.keys(layoutsForThisSize)
@@ -45,7 +34,7 @@ export const DobbleProvider = ({ children }) => {
   const [ layoutName, setLayoutName ] = useState(
     layoutNames[DEFAULT_LAYOUT]
   )
-  const layout = Object.values(layoutsForThisSize[layoutName].circles)
+  const layout = layoutsForThisSize[layoutName]
 
   const radius = 490
   const padding = 2
@@ -57,8 +46,9 @@ export const DobbleProvider = ({ children }) => {
       value ={{
         images,
         layout,
-        // layoutName,
-        // setLayoutName,
+        layoutName,
+        layoutNames,
+        setLayoutName,
         set,
         VIEW_WIDTH,
         VIEW_HEIGHT,

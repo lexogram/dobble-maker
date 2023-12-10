@@ -1,4 +1,36 @@
 section {
   width: 100%;
   background-color: #fff;
+  margin-top: 0.5em;
+}
+
+/* Leave space for the header */
+section:first-child {
+  margin-top: 5rem;
+}
+
+#header {
+  position: fixed;
+  top: 0;
+  /* Same as #root */
+  width: 100vw;
+  max-width: 1024px;
+
+  display: flex;
+  justify-content: space-between;
+  background-color: #eee;
+  box-shadow: 0 2px 5px  #0006;
+}
+
+@media print
+{    
+  #header *
+  {
+    display: none !important;
+  }
+
+  /* No space needed for the header or between pages */
+  section, section:first-child {
+    margin-top: 0;
+  }
 }
