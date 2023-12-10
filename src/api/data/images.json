@@ -1,5 +1,5 @@
 {
-  "animals": [
+  "57_Animals": [
     "alligator.png",
     "badger.png",
     "bear.png",
@@ -58,7 +58,7 @@
     "wolf.png",
     "zebra.png"
   ],
-  "zebra": [
+  "13_Zebra": [
     "zebra1.jpg",
     "zebra2.jpg",
     "zebra3.jpg",

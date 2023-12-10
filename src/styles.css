@@ -18,8 +18,19 @@ section:first-child {
 
   display: flex;
   justify-content: space-between;
-  background-color: #eee;
+  align-items: center;
+  background-color: #222;
   box-shadow: 0 2px 5px  #0006;
+}
+
+select {
+  background-color: inherit;
+  color: inherit;
+  font-size: 1.2em;
+  height: 2em;
+  padding: 0.25em 0.5em;
+  border: 2px outset #666;
+  border-radius: 0.25em;
 }
 
 @media print

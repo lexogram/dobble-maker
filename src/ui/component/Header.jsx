@@ -51,7 +51,7 @@ export const Header = () => {
 
   return (
     <div id="header">
-       <h1>Dobble</h1>
+       <h1>Dobble Maker</h1>
        {layouts}
        {sets}
     </div>

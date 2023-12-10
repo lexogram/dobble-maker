@@ -12,7 +12,7 @@ export const Selector = ({ selection, selected, onChange }) => {
       key={value}
       value={value}
     >
-      {value}
+      {value.replace(/_/g, " ")}
     </option>
   ))
 
