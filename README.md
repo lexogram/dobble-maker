@@ -2,4 +2,4 @@
 
 Create your own Dobble cards.
 
-[Demo]("https://lexogram.github.io/dobble-maker)
+[Demo](https://lexogram.github.io/dobble-maker)
