@@ -5,7 +5,7 @@
 
 
 import React, { useContext} from "react"
-import { DobbleContext } from "../../context/DobbleContext";
+import { DobbleContext } from "../../api/context/DobbleContext";
 import { Card } from "./Card";
 
 
