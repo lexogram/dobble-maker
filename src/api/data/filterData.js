@@ -45,7 +45,8 @@ export const layouts = inputs.reduce((output, [size, layoutMap]) => {
       sizeMap[name] = values.map( data  => ({
           cx: data.cx,
           cy: data.cy,
-          r : data.r
+          r : data.r,
+          fill: data.fill || "none"
         })
       )
     }

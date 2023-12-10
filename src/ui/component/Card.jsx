@@ -18,19 +18,19 @@ export const Card = ({ index, hrefs, cx: cardX, cy: cardY, r: cardR }) => {
   const ratio = cardR / 50 
 
   const images = hrefs.map(( href, imageIndex ) => {    
-    let { cx, cy, r } = layout[imageIndex]
+    let { cx, cy, r, fill } = layout[imageIndex]
     cx *= ratio
     cx += cardX
     cy *= ratio
     cy += cardY
     r *= ratio
     const rotation = random() * 360
-    const defId = `crop-circle-${index * 6 + imageIndex}`
+    const defId = `crop-circle-${index * 20 + imageIndex}`
 
     return (
       <Picture
         key={defId}
-        {...{ cx, cy, r, defId, href, rotation }}
+        {...{ cx, cy, r, defId, href, rotation, fill }}
       />
     )
   })
