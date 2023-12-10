@@ -1,7 +1,4 @@
 section {
-  width: 100vw;
-}
-
-svg {
-  border: 0.1px solid red;
+  width: 100%;
+  background-color: #fff;
 }
