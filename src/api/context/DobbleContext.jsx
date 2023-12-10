@@ -4,10 +4,12 @@
  */
 
 import React, { createContext, useState } from 'react'
-import allImages from '../data/images.json'
-import { layouts, getSet } from './filterData'
-
-const DEFAULT_LAYOUT = 0
+import {
+  layouts,
+  getSet,
+  imageSets,
+  getImageSet
+} from './filterData'
 
 const VIEW_WIDTH = 2100
 const pageHeight = 2970
@@ -24,7 +26,9 @@ export const DobbleContext = createContext()
 
 
 export const DobbleProvider = ({ children }) => {
-  const images = allImages["animals"].map( file => `animals/${file}`)
+  const [ imageSet, setTheImageSet ] = useState(imageSets[0])
+  
+  const images = getImageSet(imageSet)
 
   const { set, imageCount } = getSet(images.length)
   
@@ -32,7 +36,7 @@ export const DobbleProvider = ({ children }) => {
   const layoutNames = Object.keys(layoutsForThisSize)
   
   const [ layoutName, setLayoutName ] = useState(
-    layoutNames[DEFAULT_LAYOUT]
+    layoutNames[0]
   )
   const layout = layoutsForThisSize[layoutName]
 
@@ -41,15 +45,32 @@ export const DobbleProvider = ({ children }) => {
   const spacing = radius + padding
 
 
+  const setImageSet = value => {
+    // Need to:
+    // 1. Choose the requested image set
+    // 2. Count the images to check if the layouts need to change
+    // 3. Select the best layout
+    // const images = getImageSet(value)
+    // const { set, imageCount } = getSet(images.length)
+    setTheImageSet(value)
+  }
+
+
   return (
     <DobbleContext.Provider
       value ={{
         images,
+        imageSet,
+        imageSets,
+        setImageSet,
+
         layout,
         layoutName,
         layoutNames,
         setLayoutName,
+
         set,
+
         VIEW_WIDTH,
         VIEW_HEIGHT,
         STROKE_WIDTH,

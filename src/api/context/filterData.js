@@ -1,5 +1,7 @@
-import input from '../data/layout.json'
-import allSets from '../data/shuffledSets.json'
+import input from '../../data/layout.json'
+import allSets from '../../data/shuffledSets.json'
+import allImages from '../../data/images.json'
+
 /* Incoming:
 
    { "<Size>" : {
@@ -79,4 +81,14 @@ export const getSet = (imageCount) => {
     set,
     imageCount
   }
+}
+
+
+// IMAGES // IMAGES // IMAGES // IMAGES // IMAGES // IMAGES //
+
+export const imageSets = Object.keys(allImages).sort()
+
+export const getImageSet = setName => {
+  return allImages[setName]
+    .map( file => `${setName}/${file}`)
 }

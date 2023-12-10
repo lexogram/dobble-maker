@@ -3,7 +3,7 @@
  */
 
 import React, { useContext} from "react"
-import { DobbleContext } from "../../api/context/DobbleContext";
+import { DobbleContext } from "../../context/DobbleContext";
 import { Picture } from "./Picture";
 import { lcg } from "../../api/lcg";
 

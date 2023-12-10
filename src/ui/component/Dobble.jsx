@@ -4,7 +4,7 @@
 
 
 import React, { useContext } from "react"
-import { DobbleContext } from "../../api/context/DobbleContext";
+import { DobbleContext } from "../../context/DobbleContext";
 import { Page } from "./Page"
 
 export const Dobble = () => {

@@ -1,5 +1,6 @@
-{ "animals":
-  [ "alligator.png",
+{
+  "animals": [
+    "alligator.png",
     "badger.png",
     "bear.png",
     "budgie.png",
