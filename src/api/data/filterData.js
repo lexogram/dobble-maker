@@ -1,6 +1,6 @@
-import input from '../../data/layout.json'
-import allSets from '../../data/shuffledSets.json'
-import allImages from '../../data/images.json'
+import input from './layout.json'
+import allSets from './shuffledSets.json'
+import allImages from './images.json'
 
 /* Incoming:
 
