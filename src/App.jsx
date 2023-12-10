@@ -1,6 +1,6 @@
 import React from 'react'
-import { DobbleProvider } from './context/DobbleContext'
-import { Dobble } from './component/Dobble'
+import { DobbleProvider } from './api/context/DobbleContext'
+import { Dobble } from './ui/component/Dobble'
 import './styles.css'
 
 function App() {
