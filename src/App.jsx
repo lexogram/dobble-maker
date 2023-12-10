@@ -1,12 +1,14 @@
-
+import React from 'react'
+import { DobbleProvider } from './context/DobbleContext'
+import { Dobble } from './component/Dobble'
 import './styles.css'
 
 function App() {
 
   return (
-    <>
-      <h1>App goes here</h1>
-    </>
+    <DobbleProvider>
+      <Dobble />
+    </DobbleProvider>
   )
 }
 
