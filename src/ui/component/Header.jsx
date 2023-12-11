@@ -5,6 +5,7 @@
 
 import React, { useContext } from 'react'
 import { DobbleContext } from "../../api/context/DobbleContext";
+import { Upload } from './Upload';
 import { Selector } from './Selector'
 
 
@@ -52,8 +53,11 @@ export const Header = () => {
   return (
     <div id="header">
        <h1>Dobble Maker</h1>
-       {layouts}
-       {sets}
+       <Upload />
+       <div>
+         {layouts}
+         {sets}
+       </div>
     </div>
    
   )

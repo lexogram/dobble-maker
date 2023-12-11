@@ -4,7 +4,7 @@
 
 import React from "react";
 export const Picture = ({ cx, cy, r, defId, href, rotation, fill }) => {
-  const scale = r // * 0.8ƒ
+  const scale = r * 0.82 // for gecko
 
   return (
     <g>
@@ -30,11 +30,12 @@ export const Picture = ({ cx, cy, r, defId, href, rotation, fill }) => {
       />
       {/* Temporary display of clip-path */}
       <circle
+        className="temp"
         cx={cx}
         cy={cy}
         r={r}
         fill={fill}
-        opacity={.1}
+        opacity={.05}
       />
     </g>
   )

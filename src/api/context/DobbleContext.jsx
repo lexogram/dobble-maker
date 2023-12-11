@@ -32,10 +32,13 @@ export const DobbleProvider = ({ children }) => {
       imageSets,
       imageSet,
       images,
+
       set,
       layoutNames,
       layoutName,
-      layout
+      layout,
+
+      showDialog
     } = state
 
   const radius = 490
@@ -55,6 +58,15 @@ export const DobbleProvider = ({ children }) => {
   const setImageSet = value => {
     const action = {
       type: "SELECT_IMAGE_SET",
+      payload: value
+    }
+    dispatch(action)
+  }
+
+
+  const toggleDialog = value => {
+    const action = {
+      type: "TOGGLE_DIALOG",
       payload: value
     }
     dispatch(action)
@@ -81,7 +93,10 @@ export const DobbleProvider = ({ children }) => {
         STROKE_WIDTH,
         padding,
         spacing,
-        radius
+        radius,
+
+        showDialog,
+        toggleDialog
       }}
     >
       {children}

@@ -21,7 +21,7 @@ import {
 
 
 const initialState = selectImageSet(
-  { imageSets }, imageSets[0]
+  { imageSets, showDialog: false }, imageSets[0]
 )
 
 
@@ -33,11 +33,14 @@ const reducer = (state, action) => {
     case "SELECT_IMAGE_SET":
       return selectImageSet(state, payload)
 
-      case "SELECT_LAYOUT_NAME":
-        return selectLayout(state, payload)
-  
-    default:
-      return {...state}
+  case "SELECT_LAYOUT_NAME":
+    return selectLayout(state, payload)
+
+  case "TOGGLE_DIALOG":
+    return toggleDialog(state, payload)
+
+  default:
+    return {...state}
   }
 }
 
@@ -69,6 +72,12 @@ function selectLayout( state, layoutName ) {
   const layout = state.layoutsForThisSize[layoutName]
 
   return { ...state, layoutName, layout }
+}
+
+
+
+function toggleDialog( state, showDialog ) {
+  return { ...state, showDialog }
 }
 
 
