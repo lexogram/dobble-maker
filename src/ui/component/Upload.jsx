@@ -4,12 +4,12 @@
 
 
 import React, { useState, useContext } from 'react'
-import { DobbleContext } from '../../api/context/DobbleContext'
+import { Context } from '../../api/context/Context'
 
 
 const IMAGE_REGEX = /\.(png|jpg|jpeg|gif|svg|webp|tiff?|bmp)$/i
 export const Upload = () => {
-  const { showDialog, toggleDialog } = useContext(DobbleContext)
+  const { showDialog, toggleDialog } = useContext(Context)
   const [ files, setFiles ] = useState([])
   
 

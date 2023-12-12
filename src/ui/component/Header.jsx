@@ -4,7 +4,7 @@
 
 
 import React, { useContext } from 'react'
-import { DobbleContext } from "../../api/context/DobbleContext";
+import { Context } from "../../api/context/Context";
 import { Upload } from './Upload';
 import { Selector } from './Selector'
 
@@ -19,7 +19,7 @@ export const Header = () => {
     layoutName,
     layoutNames,
     setLayoutName
-  } = useContext(DobbleContext)
+  } = useContext(Context)
   
 
   const selectLayout = event => {

@@ -5,7 +5,7 @@
 
 
 import React, { useContext} from "react"
-import { DobbleContext } from "../../api/context/DobbleContext";
+import { Context } from "../../api/context/Context";
 import { Card } from "./Card";
 
 
@@ -18,7 +18,7 @@ export const Page = ({ cards, index }) => {
     padding,
     spacing,
     radius
-  } = useContext(DobbleContext)
+  } = useContext(Context)
   // console.log("props:", props);
 
   cards = cards.map(( card, index ) => {

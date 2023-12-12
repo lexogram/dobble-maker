@@ -1,10 +1,10 @@
 /**
- * DobbleContext.jsx
+ * Context.jsx
  * description
  */
 
-import React, { createContext, useReducer } from 'react'
-import { reducer, initialState } from '../reducer/DobbleReducer'
+import React, { createContext, useReducer, useEffect } from 'react'
+import { reducer, initialState } from './Reducer'
 // import {
 //   layouts,
 //   getSet,
@@ -22,13 +22,15 @@ const VIEW_HEIGHT = pageHeight - pageHeightTweak
 
 
 
-export const DobbleContext = createContext()
+export const Context = createContext()
 
 
 
-export const DobbleProvider = ({ children }) => {
+export const Provider = ({ children }) => {
   const [ state, dispatch ] = useReducer(reducer, initialState)
   const {
+      page,
+
       imageSets,
       imageSet,
       images,
@@ -44,6 +46,16 @@ export const DobbleProvider = ({ children }) => {
   const radius = 490
   const padding = 2
   const spacing = radius + padding
+
+
+  const setPage = value => {
+    const action = {
+      type: "SET_PAGE",
+      payload: value
+    }
+    dispatch(action)
+    
+  }
 
 
   const setLayoutName = value => {
@@ -74,8 +86,11 @@ export const DobbleProvider = ({ children }) => {
 
 
   return (
-    <DobbleContext.Provider
+    <Context.Provider
       value ={{
+        page,
+        setPage,
+
         images,
         imageSet,
         imageSets,
@@ -100,6 +115,6 @@ export const DobbleProvider = ({ children }) => {
       }}
     >
       {children}
-    </DobbleContext.Provider>
+    </Context.Provider>
   )
 }

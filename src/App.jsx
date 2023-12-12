@@ -1,16 +1,17 @@
 import React from 'react'
-import { DobbleProvider } from './api/context/DobbleContext'
+import { Provider } from './api/context/Context'
 import { Header } from './ui/component/Header'
 import { Dobble } from './ui/component/Dobble'
-import './styles.css'
+// import './styles.css'
+import './App.css'
 
 function App() {
 
   return (
-    <DobbleProvider>
+    <Provider>
       <Dobble />
       <Header />
-    </DobbleProvider>
+    </Provider>
   )
 }
 

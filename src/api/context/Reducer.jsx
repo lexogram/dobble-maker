@@ -19,9 +19,13 @@ import {
 } from '../data/filterData.js'
 
 
+const page = window.location.pathname.replace(/^\//, "")
+console.log("page:", page);
+
+
 
 const initialState = selectImageSet(
-  { imageSets, showDialog: false }, imageSets[0]
+  { page, imageSets, showDialog: false }, imageSets[0]
 )
 
 
@@ -30,18 +34,26 @@ const reducer = (state, action) => {
   const { type, payload } = action
 
   switch (type) {
+    case "SET_PAGE":
+      return setPage(state, payload)
+
     case "SELECT_IMAGE_SET":
       return selectImageSet(state, payload)
+  
+    case "SELECT_LAYOUT_NAME":
+      return selectLayout(state, payload)
 
-  case "SELECT_LAYOUT_NAME":
-    return selectLayout(state, payload)
+    case "TOGGLE_DIALOG":
+      return toggleDialog(state, payload)
 
-  case "TOGGLE_DIALOG":
-    return toggleDialog(state, payload)
-
-  default:
-    return {...state}
+    default:
+      return {...state}
   }
+}
+
+
+function setPage(state, page) {
+  return { ...state, page }
 }
 
 

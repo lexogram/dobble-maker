@@ -4,11 +4,11 @@
 
 
 import React, { useContext } from "react"
-import { DobbleContext } from "../../api/context/DobbleContext";
+import { Context } from "../../api/context/Context";
 import { Page } from "./Page"
 
 export const Dobble = () => {
-  const { images, set } = useContext(DobbleContext)
+  const { images, set } = useContext(Context)
 
   // Map the images to the cards
   const cards = set.map(

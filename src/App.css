@@ -1,0 +1,148 @@
+:root {
+  --controller-height: 5em;
+  --square: calc(100vh - var(--controller-height));
+  --scroll-size: 20px;
+  --store-width: calc(100vw - var(--square));
+  --store-size: calc(var(--store-width) - var(--scroll-size));
+  --image-size: calc(var(--store-size) / 4)
+}
+
+#controller {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: var(--controller-height);
+}
+
+#page {
+  font-size: 0.8em;
+  text-align: center;
+  width: 24em;
+  margin: 1em;
+  border: 1px inset #666;
+  background-color: #222;
+}
+
+#controller h1 {
+  position: relative;
+  margin: 0.5em 0 0.2em;
+}
+
+#controller button {
+  /* position: relative; */
+  /* margin-bottom: 0.2em; */
+  background-color: #111;
+  padding: 0.25em 0.5em;
+  border: 2px outset #666;
+  border-radius: 0.5em;
+  color: inherit;
+}
+
+.image-count {
+  text-align: center;
+}
+
+.file-picker {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.file-picker label  {
+  margin-top: 1em;
+}
+
+.file-picker label span {
+  font-size: 0.75em;
+}
+
+.file-picker input[type="file"] {
+  font-size: 1em;
+  width: 18em;
+}
+
+/* Main */
+
+article h1 {
+  margin-top: 0;
+  padding-top: 1em;
+}
+
+#home {
+  height: 100vh;
+  background-color: #311;
+}
+
+#create {
+  height: var(--square);
+  background-color: #121;
+  display: flex;
+}
+
+.image-store {
+  height: 100%;
+  width: var(--store-width);
+  background-color: #111;
+  overflow: auto;
+}
+
+.one-card {
+  margin: 1em 0
+}
+
+.image {
+  display: inline-block;
+  width: var(--image-size);
+  height: var(--image-size);
+  border-radius: var(--image-size);
+  background-color: #444;
+}
+
+.image:first-child {
+  background-color: transparent;
+  border:1px #444 solid;
+  box-sizing: border-box;
+}
+
+.one-card:first-child .image:first-child {
+  background-color: #444;
+  border: none
+}
+
+.orange {
+  background-color: #840;
+}
+
+.yellow {
+  background-color: #880;
+}
+
+.green {
+  background-color: #080;
+}
+
+.teal {
+  background-color: #084;
+}
+
+.teal {
+  background-color: #088;
+}
+
+.blue {
+  background-color: #059;
+}
+
+.royal {
+  background-color: #007;
+}
+
+.pink {
+  background-color: #404;
+}
+
+.card-maker {
+  height: var(--square);
+  width: var(--square);
+}
