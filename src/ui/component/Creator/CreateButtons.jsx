@@ -3,10 +3,12 @@
  */
 
 
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { ImagesContext } from '../../../api/context/ImagesContext'
 
 
-export const CreateButtons = (props) => {
+export const CreateButtons = () => {
+  const { images, addImages } = useContext(ImagesContext)
   const [ directory, setDirectory ] = useState(true)
 
   const filePicker = directory
@@ -30,16 +32,18 @@ export const CreateButtons = (props) => {
     setDirectory(!directory)
   }
 
-  function chooseFiles() {
-    
+  function chooseFiles(event) {
+    const files = event.target.files
+    addImages(files)
   }
 
   return (
     <>
       <div className="image-count">
-        <h1>0 images</h1>
+        <h1>{images.length} images</h1>
         <p>Use 7, 13, 31, 57, or 133 images</p>
       </div>
+
       <div className="file-picker">
         {filePicker}
         <label htmlFor="choose-folder">

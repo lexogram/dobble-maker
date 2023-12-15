@@ -5,7 +5,9 @@
 
 import React from 'react'
 import '../../Routing.css'
-import { Provider as Provider } from '../../api/context/Context';
+import {
+  ImagesProvider as Provider
+} from '../../api/context/ImagesContext';
 
 import { Base } from '../component/Base';
 import { Home } from '../component/Home';

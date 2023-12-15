@@ -7,7 +7,7 @@ import React from 'react'
 import { ImageStore } from './ImageStore'
 import { CardMaker } from './CardMaker'
 
-export const Create = (props) => {
+export const Create = () => {
 
 
   return (

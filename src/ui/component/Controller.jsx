@@ -8,7 +8,7 @@ import { useLocation } from 'react-router-dom'
 
 import { SwitchPage } from './SwitchPage'
 import { HomeButtons } from './HomeButtons'
-import { CreateButtons } from './CreateButtons'
+import { CreateButtons } from './Creator/CreateButtons'
 
 
 export const Controller = (props) => {
