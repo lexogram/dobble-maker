@@ -57,6 +57,7 @@ export const Upload = () => {
           id="filepicker"
           name="fileList"
           multiple
+          webkitdirectory="true"
           onChange={chooseFiles}
         />
         <div

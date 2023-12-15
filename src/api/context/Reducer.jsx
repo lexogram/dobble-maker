@@ -20,7 +20,7 @@ import {
 
 
 const page = window.location.pathname.replace(/^\//, "")
-console.log("page:", page);
+// console.log("page:", page);
 
 
 

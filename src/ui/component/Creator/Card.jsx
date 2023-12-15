@@ -3,9 +3,9 @@
  */
 
 import React, { useContext} from "react"
-import { Context } from "../../api/context/Context";
-import { Picture } from "./Picture";
-import { lcg } from "../../api/lcg";
+import { Context } from "../../../api/context/Context";
+import { Picture } from "../Picture";
+import { lcg } from "../../../api/lcg";
 
 
 const random = lcg()

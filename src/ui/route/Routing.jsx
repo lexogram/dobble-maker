@@ -4,11 +4,12 @@
 
 
 import React from 'react'
+import '../../Routing.css'
 import { Provider as Provider } from '../../api/context/Context';
 
 import { Base } from '../component/Base';
 import { Home } from '../component/Home';
-import { Create } from '../component/Create';
+import { Create } from '../component/Creator/Create';
 
 import {
   BrowserRouter as Router,

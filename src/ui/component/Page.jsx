@@ -6,7 +6,7 @@
 
 import React, { useContext} from "react"
 import { Context } from "../../api/context/Context";
-import { Card } from "./Card";
+import { Card } from "./Creator/Card";
 
 
 
