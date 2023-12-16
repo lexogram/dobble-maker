@@ -7,8 +7,8 @@ import React from 'react'
 import { useLocation } from 'react-router-dom'
 
 import { SwitchPage } from './SwitchPage'
-import { HomeButtons } from './HomeButtons'
-import { CreateButtons } from './Creator/CreateButtons'
+import { HomeButtons } from '../Home/HomeButtons'
+import { CreateButtons } from '../Creator/CreateButtons'
 
 
 export const Controller = (props) => {

@@ -4,9 +4,9 @@
 
 
 import React, { useContext } from 'react'
-import { Context } from "../../api/context/Context";
+import { Context } from "../../../api/context/Context";
 import { Upload } from './Upload';
-import { Selector } from './Widget/Selector'
+import { Selector } from '../Widget/Selector'
 
 
 

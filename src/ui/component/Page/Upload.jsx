@@ -4,7 +4,7 @@
 
 
 import React, { useState, useContext } from 'react'
-import { Context } from '../../api/context/Context'
+import { Context } from '../../../api/context/Context'
 
 
 const IMAGE_REGEX = /\.(png|jpg|jpeg|gif|svg|webp|tiff?|bmp)$/i

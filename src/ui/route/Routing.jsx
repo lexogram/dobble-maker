@@ -10,7 +10,7 @@ import {
 } from '../../api/context/ImagesContext';
 
 import { Base } from '../component/Base';
-import { Home } from '../component/Home';
+import { Home } from '../component/Home/Home';
 import { Create } from '../component/Creator/Create';
 
 import {

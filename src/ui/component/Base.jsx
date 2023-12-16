@@ -6,7 +6,7 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 
-import { Controller } from './Controller'
+import { Controller } from './Controller/Controller'
 
 
 
