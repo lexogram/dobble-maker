@@ -9,7 +9,7 @@ export const ImagesContext = createContext()
 
 export const ImagesProvider = ({ children }) => {
   const [ state, dispatch ] = useReducer(reducer, initialState)
-  const { images } = state
+  const { images, imagesPerCard } = state
 
 
   const addImages = imageArray => {
@@ -20,11 +20,23 @@ export const ImagesProvider = ({ children }) => {
     dispatch(action)
   }
 
+
+  const setImagesPerCard = value => {
+    const action = {
+      type: "SET_IMAGES_PER_CARD",
+      payload: value
+    }
+    dispatch(action)
+  }
+
+
   return (
     <ImagesContext.Provider
       value ={{
         images,
-        addImages
+        addImages,
+        imagesPerCard,
+        setImagesPerCard
       }}
     >
       {children}

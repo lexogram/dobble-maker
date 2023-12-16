@@ -1,6 +1,6 @@
 /**
  * ImagesReducer.jsx
- * 
+ *
  * Use useReducer when:
  * + The next state depends on the previous state
  * + The state is complex
@@ -15,7 +15,10 @@ const IMAGE_REGEX = /\.(bmp|gif|jpe?g|png|tiff|webp)$/i
 
 
 const initialState = {
-  images: []
+  images: [],
+  imagesPerCard: 8,
+  customLayout: true,
+  cards: [],
 }
 
 
@@ -26,11 +29,13 @@ const reducer = (state, action) => {
     case "ADD_IMAGES":
       return addImages(state, payload)
 
+    case "SET_IMAGES_PER_CARD":
+      return setImagesPerCard(state, payload)
+
     default:
       return {...state}
   }
 }
-
 
 
 function addImages( state, imageFiles ) {
@@ -59,13 +64,13 @@ function addImages( state, imageFiles ) {
         && imageObject.size         === size
         && imageObject.type         === type
       ))
-      
+
       if (match) {
         return false
       }
 
       // Ignore files that are not images (like .DS_Store)
-      return IMAGE_REGEX.test(name) 
+      return IMAGE_REGEX.test(name)
     })
 
   const imagesAdded = imageFiles.length
@@ -76,9 +81,16 @@ function addImages( state, imageFiles ) {
   } else {
     state.status = "No images added"
   }
-  
+
   return { ...state, images }
 }
+
+
+
+function setImagesPerCard( state, imagesPerCard ) {
+  return { ...state, imagesPerCard }
+}
+
 
 
 export { initialState, reducer }

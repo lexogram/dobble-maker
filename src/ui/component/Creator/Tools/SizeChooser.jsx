@@ -3,11 +3,14 @@
  */
 
 
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
+import { ImagesContext } from '../../../../api/context/ImagesContext'
 
-
-export const SizeChooser = (props) => {
-  const [ imagesPerCard, setImagesPerCard ] = useState(8)
+export const SizeChooser = () => {
+  const {
+    imagesPerCard,
+    setImagesPerCard
+  } = useContext(ImagesContext)
   
   const imagesTotal = imagesPerCard * (imagesPerCard - 1) + 1
 
@@ -28,6 +31,7 @@ export const SizeChooser = (props) => {
         name="images-per-card"
         id={`${perCard}-per-card`}
         checked={perCard === imagesPerCard}
+        onChange={setPerCard}
       />
       <span>{perCard}</span>
     </label>
@@ -37,9 +41,7 @@ export const SizeChooser = (props) => {
     <div id="size-chooser">
       <span>Images per card: </span>
       
-      <div
-        onChange={setPerCard}
-      >
+      <div>
         {radioButtons}
       </div>
       <span>(Requires {imagesTotal} images in total)</span>
