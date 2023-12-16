@@ -34,7 +34,7 @@ export const SizeChooser = (props) => {
   ))
 
   return (
-    <div id="images-per-card">
+    <div id="size-chooser">
       <span>Images per card: </span>
       
       <div

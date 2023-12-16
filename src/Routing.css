@@ -9,6 +9,8 @@
   --image-bg-color: #222;
   --tool-width: calc(var(--card-width) / 4);
   --one-card-margin: 1em;
+  --size-chooser-height: 6em;
+  --image-store-height: calc(100% - var(--size-chooser-height))
 }
 
 #controller {
@@ -88,14 +90,14 @@ article h1 {
   height: 100%;
   width: var(--store-width);
   background-color: #111;
-  overflow: auto;
 }
 
-#images-per-card {
+#size-chooser {
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
   align-items: center;
-  margin-top: var(--one-card-margin);
+  height: var(--size-chooser-height);
 }
 
 .images-per-card input[type="radio"] {
@@ -120,8 +122,18 @@ article h1 {
   background-color: #111;
 }
 
+#images-in-cards {
+  height: var(--image-store-height);
+  overflow: auto;
+}
+
 .one-card {
   margin: var(--one-card-margin) 0
+}
+
+.one-card:first-child,
+.one-card:last-child {
+    margin: 0
 }
 
 .image {
