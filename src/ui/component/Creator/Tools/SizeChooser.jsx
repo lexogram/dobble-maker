@@ -8,16 +8,45 @@ import { ImagesContext } from '../../../../api/context/ImagesContext'
 
 export const SizeChooser = () => {
   const {
+    images,
     imagesPerCard,
     setImagesPerCard
   } = useContext(ImagesContext)
   
-  const imagesTotal = imagesPerCard * (imagesPerCard - 1) + 1
+  const required = imagesPerCard * (imagesPerCard - 1) + 1
 
   const setPerCard = event => {
     const imagesPerCard = parseInt(event.target.id);
     setImagesPerCard(imagesPerCard)
   }
+
+  const requires = (() => {
+    const missing = required - images.length
+    const status = missing ? missing / Math.abs(missing) + 1 : 1
+    // 0 if no images missing; 1 if just right; 2 if more needed
+    const className = [
+      "too-many",
+      "just-right",
+      "add-more"
+    ][status]
+
+    const only = missing < 0 ? " only" : ""
+    const addMore = missing > 0
+      ? `, Add ${missing} more.)`
+      : missing < 0
+        ? `. The last ${-missing} will not be selected.)`
+        : ")"
+    const phrase =
+      `(Requires${only} ${required} images in total${addMore}`
+
+    return (
+      <span
+        className={className}
+      >
+        {phrase}
+      </span>
+    )
+    })()
 
   const imagesPerCardArray = [3, 4, 6, 8, 12]
   const radioButtons = imagesPerCardArray.map( perCard => (
@@ -44,7 +73,7 @@ export const SizeChooser = () => {
       <div>
         {radioButtons}
       </div>
-      <span>(Requires {imagesTotal} images in total)</span>
+      {requires}
     </div>
   )
 }
