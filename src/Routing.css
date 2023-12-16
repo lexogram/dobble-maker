@@ -8,6 +8,7 @@
   --image-size: calc(var(--store-size) / 4);
   --image-bg-color: #222;
   --tool-width: calc(var(--card-width) / 4);
+  --one-card-margin: 1em;
 }
 
 #controller {
@@ -90,8 +91,37 @@ article h1 {
   overflow: auto;
 }
 
+#images-per-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: var(--one-card-margin);
+}
+
+.images-per-card input[type="radio"] {
+  position: absolute;
+  visibility: hidden;
+  width: 0;
+}
+
+.images-per-card span {
+  display: inline-block;
+  width: 2em;
+  height: 2em;
+  line-height: 2em;
+  border: 2px outset #666;
+  border-radius: 6px;
+  text-align: center;
+  background-color: #333;
+}
+
+.images-per-card input[type="radio"]:checked ~ span {
+  border-style: inset;
+  background-color: #111;
+}
+
 .one-card {
-  margin: 1em 0
+  margin: var(--one-card-margin) 0
 }
 
 .image {
