@@ -9,7 +9,7 @@ export const ImagesContext = createContext()
 
 export const ImagesProvider = ({ children }) => {
   const [ state, dispatch ] = useReducer(reducer, initialState)
-  const { images, imagesPerCard } = state
+  const { images, imagesPerCard, total } = state
 
 
   const addImages = imageArray => {
@@ -36,7 +36,8 @@ export const ImagesProvider = ({ children }) => {
         images,
         addImages,
         imagesPerCard,
-        setImagesPerCard
+        setImagesPerCard,
+        total
       }}
     >
       {children}

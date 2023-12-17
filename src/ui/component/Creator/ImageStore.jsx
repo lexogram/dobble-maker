@@ -3,11 +3,17 @@
  */
 
 
-import React from 'react'
+import React, { useContext } from 'react'
+import { ImagesContext } from '../../../api/context/ImagesContext'
 import { SizeChooser } from './Tools/SizeChooser'
 
 
 export const ImageStore = () => {
+  const {
+    images,
+    imagesPerCard,
+    total
+  } = useContext(ImagesContext)
 
 
   return (

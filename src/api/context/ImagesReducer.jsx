@@ -17,6 +17,7 @@ const IMAGE_REGEX = /\.(bmp|gif|jpe?g|png|tiff|webp)$/i
 const initialState = {
   images: [],
   imagesPerCard: 8,
+  total: 57,
   customLayout: true,
   cards: [],
 }
@@ -88,7 +89,8 @@ function addImages( state, imageFiles ) {
 
 
 function setImagesPerCard( state, imagesPerCard ) {
-  return { ...state, imagesPerCard }
+  const total = imagesPerCard * imagesPerCard - imagesPerCard + 1
+  return { ...state, imagesPerCard, total }
 }
 
 
