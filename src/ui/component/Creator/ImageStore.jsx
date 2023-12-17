@@ -30,11 +30,14 @@ export const ImageStore = () => {
     const { name, size, lastModified } = imageData
     const trimmedName = name.replace(/\.\w{3,4}$/, "")
     const src = URL.createObjectURL(imageData)
+    const className = index
+      ? "image"
+      : "image on-all-preview-cards"
 
     return (
       <div
         key={`${name}_${size}_${lastModified}`}
-        className='image'
+        className={className}
       >
         <img src={src} alt={trimmedName} />
       </div>
@@ -59,7 +62,8 @@ export const ImageStore = () => {
   let ii = 0
   while (ii < imagesPerCard) { // = number of cards for an image
     const cardImages = store.splice(0, imagesPerCard-1)
-    cardImages.unshift(firstImage)
+    cardImages.splice(ii, 0, firstImage)
+
     const colour = colours[ii] || "grey"
     const className = `one-card ${colour}`
     const cardDiv = (

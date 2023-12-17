@@ -156,12 +156,14 @@ article h1 {
   background-color: var(--image-bg-color);
 }
 
-.image:first-child {
+/* Show repeated image as unchangeable... */
+.image.on-all-preview-cards {
   background-color: transparent;
   border:1px var(--image-bg-color) solid;
   box-sizing: border-box;
 }
 
+/* Except on the first preview card */
 .one-card:first-child .image:first-child {
   background-color: var(--image-bg-color);
   border: none
@@ -172,39 +174,39 @@ article h1 {
 }
 
 .orange {
-  background-color: #840;
+  background-color: #8408;
 }
 
 .yellow {
-  background-color: #880;
+  background-color: #8808;
 }
 
 .green {
-  background-color: #080;
+  background-color: #0808;
 }
 
 .teal {
-  background-color: #088;
+  background-color: #0888;
 }
 
 .blue {
-  background-color: #059;
+  background-color: #0598;
 }
 
 .royal {
-  background-color: #007;
+  background-color: #0078;
 }
 
 .purple {
-  background-color: #407;
+  background-color: #4078;
 }
 
 .pink {
-  background-color: #704;
+  background-color: #7048;
 }
 
 .grey {
-  background-color: #444;
+  background-color: #4448;
 }
 
 #card-maker {
