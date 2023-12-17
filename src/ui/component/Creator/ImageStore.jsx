@@ -44,7 +44,8 @@ export const ImageStore = () => {
     )
   }
 
-  const store = Array.from({length: total}, imageMapper)
+  const slotCount = Math.max(total, images.length)
+  const store = Array.from({length: slotCount}, imageMapper)
   const colours = [
     "orange",
     "yellow",
@@ -77,6 +78,18 @@ export const ImageStore = () => {
     cards.push(cardDiv)
 
     ii++
+  }
+
+  const extra = images.length - total
+  if (extra > 0) {
+    cards.push(
+      <h1>{`+ ${extra} unused images`}</h1>
+    )
+    cards.push(
+      <div className="extra">
+        {store}
+      </div>
+    )
   }
 
 

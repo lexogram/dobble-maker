@@ -173,6 +173,10 @@ article h1 {
   width: 100%;
 }
 
+.extra img {
+  opacity: 0.25
+}
+
 .orange {
   background-color: #8408;
 }
