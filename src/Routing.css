@@ -167,6 +167,10 @@ article h1 {
   border: none
 }
 
+.image img {
+  width: 100%;
+}
+
 .orange {
   background-color: #840;
 }
@@ -177,10 +181,6 @@ article h1 {
 
 .green {
   background-color: #080;
-}
-
-.teal {
-  background-color: #084;
 }
 
 .teal {
@@ -195,8 +195,16 @@ article h1 {
   background-color: #007;
 }
 
+.purple {
+  background-color: #407;
+}
+
 .pink {
-  background-color: #404;
+  background-color: #704;
+}
+
+.grey {
+  background-color: #444;
 }
 
 #card-maker {
