@@ -6,7 +6,7 @@
   "scripts": {
     "start": "vite",
     "build": "vite build",
-    "predeploy": "npm run build",
+    "predeploy": "npm run build --base=/dobble-maker",
     "deploy": "gh-pages -d dist",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"

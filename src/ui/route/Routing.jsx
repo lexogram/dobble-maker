@@ -15,7 +15,7 @@ import { Create } from '../component/Creator/Create';
 import { Preview } from '../component/Preview';
 
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Routes,
   Route,
   // Navigate,
