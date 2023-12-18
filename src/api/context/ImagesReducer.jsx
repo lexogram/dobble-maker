@@ -10,14 +10,29 @@
  * + You want to be able to test easily
  */
 
-
+import sets from '../data/shuffledSets.json'
+import layouts from '../data/layout.json'
 const IMAGE_REGEX = /\.(bmp|gif|jpe?g|png|tiff|webp)$/i
+
+const getFirstLayoutForSet = totalCards => {
+  const layoutsForSet = layouts[totalCards]  
+  const firstLayoutName = Object.keys(layoutsForSet)[0]
+  const firstCircles = layoutsForSet[firstLayoutName].circles
+  
+  const values = Object
+    .values(firstCircles)
+    .filter( object => typeof object === "object")
+
+  return values
+}
 
 
 const initialState = {
   images: [],
   imagesPerCard: 8,
+  sets: sets[8],
   total: 57,
+  layout: getFirstLayoutForSet(57),
   customLayout: true,
   cards: [],
 }
@@ -90,7 +105,9 @@ function addImages( state, imageFiles ) {
 
 function setImagesPerCard( state, imagesPerCard ) {
   const total = imagesPerCard * imagesPerCard - imagesPerCard + 1
-  return { ...state, imagesPerCard, total }
+  state.sets = sets[imagesPerCard]
+  const layout = getFirstLayoutForSet(total)
+  return { ...state, imagesPerCard, total, layout }
 }
 
 

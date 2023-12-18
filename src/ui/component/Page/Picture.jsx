@@ -3,8 +3,10 @@
  */
 
 import React from "react";
-export const Picture = ({ cx, cy, r, defId, href, rotation, fill }) => {
-  const scale = r * 0.82 // for gecko
+export const Picture = ({ cx, cy, r, defId, href, rotation, fill, offset=0}) => {
+  cx += offset
+  cy += offset
+  const scale = r // * 0.82 // for gecko
 
   return (
     <g>
@@ -26,7 +28,7 @@ export const Picture = ({ cx, cy, r, defId, href, rotation, fill }) => {
         width={scale * 2}
         transform={`rotate(${rotation})`}
         transform-origin={`${cx} ${cy}`}
-        clipPath={`url(#${defId})`}
+        // clipPath={`url(#${defId})`}
       />
       {/* Temporary display of clip-path */}
       <circle
@@ -36,7 +38,7 @@ export const Picture = ({ cx, cy, r, defId, href, rotation, fill }) => {
         r={r}
         fill={fill}
         opacity={.05}
-      />
+      /> {/* */}
     </g>
   )
 }

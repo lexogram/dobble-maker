@@ -225,6 +225,9 @@ div[id$="-tools"] {
   position: absolute;
   width: var(--tool-width);
   display: inline-block;
+
+  opacity: 0.25;
+  pointer-events: none;
 }
 
 div[id$="-tools"] .slider,
