@@ -4,7 +4,7 @@
 
 import React, { useContext} from "react"
 import { ImagesContext } from "../../../api/context/ImagesContext";
-import { Picture } from "../Page/Picture";
+import { Picture } from "../Preview/Picture";
 import { lcg } from "../../../api/lcg";
 
 

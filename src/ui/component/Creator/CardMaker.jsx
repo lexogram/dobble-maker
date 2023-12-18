@@ -9,7 +9,7 @@ import { SetTools } from './Tools/SetTools'
 import { CardTools } from './Tools/CardTools'
 import { ImageTools } from './Tools/ImageTools'
 import { PreviewButton } from './Tools/PreviewButton'
-import { Picture } from '../Page/Picture'
+import { Picture } from '../Preview/Picture'
 import { lcg } from '../../../api/lcg'
 
 const random = lcg()
