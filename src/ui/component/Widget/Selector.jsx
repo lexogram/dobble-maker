@@ -23,6 +23,7 @@ export const Selector = ({ selection, selected, onChange }) => {
     <select
       value={selected}
       onChange={onChange}
+      onClick={onChange}
     >
       {options}
     </select>

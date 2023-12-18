@@ -23,10 +23,10 @@ import {
 
 
 const getFirstLayoutForSet = totalCards => {
-  const layoutsForSet = layouts[totalCards]  
+  const layoutsForSet = layouts[totalCards]
   const firstLayoutName = Object.keys(layoutsForSet)[0]
   const firstCircles = layoutsForSet[firstLayoutName].circles
-  
+
   const values = Object
     .values(firstCircles)
     .filter( object => typeof object === "object")
@@ -129,13 +129,18 @@ function setImagesPerCard( state, imagesPerCard ) {
 
 function selectImageSet( state, imageSet ) {
   const images = getImageSet(imageSet)
-  const { set } = getSet(images.length)
+  const { set, imageCount: total } = getSet(images.length)
+  const layout = getFirstLayoutForSet(total)
+  const imagesPerCard = layout.length
 
-  return { 
+  return {
     ...state,
     imageSet,
     images,
-    set
+    sets: set,
+    layout,
+    total,
+    imagesPerCard
   }
 }
 

@@ -41,11 +41,12 @@ export const CardMaker = () => {
       // }
 
       if (imageData) {
+        const layoutData = layout[layoutIndex]
+        // console.log("imageData:", imageData.name || imageData);
+        
         const href = getURL(imageData)
         // blob:http://domain:port/r4nd0m-ha5h
-
-        const layoutData = layout[layoutIndex]
-        // console.log("layoutData:", layoutData);
+        // console.log("layoutData, layoutIndex, layout:", layoutData, layoutIndex, layout);
         // { "cx": 17.054, "cy": 34.442, "r": 11.566 }
 
         // Calculate "sunburst" angle
@@ -77,7 +78,7 @@ export const CardMaker = () => {
         )
       }
     })
-    // console.log(" ")
+
     return (
       <svg
         key={setIndex}
