@@ -4,14 +4,14 @@
 
 
 import React, { useContext } from 'react'
-import { ImagesContext } from '../../../../api/context/ImagesContext'
+import { Context } from '../../../../api/context/Context'
 import { useNavigate } from 'react-router-dom'
 
 
 
 export const PreviewButton = ({ page }) => {
   const navigate = useNavigate()
-  const { total, images } = useContext(ImagesContext)
+  const { total, images } = useContext(Context)
   const disabled = images.length < total
 
 

@@ -5,7 +5,7 @@
 
 
 import React, { useContext} from "react"
-import { ImagesContext } from "../../../api/context/ImagesContext";
+import { Context } from "../../../api/context/Context";
 import { Card } from "../Creator/Card";
 
 
@@ -18,7 +18,7 @@ export const Page = ({ cards, index }) => {
     PADDING,
     SPACING,
     RADIUS
-  } = useContext(ImagesContext)
+  } = useContext(Context)
 
   cards = cards.map(( card, index ) => {
     // console.log("card:", card);

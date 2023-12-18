@@ -4,7 +4,7 @@
 
 
 import React, { useState, useContext } from 'react'
-import { ImagesContext } from '../../../api/context/ImagesContext'
+import { Context } from '../../../api/context/Context'
 
 
 export const PreviewButtons = () => {

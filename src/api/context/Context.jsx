@@ -1,16 +1,9 @@
 /**
  * Context.jsx
- * description
  */
 
-import React, { createContext, useReducer, useEffect } from 'react'
+import React, { createContext, useReducer } from 'react'
 import { reducer, initialState } from './Reducer'
-// import {
-//   layouts,
-//   getSet,
-//   imageSets,
-//   getImageSet
-// } from './filterData'
 
 const VIEW_WIDTH = 2100
 const pageHeight = 2970
@@ -20,7 +13,9 @@ const STROKE_WIDTH = 1
 const pageHeightTweak = 18 // margin of 1.8mm to fit paper
 const VIEW_HEIGHT = pageHeight - pageHeightTweak
 
-
+const RADIUS = 490
+const PADDING = 2
+const SPACING = RADIUS + PADDING
 
 export const Context = createContext()
 
@@ -29,38 +24,29 @@ export const Context = createContext()
 export const Provider = ({ children }) => {
   const [ state, dispatch ] = useReducer(reducer, initialState)
   const {
-      page,
+    images,
+    imagesPerCard,
+    total,
+    sets,
+    layout,
+  
+    imageSet,
+    imageSets
+  } = state
 
-      imageSets,
-      imageSet,
-      images,
-
-      set,
-      layoutNames,
-      layoutName,
-      layout,
-
-      showDialog
-    } = state
-
-  const radius = 490
-  const padding = 2
-  const spacing = radius + padding
-
-
-  const setPage = value => {
+  
+  const addImages = imageArray => {
     const action = {
-      type: "SET_PAGE",
-      payload: value
+      type: "ADD_IMAGES",
+      payload: imageArray
     }
     dispatch(action)
-    
   }
 
 
-  const setLayoutName = value => {
+  const setImagesPerCard = value => {
     const action = {
-      type: "SELECT_LAYOUT_NAME",
+      type: "SET_IMAGES_PER_CARD",
       payload: value
     }
     dispatch(action)
@@ -76,42 +62,40 @@ export const Provider = ({ children }) => {
   }
 
 
-  const toggleDialog = value => {
-    const action = {
-      type: "TOGGLE_DIALOG",
-      payload: value
+  const getURL = stringOrObject => {
+    if (!stringOrObject) {
+      return ""
+    } else if (typeof stringOrObject === "string") {
+      return stringOrObject
     }
-    dispatch(action)
+    
+    return URL.createObjectURL(stringOrObject)
   }
 
 
   return (
     <Context.Provider
       value ={{
-        page,
-        setPage,
-
         images,
+        addImages,
+        imagesPerCard,
+        setImagesPerCard,
+        total,
+        sets,
+        layout,
+  
         imageSet,
         imageSets,
         setImageSet,
 
-        layout,
-        layoutName,
-        layoutNames,
-        setLayoutName,
-
-        set,
+        getURL,
 
         VIEW_WIDTH,
         VIEW_HEIGHT,
         STROKE_WIDTH,
-        padding,
-        spacing,
-        radius,
-
-        showDialog,
-        toggleDialog
+        PADDING,
+        SPACING,
+        RADIUS
       }}
     >
       {children}

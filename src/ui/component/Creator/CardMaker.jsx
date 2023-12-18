@@ -4,7 +4,7 @@
 
 
 import React, { useContext } from 'react'
-import { ImagesContext } from '../../../api/context/ImagesContext'
+import { Context } from '../../../api/context/Context'
 import { SetTools } from './Tools/SetTools'
 import { CardTools } from './Tools/CardTools'
 import { ImageTools } from './Tools/ImageTools'
@@ -16,7 +16,7 @@ const random = lcg()
 const OFFSET = 50
 
 export const CardMaker = () => {
-  const { images, total, sets, layout, getURL } = useContext(ImagesContext)
+  const { images, total, sets, layout, getURL } = useContext(Context)
   // console.log("sets:", sets);
   // [
   //   [  0,  1,  2,  3,  4,  5,  6,  7 ],

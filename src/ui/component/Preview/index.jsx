@@ -4,11 +4,11 @@
 
 
 import React, { useContext } from "react"
-import { ImagesContext } from "../../../api/context/ImagesContext";
+import { Context } from "../../../api/context/Context";
 import { Page } from "./Page"
 
 export const Preview = () => {
-  const { images, sets } = useContext(ImagesContext)
+  const { images, sets } = useContext(Context)
 
   // Map the images to the cards
   const cards = sets.map(

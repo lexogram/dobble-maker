@@ -3,7 +3,7 @@
  */
 
 import React, { useContext} from "react"
-import { ImagesContext } from "../../../api/context/ImagesContext";
+import { Context } from "../../../api/context/Context";
 import { Picture } from "../Preview/Picture";
 import { lcg } from "../../../api/lcg";
 
@@ -13,7 +13,7 @@ const random = lcg()
 
 
 export const Card = ({ index, hrefs, cx: cardX, cy: cardY, r: cardR }) => {
-  const { layout, getURL } = useContext(ImagesContext)
+  const { layout, getURL } = useContext(Context)
   // cardR is actually relative to a card with _diameter_ 100
   const ratio = cardR / 50
 

@@ -4,7 +4,7 @@
 
 
 import React, { useContext } from 'react'
-import { ImagesContext } from '../../../api/context/ImagesContext'
+import { Context } from '../../../api/context/Context'
 import { SizeChooser } from './Tools/SizeChooser'
 
 
@@ -14,7 +14,7 @@ export const ImageStore = () => {
     imagesPerCard,
     total,
     getURL
-  } = useContext(ImagesContext)
+  } = useContext(Context)
 
 
   const imageMapper = (_, index) => {

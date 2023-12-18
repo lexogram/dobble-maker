@@ -4,11 +4,11 @@
 
 
 import React, { useState, useContext } from 'react'
-import { ImagesContext } from '../../../api/context/ImagesContext'
+import { Context } from '../../../api/context/Context'
 
 
 export const CreateButtons = () => {
-  const { images, addImages } = useContext(ImagesContext)
+  const { images, addImages } = useContext(Context)
   const [ directory, setDirectory ] = useState(true)
 
   const filePicker = directory

@@ -5,9 +5,8 @@
 
 import React from 'react'
 import './App.css'
-import {
-  ImagesProvider as Provider
-} from './api/context/ImagesContext';
+
+import { Provider } from './api/context/Context';
 
 import { Base } from './ui/component/Base';
 import { Home } from './ui/component/Home/Home';
