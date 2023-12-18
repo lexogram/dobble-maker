@@ -10,36 +10,34 @@
  * + You want to be able to test easily
  */
 
-import sets from '../data/shuffledSets.json'
-import layouts from '../data/layout.json'
+
 const IMAGE_REGEX = /\.(bmp|gif|jpe?g|png|tiff|webp)$/i
 
 
 import {
-  getSet,
+  layouts,
+  getSets,
   imageSets, // won't change
   getImageSet
 } from '../data/filterData.js'
 
 
+
+
 const getFirstLayoutForSet = totalCards => {
   const layoutsForSet = layouts[totalCards]
   const firstLayoutName = Object.keys(layoutsForSet)[0]
-  const firstCircles = layoutsForSet[firstLayoutName].circles
+  const firstCircles = layoutsForSet[firstLayoutName]
 
-  const values = Object
-    .values(firstCircles)
-    .filter( object => typeof object === "object")
-
-  return values
+  return firstCircles
 }
 
 
 const initialState = {
   images: [],
   imagesPerCard: 8,
-  sets: sets[8],
   total: 57,
+  sets: getSets(57).sets,
   layout: getFirstLayoutForSet(57),
   customLayout: true,
   cards: [],
@@ -119,9 +117,9 @@ function addImages( state, imageFiles ) {
 
 function setImagesPerCard( state, imagesPerCard ) {
   const total = imagesPerCard * imagesPerCard - imagesPerCard + 1
-  state.sets = sets[imagesPerCard]
+  const sets = getSets(total).sets  
   const layout = getFirstLayoutForSet(total)
-  return { ...state, imagesPerCard, total, layout }
+  return { ...state, imagesPerCard, total, sets, layout }
 }
 
 
@@ -129,15 +127,15 @@ function setImagesPerCard( state, imagesPerCard ) {
 
 function selectImageSet( state, imageSet ) {
   const images = getImageSet(imageSet)
-  const { set, imageCount: total } = getSet(images.length)
+  const { sets, total } = getSets(images.length)
   const layout = getFirstLayoutForSet(total)
-  const imagesPerCard = layout.length
+  const imagesPerCard = layout.length  
 
   return {
     ...state,
     imageSet,
     images,
-    sets: set,
+    sets,
     layout,
     total,
     imagesPerCard

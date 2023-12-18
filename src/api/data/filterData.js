@@ -70,7 +70,7 @@ const setLengths = sets.map( set => set.length )
 setLengths.push(9999)
 
 
-export const getSet = (imageCount) => {
+export const getSets = (imageCount) => {
   const setIndex = setLengths.findIndex(
     setLength => setLength > imageCount
   ) - 1
@@ -79,8 +79,8 @@ export const getSet = (imageCount) => {
   imageCount = setLengths[setIndex]
 
   return {
-    set,
-    imageCount
+    sets: set,
+    total: imageCount
   }
 }
 
