@@ -5,7 +5,21 @@
 import React, { createContext, useReducer } from 'react'
 import { reducer, initialState } from './ImagesReducer'
 
+const VIEW_WIDTH = 2100
+const pageHeight = 2970
+const STROKE_WIDTH = 1
+// The height of the SVG element needs to be trimmed in order
+// not to trigger the creation of an extra page.
+const pageHeightTweak = 18 // margin of 1.8mm to fit paper
+const VIEW_HEIGHT = pageHeight - pageHeightTweak
+
+const RADIUS = 490
+const PADDING = 2
+const SPACING = RADIUS + PADDING
+
 export const ImagesContext = createContext()
+
+
 
 export const ImagesProvider = ({ children }) => {
   const [ state, dispatch ] = useReducer(reducer, initialState)
@@ -17,7 +31,7 @@ export const ImagesProvider = ({ children }) => {
     layout,
   
     imageSet,
-    imageSets,
+    imageSets
   } = state
 
   
@@ -49,11 +63,11 @@ export const ImagesProvider = ({ children }) => {
 
 
   const getURL = stringOrObject => {
-    if (typeof stringOrObject === "string") {
+    if (!stringOrObject) {
+      return ""
+    } else if (typeof stringOrObject === "string") {
       return stringOrObject
     }
-
-    // console.log("stringOrObject instanceof File:", stringOrObject instanceof File);
     
     return URL.createObjectURL(stringOrObject)
   }
@@ -74,7 +88,14 @@ export const ImagesProvider = ({ children }) => {
         imageSets,
         setImageSet,
 
-        getURL
+        getURL,
+
+        VIEW_WIDTH,
+        VIEW_HEIGHT,
+        STROKE_WIDTH,
+        PADDING,
+        SPACING,
+        RADIUS
       }}
     >
       {children}

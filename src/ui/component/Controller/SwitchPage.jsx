@@ -15,7 +15,7 @@ export const SwitchPage = ({ page }) => {
     ? page === "create"
       ? [ "Make Your Own Dobble", "Choose a Shared Dobble" ]
       : page === "preview"
-      ? [ "Preview", "Go Back"]
+      ? [ "Print Preview", "Customize"]
       : [ "Choose a Shared Dobble", "Make Your Own Dobble"]
     : [ "Make Your Own Dobble", "Choose a Shared Dobble" ]
 

@@ -11,7 +11,10 @@ export const PreviewButtons = () => {
   
 
   return (
-    <>
-    </>
+    <button
+      onClick={window.print}
+    >
+      Print
+    </button>
   )
 }

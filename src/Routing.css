@@ -316,3 +316,36 @@ div[id$="-tools"] button {
   right: 1em;
   padding: 0.25em 0.5em;
 }
+
+main {
+  height: calc(100% - var(--controller-height));
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  overflow: auto;
+  background-color: #fff;
+
+}
+
+
+/* PRINT // PRINT // PRINT // PRINT // PRINT // PRINT // PRINT */
+
+@media print {
+  #controller, #controller *
+  {
+    display: none !important;
+  }
+
+  #root {
+    height: auto !important;
+  }
+
+  /* No space needed for the header or between pages */
+  section, section:first-of-type {
+    margin-top: 0;
+  }
+
+  .temp {
+    opacity: 0;
+  }
+}
