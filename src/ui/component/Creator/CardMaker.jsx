@@ -73,7 +73,6 @@ export const CardMaker = () => {
           <Picture
             key={defId}
             {...pictureData}
-            name={imageData.name}
           />
         )
       }

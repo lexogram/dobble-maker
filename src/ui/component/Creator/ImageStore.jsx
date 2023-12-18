@@ -98,10 +98,17 @@ export const ImageStore = () => {
   const extra = images.length - total
   if (extra > 0) {
     cards.push(
-      <h1>{`+ ${extra} unused images`}</h1>
+      <h1
+        key="unused"
+      >
+        {`+ ${extra} unused images`}
+      </h1>
     )
     cards.push(
-      <div className="extra">
+      <div
+        key="extra"
+        className="extra"
+      >
         {store}
       </div>
     )

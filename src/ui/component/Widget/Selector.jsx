@@ -16,14 +16,10 @@ export const Selector = ({ selection, selected, onChange }) => {
     </option>
   ))
 
-  // console.log("selection, selected, onChange:", selection, selected, onChange);
-  
-
   return (
     <select
       value={selected}
       onChange={onChange}
-      onClick={onChange}
     >
       {options}
     </select>

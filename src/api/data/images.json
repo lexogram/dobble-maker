@@ -72,5 +72,20 @@
     "zebra11.jpg",
     "zebra12.jpg",
     "zebra13.jpg"
+  ],
+  "13_Chess": [
+    "BlackBishop.png",
+    "BlackKing.png",
+    "BlackKnight.png",
+    "BlackPawn.png",
+    "BlackQueen.png",
+    "BlackRook.png",
+    "chessboard.png",
+    "WhiteBishop.png",
+    "WhiteKing.png",
+    "WhiteKnight.png",
+    "WhitePawn.png",
+    "WhiteQueen.png",
+    "WhiteRook.png"
   ]
 }
