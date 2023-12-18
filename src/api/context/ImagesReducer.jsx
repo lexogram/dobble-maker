@@ -14,6 +14,14 @@ import sets from '../data/shuffledSets.json'
 import layouts from '../data/layout.json'
 const IMAGE_REGEX = /\.(bmp|gif|jpe?g|png|tiff|webp)$/i
 
+
+import {
+  getSet,
+  imageSets, // won't change
+  getImageSet
+} from '../data/filterData.js'
+
+
 const getFirstLayoutForSet = totalCards => {
   const layoutsForSet = layouts[totalCards]  
   const firstLayoutName = Object.keys(layoutsForSet)[0]
@@ -35,6 +43,9 @@ const initialState = {
   layout: getFirstLayoutForSet(57),
   customLayout: true,
   cards: [],
+
+  imageSet: imageSets[0],
+  imageSets
 }
 
 
@@ -47,6 +58,9 @@ const reducer = (state, action) => {
 
     case "SET_IMAGES_PER_CARD":
       return setImagesPerCard(state, payload)
+
+    case "SELECT_IMAGE_SET":
+      return selectImageSet(state, payload)
 
     default:
       return {...state}
@@ -108,6 +122,21 @@ function setImagesPerCard( state, imagesPerCard ) {
   state.sets = sets[imagesPerCard]
   const layout = getFirstLayoutForSet(total)
   return { ...state, imagesPerCard, total, layout }
+}
+
+
+
+
+function selectImageSet( state, imageSet ) {
+  const images = getImageSet(imageSet)
+  const { set } = getSet(images.length)
+
+  return { 
+    ...state,
+    imageSet,
+    images,
+    set
+  }
 }
 
 

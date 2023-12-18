@@ -12,7 +12,8 @@ export const ImageStore = () => {
   const {
     images,
     imagesPerCard,
-    total
+    total,
+    getURL
   } = useContext(ImagesContext)
 
 
@@ -27,16 +28,28 @@ export const ImageStore = () => {
       )
     }
 
-    const { name, size, lastModified } = imageData
+    const {
+      name,
+      size,
+      lastModified
+    } = typeof imageData === "object"
+      ? imageData
+      : { name: imageData.replace(/.*\//, "") }
+
     const trimmedName = name.replace(/\.\w{3,4}$/, "")
-    const src = URL.createObjectURL(imageData)
+    const src = getURL(imageData)
+
     const className = index
       ? "image"
       : "image on-all-preview-cards"
 
+    const key = size
+      ? `${name}_${size}_${lastModified}`
+      : name
+
     return (
       <div
-        key={`${name}_${size}_${lastModified}`}
+        key={key}
         className={className}
       >
         <img src={src} alt={trimmedName} />
@@ -67,9 +80,11 @@ export const ImageStore = () => {
 
     const colour = colours[ii] || "grey"
     const className = `one-card ${colour}`
+    const key = `card_${ii}`
+
     const cardDiv = (
       <div
-        key={`card_${ii}`}
+        key={key}
         className={className}
       >
         {cardImages}

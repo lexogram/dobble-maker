@@ -309,3 +309,10 @@ div[id$="-tools"] button {
 #reset-offset {
   font-size: 2em;
 }
+
+#preview {
+  position: fixed;
+  bottom: 1em;
+  right: 1em;
+  padding: 0.25em 0.5em;
+}

@@ -4,25 +4,31 @@
 
 
 import React from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 
 export const SwitchPage = ({ page }) => {
   const navigate = useNavigate()
   
 
-
   const [ thisPage, thatPage ] = page
-    ? [ "Make Your Own Dobble", "Choose a Shared Dobble" ]
-    : [ "Choose a Shared Dobble", "Make Your Own Dobble"]
+    ? page === "create"
+      ? [ "Make Your Own Dobble", "Choose a Shared Dobble" ]
+      : page === "preview"
+      ? [ "Preview", "Go Back"]
+      : [ "Choose a Shared Dobble", "Make Your Own Dobble"]
+    : [ "Make Your Own Dobble", "Choose a Shared Dobble" ]
 
 
   const togglePage = () => {
     switch (page) {
       case "":
-        return navigate("/create")
       case "create":
-        return navigate("/")
+        return navigate("/home")
+      case "home":
+        return navigate("/create")
+      case "preview":
+        return navigate("/create")
     }
   }
 

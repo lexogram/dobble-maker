@@ -12,13 +12,14 @@ import {
 import { Base } from '../component/Base';
 import { Home } from '../component/Home/Home';
 import { Create } from '../component/Creator/Create';
+import { Preview } from '../component/Preview';
 
 import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Navigate,
-  NavLink
+  // Navigate,
+  // NavLink
 } from "react-router-dom";
 
 
@@ -33,8 +34,10 @@ export const Routing = (props) => {
             path="/"
             element={<Base />}
           >
-            <Route index element={<Home />} />
+            <Route index element={<Create />} />
             <Route path="/create" element={<Create />} />
+            <Route path="/preview" element={<Preview />} />
+            <Route path="/home" element={<Home />} />
 
           </Route>
         </Routes>
