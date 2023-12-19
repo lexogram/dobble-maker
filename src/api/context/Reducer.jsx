@@ -60,6 +60,9 @@ const reducer = (state, action) => {
     case "SELECT_IMAGE_SET":
       return selectImageSet(state, payload)
 
+    case "SWAP_IMAGES":
+      return swapImages(state, payload)
+      
     default:
       return {...state}
   }
@@ -140,6 +143,18 @@ function selectImageSet( state, imageSet ) {
     total,
     imagesPerCard
   }
+}
+
+
+function swapImages(state, {dragIndex, dropIndex}) {
+  const { images } = state
+  const dragImage = images[dragIndex]
+  const dropImage = images.splice(dropIndex, 1, dragImage)[0]
+  // We now have two copies of dragImage, so we replace the
+  // original with the dropImage that we just spliced out
+  images.splice(dragIndex, 1, dropImage)
+
+  return { ...state, images }
 }
 
 

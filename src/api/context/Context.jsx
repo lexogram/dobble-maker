@@ -29,12 +29,12 @@ export const Provider = ({ children }) => {
     total,
     sets,
     layout,
-  
+
     imageSet,
     imageSets
   } = state
 
-  
+
   const addImages = imageArray => {
     const action = {
       type: "ADD_IMAGES",
@@ -62,13 +62,23 @@ export const Provider = ({ children }) => {
   }
 
 
+  const swapImages = (indices) => {
+    const action = {
+      type: "SWAP_IMAGES",
+      payload: indices
+    }
+    dispatch(action)
+
+  }
+
+
   const getURL = stringOrObject => {
     if (!stringOrObject) {
       return ""
     } else if (typeof stringOrObject === "string") {
       return stringOrObject
     }
-    
+
     return URL.createObjectURL(stringOrObject)
   }
 
@@ -83,7 +93,7 @@ export const Provider = ({ children }) => {
         total,
         sets,
         layout,
-  
+
         imageSet,
         imageSets,
         setImageSet,
@@ -95,7 +105,9 @@ export const Provider = ({ children }) => {
         STROKE_WIDTH,
         PADDING,
         SPACING,
-        RADIUS
+        RADIUS,
+
+        swapImages
       }}
     >
       {children}
