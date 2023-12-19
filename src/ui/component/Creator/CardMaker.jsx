@@ -43,7 +43,7 @@ export const CardMaker = () => {
       if (imageData) {
         const layoutData = layout[layoutIndex]
         // console.log("imageData:", imageData.name || imageData);
-        
+
         const href = getURL(imageData)
         // blob:http://domain:port/r4nd0m-ha5h
         // console.log("layoutData, layoutIndex, layout:", layoutData, layoutIndex, layout);
@@ -51,7 +51,7 @@ export const CardMaker = () => {
 
         // Calculate "sunburst" angle
         const { cx, cy } = layoutData
-        let angle = cx && cy
+        let angle = cx || cy
           ? (Math.atan(cy / cx) / Math.PI * 180) - 90
           : 0
         // Tweak for images on the left
