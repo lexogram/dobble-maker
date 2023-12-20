@@ -11,9 +11,14 @@
   --store-size: calc(var(--store-width) - var(--scroll-size));
   --image-size: calc(var(--store-size) / 4);
   --image-bg-color: #222;
-  --tool-width: calc(var(--maker-width) / 4);
+  --tool-width: min(
+    calc(var(--maker-width) / 2),
+    max(
+      14em,
+      calc(var(--maker-width) / 4)
+    ));
   --one-card-margin: 1em;
-  --size-chooser-height: 6em;
+  --size-chooser-height: 8em;
   --image-store-height: calc(100% - var(--size-chooser-height))
 }
 
@@ -258,17 +263,18 @@ article h1 {
 
 
 div[id$="-tools"] {
-  position: absolute;
+  position: fixed;
+  top: var(--controller-height);
   width: var(--tool-width);
-  display: inline-block;
+  overflow: hidden;
 
-  opacity: 0.25;
-  pointer-events: none;
+  /* opacity: 0.25;
+  pointer-events: none; */
 }
 
 div[id$="-tools"] .slider,
 div[id$="-tools"] button {
-    display: flex;
+  display: flex;
   justify-content: center;
   align-items: center;
 
@@ -277,11 +283,10 @@ div[id$="-tools"] button {
 }
 
 #set-tools {
-  position: absolute;
-  width: var(--tool-width);
   display: block;
-  top: 0;
-  left: 0;
+  top: var(--controller-height);
+  left: var(--store-width);
+  background-color: #0008;
 }
 
 #set-tools label {
@@ -293,7 +298,6 @@ div[id$="-tools"] button {
 }
 
 #card-tools {
-  top: 0;
   right: 0;
   text-align: right;
 }
@@ -336,8 +340,10 @@ div[id$="-tools"] button {
 }
 
 #image-tools {
+  top: auto;
   bottom: 0;
   right: 0;
+  width: fit-content;
   display: flex;
   justify-content: end;
 }

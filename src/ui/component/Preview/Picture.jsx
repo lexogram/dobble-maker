@@ -11,11 +11,14 @@ export const Picture = ({
   href,
   rotation,
   fill,
-  offset=0
+  offset=0,
+  crop
 }) => {
   cx += offset
   cy += offset
   const scale = r // * 0.82 // for gecko
+
+  const clipPath = crop ? `url(#${defId})` : ""
 
   return (
     <g>
@@ -37,7 +40,7 @@ export const Picture = ({
         width={scale * 2}
         transform={`rotate(${rotation})`}
         transform-origin={`${cx} ${cy}`}
-        clipPath={`url(#${defId})`}
+        clipPath={clipPath}
       />
       {/* Temporary display of clip-path */}
       <circle

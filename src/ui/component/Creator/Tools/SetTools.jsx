@@ -3,17 +3,29 @@
  */
 
 
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
+import { Context } from '../../../../api/context/Context'
 
 
 export const SetTools = () => {
-  const [ custom, setCustom ] = useState(true)
+  const {
+    customLayout,
+    setCustomLayout,
+    cropByDefault,
+    setCropByDefault
+  } = useContext(Context)
   
 
   const toggleCustom = ({ target }) => {
-    const custom = target.id.startsWith("custom")
-    setCustom(custom)
+    const customLayout = target.id.startsWith("custom")
+    setCustomLayout(customLayout)
   }
+
+
+  const toggleCropByDefault = ({target}) => {    
+    setCropByDefault(target.checked)
+  }
+
 
   return (
     <div id="set-tools">
@@ -23,7 +35,7 @@ export const SetTools = () => {
           type="radio"
           name="fix-layout"
           value="custom"
-          checked={custom}
+          checked={customLayout}
           onChange={toggleCustom }
         />
         <span>Custom layout for each card</span>
@@ -34,10 +46,20 @@ export const SetTools = () => {
           type="radio"
           name="fix-layout"
           value="fixed"
-          checked={!custom}
+          checked={!customLayout}
           onChange={toggleCustom }
         />
         <span>Uniform layout for all cards</span>
+      </label>
+
+      <label htmlFor="apply-crop-paths">
+        <input
+          id="apply-crop-paths"
+          type="checkbox"
+          checked={cropByDefault}
+          onChange={toggleCropByDefault}
+        />
+        <span>Crop images by default</span>
       </label>
     </div>
   )

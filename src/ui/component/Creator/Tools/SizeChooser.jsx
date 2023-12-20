@@ -11,7 +11,8 @@ export const SizeChooser = () => {
     images,
     imagesPerCard,
     setImagesPerCard,
-    total
+    total,
+    clearImages
   } = useContext(Context)
   
 
@@ -74,6 +75,11 @@ export const SizeChooser = () => {
         {radioButtons}
       </div>
       {requires}
+      <button
+        onClick={clearImages}
+      >
+        Clear
+      </button>
     </div>
   )
 }

@@ -16,7 +16,14 @@ const random = lcg()
 const OFFSET = 50
 
 export const CardMaker = () => {
-  const { images, total, sets, layout, getURL } = useContext(Context)
+  const {
+    images,
+    total,
+    sets,
+    layout,
+    getURL,
+    cropByDefault
+  } = useContext(Context)
   // console.log("sets:", sets);
   // [
   //   [  0,  1,  2,  3,  4,  5,  6,  7 ],
@@ -73,6 +80,7 @@ export const CardMaker = () => {
           <Picture
             key={defId}
             {...pictureData}
+            crop={cropByDefault}
           />
         )
       }

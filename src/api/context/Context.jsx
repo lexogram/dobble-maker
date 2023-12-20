@@ -31,7 +31,10 @@ export const Provider = ({ children }) => {
     layout,
 
     imageSet,
-    imageSets
+    imageSets,
+
+    customLayout,
+    cropByDefault
   } = state
 
 
@@ -68,7 +71,32 @@ export const Provider = ({ children }) => {
       payload: indices
     }
     dispatch(action)
+  }
 
+
+  const clearImages = () => {
+    const action = {
+      type: "CLEAR_IMAGES"
+    }
+    dispatch(action)
+  }
+
+
+  const setCustomLayout = value => {
+    const action = {
+      type: "SET_CUSTOM_LAYOUT",
+      payload: value
+    }
+    dispatch(action)
+  }
+
+
+  const setCropByDefault = value => {
+    const action = {
+      type: "SET_CROP_BY_DEFAULT",
+      payload: value
+    }
+    dispatch(action)
   }
 
 
@@ -114,7 +142,14 @@ export const Provider = ({ children }) => {
         SPACING,
         RADIUS,
 
-        swapImages
+        swapImages,
+        clearImages,
+
+
+        customLayout,
+        setCustomLayout,
+        cropByDefault,
+        setCropByDefault
       }}
     >
       {children}

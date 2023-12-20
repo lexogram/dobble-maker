@@ -6,7 +6,7 @@
 
 import React, { useContext} from "react"
 import { Context } from "../../../api/context/Context";
-import { Card } from "../Creator/Card";
+import { Card } from "./Card";
 
 
 
@@ -17,7 +17,7 @@ export const Page = ({ cards, index }) => {
     STROKE_WIDTH,
     PADDING,
     SPACING,
-    RADIUS
+    RADIUS,
   } = useContext(Context)
 
   cards = cards.map(( card, index ) => {

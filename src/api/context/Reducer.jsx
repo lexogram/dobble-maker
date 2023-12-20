@@ -43,7 +43,10 @@ const initialState = {
   cards: [],
 
   imageSet: imageSets[0],
-  imageSets
+  imageSets,
+
+  customLayout: false,
+  cropByDefault: true
 }
 
 
@@ -62,7 +65,16 @@ const reducer = (state, action) => {
 
     case "SWAP_IMAGES":
       return swapImages(state, payload)
-      
+
+    case "CLEAR_IMAGES":
+      return clearImages(state)
+
+    case "SET_CUSTOM_LAYOUT":
+      return setCustomLayout(state, payload)
+
+    case "SET_CROP_BY_DEFAULT":
+      return setCropByDefault(state, payload)
+
     default:
       return {...state}
   }
@@ -120,7 +132,7 @@ function addImages( state, imageFiles ) {
 
 function setImagesPerCard( state, imagesPerCard ) {
   const total = imagesPerCard * imagesPerCard - imagesPerCard + 1
-  const sets = getSets(total).sets  
+  const sets = getSets(total).sets
   const layout = getFirstLayoutForSet(total)
   return { ...state, imagesPerCard, total, sets, layout }
 }
@@ -132,7 +144,7 @@ function selectImageSet( state, imageSet ) {
   const images = getImageSet(imageSet)
   const { sets, total } = getSets(images.length)
   const layout = getFirstLayoutForSet(total)
-  const imagesPerCard = layout.length  
+  const imagesPerCard = layout.length
 
   return {
     ...state,
@@ -146,6 +158,7 @@ function selectImageSet( state, imageSet ) {
 }
 
 
+//!!! NOT IDEMPOTENT !!!  NOT IDEMPOTENT !!!  NOT IDEMPOTENT !!!//
 function swapImages(state, {dragIndex, dropIndex}) {
   const { images } = state
   const dragImage = images[dragIndex]
@@ -157,6 +170,20 @@ function swapImages(state, {dragIndex, dropIndex}) {
   return { ...state, images }
 }
 
+
+function clearImages(state) {
+  return { ...state, images: [] }
+}
+
+
+function setCustomLayout(state, customLayout) {
+  return { ...state, customLayout }
+}
+
+
+function setCropByDefault(state, cropByDefault) {
+  return { ...state, cropByDefault }
+}
 
 
 export { initialState, reducer }
