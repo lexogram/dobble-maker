@@ -76,6 +76,13 @@ export const Provider = ({ children }) => {
     if (!stringOrObject) {
       return ""
     } else if (typeof stringOrObject === "string") {
+      // <<< HACK for testing during development
+      if (location.host.startsWith("127.0.0.1:")) {
+        stringOrObject = `/dobble-maker/${stringOrObject}`
+      }
+      console.log("stringOrObject:", stringOrObject);
+      // HACK >>>
+
       return stringOrObject
     }
 
