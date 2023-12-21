@@ -8,15 +8,10 @@ import { Context } from "../../../api/context/Context";
 import { Page } from "./Page"
 
 export const Preview = () => {
-  const { images, sets } = useContext(Context)
-
-  // Map the images to the cards
-  const cards = sets.map(
-    card => card.map( number => images[number])
-  )
+  const { cardData } = useContext(Context)
 
   // Divide the cards up into printable pages
-  const pages = cards.reduce(( pages, card ) => {
+  const pages = cardData.reduce(( pages, card ) => {
     let page = pages[0]
     if (page.length === 6) {
       page = []
@@ -31,7 +26,6 @@ export const Preview = () => {
   // The pages have been unshifted in from the left. We should
   // reverse the order
   pages.reverse()
-
 
   // console.log("pages:", pages.map( page => page.length));
   // const sections = pages.slice(0,1).map(( page, index )=> (

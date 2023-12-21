@@ -18,78 +18,31 @@ import {
   allLayouts,
   getSets,
   imageSets, // won't change
-  getImageSet
-} from '../data/filterData.js'
-import {
-  createCards,
+  getImageSet,
   createDisplay,
-} from '../data/fillCard.js'
+  createCards
+} from '../data/filterData.js'
+
 import { lcg } from '../lcg.js'
 
 const IMAGE_REGEX = /\.(bmp|gif|jpe?g|png|tiff|webp)$/i
-
-
-
-
-
-const getFirstLayoutForSet = totalCards => {
-  const layoutsForSet = allLayouts[totalCards]
-  const firstLayoutName = Object.keys(layoutsForSet)[0]
-  const firstCircles = layoutsForSet[firstLayoutName]
-
-  return firstCircles
-}
-
-
-
 
 const getTotalFrom = imagesPerCard => (
   imagesPerCard * imagesPerCard - imagesPerCard + 1
 )
 
-const imagesPerCard = 8
-const total = getTotalFrom(imagesPerCard)
-const layouts = allLayouts[total]
-const layoutNames = Object.keys(layouts)
-const cardData = createCards(
-  total,
-  layoutNames,
-  lcg()
-)
-// [ { "images": [ {
-//         "imageIndex": 0,
-//         "specificScale": 1,
-//         "rotation": 75.71391084,
-//         "offsetX": 0,
-//         "offsetY": 0,
-//         "zIndex": 0,
-//         "crop": 0
-//       }, ...
-//     ],
-//     "layoutName": <string layout name>,
-//     "cardScale": 1
-//   }, ...
-// ]
 
-const initialState = {
-  imagesPerCard,
-  total,
-  images: [],
-  cardData,
-  layoutNames,
-  layouts,
 
-  customLayout: true,
-  cropByDefault: true,
-  useSunburst: false,
+const initialState = (() => (
+  setImagesPerCard({
+    images: [],
+    customLayout: true,
+    cropByDefault: true,
+    useSunburst: false,
+    imageSets
+  }, 8
+)))()
 
-  // <<< Should become obsolete
-  sets: getSets(total).sets,
-  layout: getFirstLayoutForSet(total),
-  imageSets,
-  imageSet: imageSets[0]
-  // >>>
-}
 
 
 const reducer = (state, action) => {
@@ -180,28 +133,38 @@ function addImages( state, imageFiles ) {
 
 function setImagesPerCard( state, imagesPerCard ) {
   const total = getTotalFrom(imagesPerCard)
-  const sets = getSets(total).sets
-  const layout = getFirstLayoutForSet(total)
-  return { ...state, imagesPerCard, total, sets, layout }
+  const layouts = allLayouts[total]
+  const layoutNames = Object.keys(layouts)
+  const cardData = createCards(
+    total,
+    layoutNames,
+    lcg()
+  )
+
+  return {
+    ...state,
+    imagesPerCard,
+    total,
+    cardData,
+    layoutNames,
+    layouts
+  }
 }
 
 
 
 function setImageSet( state, imageSet ) {
-  const images = getImageSet(imageSet)
-    .map( image => ({ src: image, scale: 0.8 }))
-  const { sets, total } = getSets(images.length)
-  const layout = getFirstLayoutForSet(total)
-  const imagesPerCard = layout.length
+  const images = getImageSet(imageSet) // [ <url>, ... ]
+    .map( source => ({ source, selfScale: 1 }))
+  const { sets } = getSets(images.length)
+  const imagesPerCard = sets[0].length
+
+  state = setImagesPerCard( state, imagesPerCard )
 
   return {
     ...state,
-    imageSet,
     images,
-    sets,
-    layout,
-    total,
-    imagesPerCard
+    imageSet
   }
 }
 

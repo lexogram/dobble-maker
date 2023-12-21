@@ -93,3 +93,53 @@ export const getImageSet = setName => {
   return allImages[setName]
     .map( file => `${setName}/${file}`)
 }
+
+
+// CARDS & DISPLAY // CARDS & DISPLAY // CARDS & DISPLAY //
+
+const getRandomItem = (array, random) => {
+  return array[Math.floor(random() * array.length)]
+}
+
+
+export const createDisplay = (source) => {
+  return {
+    source,
+    selfScale: 1
+  }
+}
+
+
+const fillCard = (imageIndices, layoutName, random) => {
+  const images = imageIndices.map( imageIndex => ({
+    imageIndex,
+    specificScale: 1,
+    rotation: random() * 360,
+    offsetX: 0,
+    offsetY: 0,
+    zIndex: 0,
+    crop: 0
+  }))
+
+  return {
+    images,
+    layoutName,
+    cardScale: 1
+  }
+}
+
+
+export const createCards = (
+  total,
+  layoutNames,
+  random
+) => {
+  const { sets } = getSets(total)
+
+  const cards = sets.map( imageIndices => {
+    const layoutName = getRandomItem(layoutNames, random)
+    return fillCard(imageIndices, layoutName, random)
+  })
+
+  return cards
+}

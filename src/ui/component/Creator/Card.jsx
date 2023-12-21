@@ -8,7 +8,7 @@ import { Picture } from "../Preview/Picture"
 
 
 
-export const Card = ({ card, cardIndex, dimensions }) => {
+export const Card = ({ card, cardIndex, dimensions, isPreview }) => {
   const {
     total, // required for crop-circle-XXX defId
     images, // [ ..., { source, selfScale }, ...]
@@ -95,6 +95,20 @@ export const Card = ({ card, cardIndex, dimensions }) => {
       )
     }
   })
+
+  if (isPreview) {
+    return (
+      <>
+        <circle
+          cx={cardX}
+          cy={cardY}
+          r={cardR}
+          fill="#fff"
+        />
+        {pictures}
+      </>
+    )
+  }
 
   return (
     <svg

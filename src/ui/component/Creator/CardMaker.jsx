@@ -10,15 +10,11 @@ import { CardTools } from './Tools/CardTools'
 import { ImageTools } from './Tools/ImageTools'
 import { PreviewButton } from './Tools/PreviewButton'
 import { Card } from './Card'
-// import { Picture } from '../Preview/Picture'
 
 const OFFSET = 50
 
 export const CardMaker = () => {
-  const {
-    cardData,
-    layouts
-  } = useContext(Context)
+  const { cardData } = useContext(Context)
   // console.log("cardData:", cardData);
   // [ { "images": [ {
   //         "display": {

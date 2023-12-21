@@ -33,8 +33,6 @@ export const ImageStore = () => {
     getURL
   } = useContext(Context)
 
-
-
   /**
    * imageMapper creates a `store` array  from an array with with
    * EITHER the number of required slots for the current number of

@@ -6,7 +6,7 @@
 
 import React, { useContext} from "react"
 import { Context } from "../../../api/context/Context";
-import { Card } from "./Card";
+import { Card } from "../Creator/Card";
 
 
 
@@ -18,26 +18,28 @@ export const Page = ({ cards, index }) => {
     PADDING,
     SPACING,
     RADIUS,
+    imagesPerCard
   } = useContext(Context)
 
-  cards = cards.map(( card, index ) => {
+  cards = cards.map(( card, cardIndex ) => {
     // console.log("card:", card);
     
     const cx = PADDING
-             + (index % 2) * (VIEW_WIDTH - SPACING * 2)
+             + (cardIndex % 2) * (VIEW_WIDTH - SPACING * 2)
              + RADIUS
     const cy = PADDING
-             + (index % 3) * SPACING * 2
+             + (cardIndex % 3) * SPACING * 2
              + RADIUS
+    const dimensions = { cx, cy, r: RADIUS }
+    const uniqueIndex = index * imagesPerCard + cardIndex
     
     return (
       <Card
-        key={index}
-        index={index}
+        key={"card_"+cardIndex}
         card={card}
-        cx={cx}
-        cy={cy}
-        r={RADIUS}
+        cardIndex={uniqueIndex}
+        dimensions={dimensions}
+        isPreview={true}
       />
     )
   })  
