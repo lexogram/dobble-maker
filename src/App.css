@@ -267,9 +267,12 @@ div[id$="-tools"] {
   top: var(--controller-height);
   width: var(--tool-width);
   overflow: hidden;
+}
 
-  /* opacity: 0.25;
-  pointer-events: none; */
+div#card-tools,
+div#image-tools {
+  opacity: 0.25;
+  pointer-events: none;
 }
 
 div[id$="-tools"] .slider,
