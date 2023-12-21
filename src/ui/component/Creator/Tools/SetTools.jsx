@@ -12,9 +12,11 @@ export const SetTools = () => {
     customLayout,
     setCustomLayout,
     cropByDefault,
-    setCropByDefault
+    setCropByDefault,
+    useSunburst,
+    setSunburst,
   } = useContext(Context)
-  
+
 
   const toggleCustom = ({ target }) => {
     const customLayout = target.id.startsWith("custom")
@@ -22,8 +24,13 @@ export const SetTools = () => {
   }
 
 
-  const toggleCropByDefault = ({target}) => {    
+  const toggleCropByDefault = ({target}) => {
     setCropByDefault(target.checked)
+  }
+
+
+  const toggleSunburst = ({target}) => {
+    setSunburst(target.checked)
   }
 
 
@@ -60,6 +67,16 @@ export const SetTools = () => {
           onChange={toggleCropByDefault}
         />
         <span>Crop images by default</span>
+      </label>
+
+      <label htmlFor="use-sunburst">
+        <input
+          id="use-sunburst"
+          type="checkbox"
+          checked={useSunburst}
+          onChange={toggleSunburst}
+        />
+        <span>Fixed rotation</span>
       </label>
     </div>
   )

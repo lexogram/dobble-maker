@@ -12,22 +12,28 @@ const random = lcg()
 
 
 
-export const Card = ({ index, hrefs, cx: cardX, cy: cardY, r: cardR }) => {
+export const Card = ({ index, card, cx: cardX, cy: cardY, r: cardR }) => {
   const { layout, getURL, cropByDefault } = useContext(Context)
   // cardR is actually relative to a card with _diameter_ 100
   const ratio = cardR / 50
 
-  const images = hrefs.map(( href, imageIndex ) => {
+  // console.log("card:", card);
+  
+
+  const images = card.map(( imageData, imageIndex ) => {
+    const { src="", scale=1 } = imageData || {}
     let { cx, cy, r, fill } = layout[imageIndex]
     cx *= ratio
     cx += cardX
     cy *= ratio
     cy += cardY
-    r *= ratio
+    r *= (ratio * scale)
     const rotation = random() * 360
+    // 20 is acceptable here because there will never be more than
+    // 20 images on a single card.
     const defId = `crop-circle-${index * 20 + imageIndex}`
 
-    href = getURL(href)
+    const href = getURL(src)
 
     return (
       <Picture

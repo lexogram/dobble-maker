@@ -50,7 +50,24 @@ export const ImageStore = () => {
    */
   const imageMapper = (_, index) => {
     const imageData = images[index]
+    // console.log("ImageStore > imageMapper, imageData:", index, imageData);
+    // { source, selfScale }
+
     if (!imageData) {
+      // If there is no image (neither File object nor string URL)
+      // create an empty div.
+      // console.log("No imageData:", index);
+
+      return (
+        <StoreImage
+          key={`empty_${index}`}
+        />
+      )
+    }
+
+    const { source, selfScale } = imageData
+
+    if (!source) {
       // If there is no image (neither File object nor string URL)
       // create an empty div.
       return (
@@ -60,7 +77,7 @@ export const ImageStore = () => {
       )
     }
 
-    // imageData may be a File object with a `name` property with
+    // source may be a File object with a `name` property with
     // just the name of the file (excluding the path) or a string
     // URL (which may include the path.) In the latter case, size
     // and lastModified will be undefined.
@@ -68,15 +85,15 @@ export const ImageStore = () => {
       name,
       size,
       lastModified
-    } = typeof imageData === "object"
-      ? imageData
-      : { name: imageData.replace(/.*\//, "") }
+    } = typeof source === "object"
+      ? source
+      : { name: source.replace(/.*\//, "") }
 
     // Remove the extension after the final dot
     const trimmedName = name.replace(/\.\w+$/, "")
     // Use the function imported from Context to convert either
     // type of data to a usable value for src
-    const src = getURL(imageData)
+    const src = getURL(source)
 
     // The first image (index === 0) will appear (in a different
     // place) on all the preview cards. Show it with a thin border

@@ -1,6 +1,6 @@
-import input from './layout.json'
-import allSets from './shuffledSets.json'
-import allImages from './images.json'
+import input from './layout.json' assert { type: "json" }
+import allSets from './shuffledSets.json' assert { type: "json" }
+import allImages from './images.json' assert { type: "json" }
 
 /* Incoming:
 
@@ -33,7 +33,7 @@ import allImages from './images.json'
 const inputs = Object.entries(input)
 // [[ "<Size>", <LayoutsMap> ], ... ]
 
-export const layouts = inputs.reduce((output, [size, layoutMap]) => {
+export const allLayouts = inputs.reduce((output, [size, layoutMap]) => {
   const layouts = Object.entries(layoutMap)
   // [ "<LayoutName>", {..., circles: { <key>: <value>, ...}, ...}]
 
@@ -70,7 +70,7 @@ const setLengths = sets.map( set => set.length )
 setLengths.push(9999)
 
 
-export const getSets = (imageCount) => {
+export const getSets = imageCount => {
   const setIndex = setLengths.findIndex(
     setLength => setLength > imageCount
   ) - 1

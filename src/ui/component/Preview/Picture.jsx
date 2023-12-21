@@ -12,11 +12,12 @@ export const Picture = ({
   rotation,
   fill,
   offset=0,
+  scale,
   crop
 }) => {
   cx += offset
   cy += offset
-  const scale = r // * 0.82 // for gecko
+  scale *= r
 
   const clipPath = crop ? `url(#${defId})` : ""
 

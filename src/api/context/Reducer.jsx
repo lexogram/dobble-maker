@@ -11,21 +11,29 @@
  */
 
 
-const IMAGE_REGEX = /\.(bmp|gif|jpe?g|png|tiff|webp)$/i
+
 
 
 import {
-  layouts,
+  allLayouts,
   getSets,
   imageSets, // won't change
   getImageSet
 } from '../data/filterData.js'
+import {
+  createCards,
+  createDisplay,
+} from '../data/fillCard.js'
+import { lcg } from '../lcg.js'
+
+const IMAGE_REGEX = /\.(bmp|gif|jpe?g|png|tiff|webp)$/i
+
 
 
 
 
 const getFirstLayoutForSet = totalCards => {
-  const layoutsForSet = layouts[totalCards]
+  const layoutsForSet = allLayouts[totalCards]
   const firstLayoutName = Object.keys(layoutsForSet)[0]
   const firstCircles = layoutsForSet[firstLayoutName]
 
@@ -33,20 +41,54 @@ const getFirstLayoutForSet = totalCards => {
 }
 
 
+
+
+const getTotalFrom = imagesPerCard => (
+  imagesPerCard * imagesPerCard - imagesPerCard + 1
+)
+
+const imagesPerCard = 8
+const total = getTotalFrom(imagesPerCard)
+const layouts = allLayouts[total]
+const layoutNames = Object.keys(layouts)
+const cardData = createCards(
+  total,
+  layoutNames,
+  lcg()
+)
+// [ { "images": [ {
+//         "imageIndex": 0,
+//         "specificScale": 1,
+//         "rotation": 75.71391084,
+//         "offsetX": 0,
+//         "offsetY": 0,
+//         "zIndex": 0,
+//         "crop": 0
+//       }, ...
+//     ],
+//     "layoutName": <string layout name>,
+//     "cardScale": 1
+//   }, ...
+// ]
+
 const initialState = {
+  imagesPerCard,
+  total,
   images: [],
-  imagesPerCard: 8,
-  total: 57,
-  sets: getSets(57).sets,
-  layout: getFirstLayoutForSet(57),
+  cardData,
+  layoutNames,
+  layouts,
+
   customLayout: true,
-  cards: [],
+  cropByDefault: true,
+  useSunburst: false,
 
-  imageSet: imageSets[0],
+  // <<< Should become obsolete
+  sets: getSets(total).sets,
+  layout: getFirstLayoutForSet(total),
   imageSets,
-
-  customLayout: false,
-  cropByDefault: true
+  imageSet: imageSets[0]
+  // >>>
 }
 
 
@@ -60,8 +102,8 @@ const reducer = (state, action) => {
     case "SET_IMAGES_PER_CARD":
       return setImagesPerCard(state, payload)
 
-    case "SELECT_IMAGE_SET":
-      return selectImageSet(state, payload)
+    case "SET_IMAGE_SET":
+      return setImageSet(state, payload)
 
     case "SWAP_IMAGES":
       return swapImages(state, payload)
@@ -75,15 +117,19 @@ const reducer = (state, action) => {
     case "SET_CROP_BY_DEFAULT":
       return setCropByDefault(state, payload)
 
+    case "SET_SUNBURST":
+      return setSunburst(state, payload)
+  
     default:
       return {...state}
   }
 }
 
 
+
 function addImages( state, imageFiles ) {
   let { images } = state
-  // console.log("addImages payload:", payload);
+  // console.log("addImages imageFiles:", imageFiles);
   // [ File {
   //     lastModified: <integer timestamp>,
   //     name: "image.ext",
@@ -99,13 +145,13 @@ function addImages( state, imageFiles ) {
     // already been added. There is a small chance of a false
     // match, if two different images with the same name happen
     // to have exactly the same size and modification time.
-    .filter( imageObject => {
-      const { lastModified, name, size, type } = imageObject
-      const match = images.find( imageObject => (
-           imageObject.name         === name
-        && imageObject.lastModified === lastModified
-        && imageObject.size         === size
-        && imageObject.type         === type
+    .filter( imageFile => {
+      const { lastModified, name, size, type } = imageFile
+      const match = images.find(({ source }) => (
+           source.name         === name
+        && source.lastModified === lastModified
+        && source.size         === size
+        && source.type         === type
       ))
 
       if (match) {
@@ -115,10 +161,12 @@ function addImages( state, imageFiles ) {
       // Ignore files that are not images (like .DS_Store)
       return IMAGE_REGEX.test(name)
     })
+    .map( imageFile => createDisplay(imageFile))
 
   const imagesAdded = imageFiles.length
   if (imagesAdded) {
     images = [ ...images, ...imageFiles ]
+
     state.status = `${imagesAdded} images added`
 
   } else {
@@ -131,7 +179,7 @@ function addImages( state, imageFiles ) {
 
 
 function setImagesPerCard( state, imagesPerCard ) {
-  const total = imagesPerCard * imagesPerCard - imagesPerCard + 1
+  const total = getTotalFrom(imagesPerCard)
   const sets = getSets(total).sets
   const layout = getFirstLayoutForSet(total)
   return { ...state, imagesPerCard, total, sets, layout }
@@ -139,9 +187,9 @@ function setImagesPerCard( state, imagesPerCard ) {
 
 
 
-
-function selectImageSet( state, imageSet ) {
+function setImageSet( state, imageSet ) {
   const images = getImageSet(imageSet)
+    .map( image => ({ src: image, scale: 0.8 }))
   const { sets, total } = getSets(images.length)
   const layout = getFirstLayoutForSet(total)
   const imagesPerCard = layout.length
@@ -158,6 +206,7 @@ function selectImageSet( state, imageSet ) {
 }
 
 
+
 //!!! NOT IDEMPOTENT !!!  NOT IDEMPOTENT !!!  NOT IDEMPOTENT !!!//
 function swapImages(state, {dragIndex, dropIndex}) {
   const { images } = state
@@ -171,9 +220,11 @@ function swapImages(state, {dragIndex, dropIndex}) {
 }
 
 
+
 function clearImages(state) {
   return { ...state, images: [] }
 }
+
 
 
 function setCustomLayout(state, customLayout) {
@@ -181,9 +232,17 @@ function setCustomLayout(state, customLayout) {
 }
 
 
+
 function setCropByDefault(state, cropByDefault) {
   return { ...state, cropByDefault }
 }
+
+
+
+function setSunburst(state, useSunburst) {
+  return { ...state, useSunburst }
+}
+
 
 
 export { initialState, reducer }

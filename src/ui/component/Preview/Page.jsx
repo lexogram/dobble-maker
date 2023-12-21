@@ -34,7 +34,7 @@ export const Page = ({ cards, index }) => {
       <Card
         key={index}
         index={index}
-        hrefs={card}
+        card={card}
         cx={cx}
         cy={cy}
         r={RADIUS}

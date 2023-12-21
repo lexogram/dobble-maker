@@ -24,18 +24,25 @@ export const Context = createContext()
 export const Provider = ({ children }) => {
   const [ state, dispatch ] = useReducer(reducer, initialState)
   const {
-    images,
     imagesPerCard,
     total,
-    sets,
-    layout,
-
-    imageSet,
-    imageSets,
+    images,
+    cardData,
+    layoutNames,
+    layouts,
 
     customLayout,
-    cropByDefault
+    cropByDefault,
+    useSunburst,
+
+    // <<< Should become obsolete
+    sets,
+    layout,
+    imageSet,
+    imageSets
+    // >>>
   } = state
+
 
 
   const addImages = imageArray => {
@@ -58,7 +65,7 @@ export const Provider = ({ children }) => {
 
   const setImageSet = value => {
     const action = {
-      type: "SELECT_IMAGE_SET",
+      type: "SET_IMAGE_SET",
       payload: value
     }
     dispatch(action)
@@ -100,6 +107,15 @@ export const Provider = ({ children }) => {
   }
 
 
+  const setSunburst = value => {
+    const action = {
+      type: "SET_SUNBURST",
+      payload: value
+    }
+    dispatch(action)
+  }
+
+
   const getURL = stringOrObject => {
     if (!stringOrObject) {
       return ""
@@ -108,7 +124,7 @@ export const Provider = ({ children }) => {
       if (location.host.startsWith("127.0.0.1:")) {
         stringOrObject = `/dobble-maker/${stringOrObject}`
       }
-      console.log("stringOrObject:", stringOrObject);
+      // console.log("stringOrObject:", stringOrObject);
       // HACK >>>
 
       return stringOrObject
@@ -118,22 +134,51 @@ export const Provider = ({ children }) => {
   }
 
 
+  const getSunburstAngle = ({ cx, cy }) => {
+    let angle = cx || cy
+      ? (Math.atan(cy / cx) / Math.PI * 180) - 90
+      : 0
+
+    // Tweak for images on the left
+    if (cx < 0) {
+      angle += 180
+    }
+
+    return angle
+  }
+
+
   return (
     <Context.Provider
       value ={{
-        images,
-        addImages,
         imagesPerCard,
-        setImagesPerCard,
         total,
+        images,
+        cardData,
+        layoutNames,
+        layouts,
+    
+        customLayout,
+        cropByDefault,
+        useSunburst,
+
+        setCustomLayout,
+        setCropByDefault,
+        addImages,
+        setImagesPerCard,
+        setSunburst,
+
+        // <<< Should become obsolete
         sets,
         layout,
-
         imageSet,
         imageSets,
+        // >>>
+
         setImageSet,
 
         getURL,
+        getSunburstAngle,
 
         VIEW_WIDTH,
         VIEW_HEIGHT,
@@ -143,13 +188,7 @@ export const Provider = ({ children }) => {
         RADIUS,
 
         swapImages,
-        clearImages,
-
-
-        customLayout,
-        setCustomLayout,
-        cropByDefault,
-        setCropByDefault
+        clearImages
       }}
     >
       {children}
