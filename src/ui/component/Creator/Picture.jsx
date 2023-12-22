@@ -19,7 +19,8 @@ export const Picture = ({
   cy += offset
   scale *= r
 
-  const clipPath = crop ? `url(#${defId})` : ""
+  // Create a clipPath prop that can be ignored if unneeded
+  const clipPath = crop ? { clipPath:`url(#${defId})`} : {}
 
   return (
     <g>
@@ -41,7 +42,7 @@ export const Picture = ({
         width={scale * 2}
         transform={`rotate(${rotation})`}
         transform-origin={`${cx} ${cy}`}
-        clipPath={clipPath}
+        {...clipPath}
       />
       {/* Temporary display of clip-path */}
       <circle
