@@ -19,7 +19,7 @@
     ));
   --one-card-margin: 1em;
   --size-chooser-height: 8em;
-  --image-store-height: calc(100% - var(--size-chooser-height))
+  --image-store-height: calc(100% - var(--size-chooser-height));
 }
 
 #controller {
@@ -261,7 +261,6 @@ article h1 {
   overflow: auto
 }
 
-
 div[id$="-tools"] {
   position: fixed;
   top: var(--controller-height);
@@ -269,7 +268,7 @@ div[id$="-tools"] {
   overflow: hidden;
 }
 
-div#card-tools,
+div#card-scale,
 div#image-tools {
   opacity: 0.25;
   pointer-events: none;
@@ -354,6 +353,8 @@ div[id$="-tools"] button {
 #reset-offset {
   font-size: 2em;
 }
+
+/* PREVIEW // */
 
 #preview {
   position: fixed;

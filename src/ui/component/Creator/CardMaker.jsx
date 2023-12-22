@@ -3,7 +3,13 @@
  */
 
 
-import React, { useContext } from 'react'
+import React, {
+  useContext,
+  useRef,
+  useEffect,
+  useState
+} from 'react'
+import { useResize } from '../../../api/hook/useResize'
 import { Context } from '../../../api/context/Context'
 import { SetTools } from './Tools/SetTools'
 import { CardTools } from './Tools/CardTools'
@@ -34,6 +40,20 @@ export const CardMaker = () => {
   //   }, ...
   // ]
 
+  const { width, height } = useResize()
+  const [ style, setStyle ] = useState({})
+
+  const cardsRef = useRef()
+  const makerRef = useRef()
+
+  const setMargin = () => {
+    const { width } = cardsRef.current.getBoundingClientRect()
+    const { height } = makerRef.current.getBoundingClientRect()
+    const margin = (Math.max(1, height / width) - 1) * width / 2 + "px 0"
+    setStyle({ margin })
+  }
+
+  useEffect(setMargin, [width, height])
 
 
   const cards = cardData.map(( card, index ) => {
@@ -58,21 +78,29 @@ export const CardMaker = () => {
     }
 
     return (
-    <Card
-      key={"card_" + index}
-      cardIndex={index}
-      card={card}
-      dimensions={dimensions}
-    />)
+      <Card
+        key={"card_" + index}
+        cardIndex={index}
+        card={card}
+        dimensions={dimensions}
+      />
+    )
   })
 
 
   return (
-    <div id="card-maker">
+    <div
+      id="card-maker"
+      ref={makerRef}
+    >
       <SetTools />
       <CardTools />
       <ImageTools />
-      <div className="cards">
+      <div
+        className="cards"
+        ref={cardsRef}
+        style={style}
+      >
         {cards}
       </div>
       <PreviewButton

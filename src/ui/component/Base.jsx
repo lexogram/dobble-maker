@@ -9,8 +9,8 @@ import { Outlet } from 'react-router-dom'
 import { Controller } from './Controller/Controller'
 
 
+export const Base = () => {
 
-export const Base = (props) => {
 
 
   return (

@@ -6,6 +6,8 @@
 import React from 'react'
 import './App.css'
 
+import { useScrollSize } from './api/hook/useScrollSize'
+
 import { Provider } from './api/context/Context';
 
 import { Base } from './ui/component/Base';
@@ -21,6 +23,12 @@ import {
 
 
 const App = () => {
+  // Set --scroll-size custom CSS property in App.css to OS value
+  const scrollSize = useScrollSize()
+  document.documentElement.style.setProperty(
+    '--scroll-size', scrollSize + 1 + "px"
+  );
+
   return (
     <Router>
       <Provider>
