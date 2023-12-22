@@ -389,8 +389,4 @@ main {
   section, section:first-of-type {
     margin-top: 0;
   }
-
-  .temp {
-    opacity: 0;
-  }
 }

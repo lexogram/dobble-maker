@@ -34,13 +34,22 @@ const getTotalFrom = imagesPerCard => (
 
 
 const initialState = (() => (
-  setImagesPerCard({
-    images: [],
-    customLayout: true,
-    cropByDefault: true,
-    useSunburst: false,
-    imageSets
-  }, 8
+  // Preload animals while developing
+  setImageSet({
+      customLayout: true,
+      cropByDefault: true,
+      useSunburst: false,
+      imageSets
+  }, "57_Animals"
+
+  // // Show an blank set of 57 cards
+  // setImagesPerCard({
+  //   images: [],
+  //   customLayout: true,
+  //   cropByDefault: true,
+  //   useSunburst: false,
+  //   imageSets
+  // }, 8
 )))()
 
 

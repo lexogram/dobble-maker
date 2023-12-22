@@ -2,7 +2,11 @@
  * Picture.jsx
  */
 
-import React from "react";
+import React, { useState } from "react";
+import { Tweaker } from "./Tools/Tweaker";
+
+
+
 export const Picture = ({
   cx,
   cy,
@@ -13,14 +17,32 @@ export const Picture = ({
   fill,
   offset=0,
   scale,
-  crop
+  crop,
+  isPreview
 }) => {
+  // Define dimensions of crop-circle
   cx += offset
   cy += offset
   scale *= r
+  const circle = { cx, cy, r }
+  const origin = `${cx} ${cy}`
+
+  // Define dimensions of square image
+  const x = cx - scale
+  const y = cy - scale
+  const width = scale* 2
+  const square = { x, y, width }
+
+
+  const [ showTweaker, setShowTweaker ] = useState(false)
+
+  const toggleTweaker = ({ type }) => {
+    setShowTweaker(type === "mouseenter")
+  }
 
   // Create a clipPath prop that can be ignored if unneeded
-  const clipPath = crop ? { clipPath:`url(#${defId})`} : {}
+  const cropPath = crop ? { clipPath: `url(#${defId})` } : {}
+
 
   return (
     <g>
@@ -29,30 +51,29 @@ export const Picture = ({
           id={defId}
         >
           <circle
-            cx={cx}
-            cy={cy}
-            r={r}
+            {...circle}
           />
         </clipPath>
       </defs>
       <image
         href={href}
-        x={cx-scale}
-        y={cy-scale}
-        width={scale * 2}
+        {...square}
+        {...cropPath}
         transform={`rotate(${rotation})`}
-        transform-origin={`${cx} ${cy}`}
-        {...clipPath}
+        transform-origin={origin}
       />
-      {/* Temporary display of clip-path */}
+      { !isPreview &&
       <circle
-        className="temp"
-        cx={cx}
-        cy={cy}
-        r={r}
+        className="crop-circle"
+        {...circle}
         fill={fill}
         opacity={.05}
-      /> {/* */}
+        onMouseEnter={toggleTweaker}
+      />}
+      { showTweaker && <Tweaker 
+        {...circle}
+        onMouseLeave={toggleTweaker}
+      />}
     </g>
   )
 }

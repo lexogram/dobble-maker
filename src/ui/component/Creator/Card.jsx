@@ -85,6 +85,7 @@ export const Card = ({ card, cardIndex, dimensions, isPreview }) => {
         scale,
         crop,     // overwrites ...imageData
         defId,
+        isPreview
       }
 
       return (
