@@ -16,16 +16,17 @@ export const CardTools = (props) => {
   const {
     layoutNames,
     layoutName,
-    setLayoutName
+    setLayoutName,
+    customLayout
   } = useContext(Context)
 
   const [ scale, setScale ] = useState(1)
-  
+
 
   const selectLayout = ({target}) => {
     setLayoutName(target.value)
   }
-  
+
   const updateScale = value => {
     setScale(value)
   }
@@ -49,7 +50,7 @@ export const CardTools = (props) => {
           ↺
         </button>
       </div>
-      { layoutNames.length > 1 && <Selector
+      { layoutNames.length > 1 && customLayout && <Selector
         selected={layoutName}
         selection={layoutNames}
         onChange={selectLayout}
