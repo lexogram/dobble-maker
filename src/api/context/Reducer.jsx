@@ -223,6 +223,8 @@ function tweakImage(state, payload) {
   switch (payload.type) {
     case "rotation":
       return setRotation(state, payload)
+    case "offset":
+      return setOffset(state, payload)
   }
 }
 
@@ -232,6 +234,17 @@ function setRotation( state, { value, cardIndex, slotIndex }) {
   const imageData = cardData.images
   const specificData = imageData[slotIndex]
   specificData.rotation = value
+
+  return { ...state }
+}
+
+
+function setOffset( state, { value, cardIndex, slotIndex }) {
+  const cardData = state.cardData[cardIndex]
+  const imageData = cardData.images
+  const specificData = imageData[slotIndex]
+  specificData.offsetX = value.offsetX
+  specificData.offsetY = value.offsetY  
 
   return { ...state }
 }

@@ -20,7 +20,7 @@ export const Card = ({ card, cardIndex, dimensions, isPreview }) => {
     getSunburstAngle,
 } = useContext(Context)
   const { cx: cardX, cy: cardY, r: cardR } = dimensions
-  const ratio = cardR / 50
+  const ratio = cardR / 50 // 1 for Creator | 9.8 for Preview
 
   const { images: cardImages, cardScale, layoutName } = card
   const layout = customLayout
@@ -90,7 +90,9 @@ export const Card = ({ card, cardIndex, dimensions, isPreview }) => {
         scale,
         crop,     // overwrites ...imageData
         defId,
-        isPreview
+        isPreview,
+        tweaks: imageData,
+        ratio
       }
 
       return (

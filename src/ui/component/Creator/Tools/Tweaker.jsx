@@ -12,6 +12,8 @@ export const Tweaker = ({
   cy,
   r,
   rotation,
+  offsetX,
+  offsetY,
   onMouseLeave,
   cardIndex,
   slotIndex
@@ -30,12 +32,18 @@ export const Tweaker = ({
     const { left, top, width } = svg.getBoundingClientRect()
     const scale = width / 100
 
+    // Find the centre of rotation and zero angle
     const centreX = left + cx * scale
     const centreY = top  + cy * scale
-
-    // Find the centre of rotation and zero angle
     const zeroAngle = getAngle(clickX - centreX, clickY - centreY)
                     - rotation
+
+    // Use closure to remember the initial values of offsetX & Y
+    // The rendered instance where startTransform() was called
+    // will continue to send tweakImage calls, even after it has
+    // been replaced by new renders.
+    const startX = offsetX
+    const startY = offsetY
 
     // Start treating the drag
     document.body.addEventListener("mousemove", transform, false)
@@ -56,10 +64,11 @@ export const Tweaker = ({
       }
 
       function move() {
-        // translateX = deltaX * scale + startX
-        // translateY = deltaY * scale + startY
-        // const transform = `translate(${translateX} ${translateY})`
-        // translator.setAttribute("transform", transform)
+        offsetX = deltaX / scale + startX
+        offsetY = deltaY / scale + startY
+        const type = "offset"
+        const value = { offsetX, offsetY }
+        tweakImage({ type, value, cardIndex, slotIndex })
       }
 
       function rotate() {

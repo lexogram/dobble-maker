@@ -13,17 +13,18 @@ export const Picture = ({
   r,
   defId,
   href,
-  rotation,
+  tweaks,
   fill,
   offset=0,
   scale,
   crop,
   isPreview,
-  indices
+  indices,
+  ratio
 }) => {
   // Define dimensions of crop-circle
-  cx += offset
-  cy += offset
+  cx += offset + (tweaks.offsetX * ratio)
+  cy += offset + (tweaks.offsetY * ratio)
   scale *= r
   const circle = { cx, cy, r }
   const origin = `${cx} ${cy}`
@@ -44,7 +45,6 @@ export const Picture = ({
   // Create a clipPath prop that can be ignored if unneeded
   const cropPath = crop ? { clipPath: `url(#${defId})` } : {}
 
-
   return (
     <g>
       <defs>
@@ -60,7 +60,7 @@ export const Picture = ({
         href={href}
         {...square}
         {...cropPath}
-        transform={`rotate(${rotation})`}
+        transform={`rotate(${tweaks.rotation})`}
         transform-origin={origin}
       />
       { !isPreview &&
@@ -68,13 +68,13 @@ export const Picture = ({
         className="crop-circle"
         {...circle}
         fill={fill}
-        opacity={.05}
+        opacity={.0}
         onMouseEnter={toggleTweaker}
       />}
       { showTweaker && <Tweaker 
         {...circle}
         {...indices}
-        rotation={rotation}
+        {...tweaks}
         onMouseLeave={toggleTweaker}
       />}
     </g>
