@@ -81,7 +81,10 @@ const reducer = (state, action) => {
 
     case "SET_SUNBURST":
       return setSunburst(state, payload)
-  
+
+    case "TWEAK_IMAGE":
+      return tweakImage(state, payload)
+
     default:
       return {...state}
   }
@@ -213,6 +216,24 @@ function setCropByDefault(state, cropByDefault) {
 
 function setSunburst(state, useSunburst) {
   return { ...state, useSunburst }
+}
+
+
+function tweakImage(state, payload) {
+  switch (payload.type) {
+    case "rotation":
+      return setRotation(state, payload)
+  }
+}
+
+
+function setRotation( state, { value, cardIndex, slotIndex }) {
+  const cardData = state.cardData[cardIndex]
+  const imageData = cardData.images
+  const specificData = imageData[slotIndex]
+  specificData.rotation = value
+
+  return { ...state }
 }
 
 

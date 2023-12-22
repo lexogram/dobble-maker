@@ -27,7 +27,7 @@ export const Card = ({ card, cardIndex, dimensions, isPreview }) => {
     ? layouts[layoutName]
     : layouts[Object.keys(layouts)[0]]
 
-  const pictures = cardImages.map(( imageData, index ) => {
+  const pictures = cardImages.map(( imageData, slotIndex ) => {
     const { imageIndex, specificScale } = imageData
     const display = images[imageIndex]
 
@@ -51,7 +51,7 @@ export const Card = ({ card, cardIndex, dimensions, isPreview }) => {
 
       const scale = selfScale * cardScale * specificScale
 
-      const layoutData = layout[index]
+      const layoutData = layout[slotIndex]
 
       let { cx, cy, r, fill } = layoutData
       cx *= ratio
@@ -69,14 +69,19 @@ export const Card = ({ card, cardIndex, dimensions, isPreview }) => {
 
       const crop = imageData.crop === 0
         ? cropByDefault
-        : imageData.crop      
+        : imageData.crop
 
       // We need to use `total` here, because all SVGs might be in
       // the same scope
       const defId = `crop-circle-${cardIndex*total + imageIndex}`
+      const indices = {
+        cardIndex,
+        slotIndex
+      }
 
       const pictureData = {
         ...imageData, // offsetX, offsetY, zIndex
+        indices,
         href,
         cx,
         cy,

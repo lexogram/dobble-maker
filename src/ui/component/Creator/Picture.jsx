@@ -18,7 +18,8 @@ export const Picture = ({
   offset=0,
   scale,
   crop,
-  isPreview
+  isPreview,
+  indices
 }) => {
   // Define dimensions of crop-circle
   cx += offset
@@ -72,6 +73,8 @@ export const Picture = ({
       />}
       { showTweaker && <Tweaker 
         {...circle}
+        {...indices}
+        rotation={rotation}
         onMouseLeave={toggleTweaker}
       />}
     </g>

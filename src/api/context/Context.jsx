@@ -116,6 +116,15 @@ export const Provider = ({ children }) => {
   }
 
 
+  const tweakImage = value => {
+    const action = {
+      type: "TWEAK_IMAGE",
+      payload: value
+    }
+    dispatch(action)
+  }
+
+
   const getURL = stringOrObject => {
     if (!stringOrObject) {
       return ""
@@ -188,7 +197,8 @@ export const Provider = ({ children }) => {
         RADIUS,
 
         swapImages,
-        clearImages
+        clearImages,
+        tweakImage
       }}
     >
       {children}
