@@ -14,9 +14,9 @@ export const Picture = ({
   defId,
   href,
   tweaks,
+  rotation,
   fill,
   offset=0,
-  scale,
   crop,
   isPreview,
   indices,
@@ -25,14 +25,14 @@ export const Picture = ({
   // Define dimensions of crop-circle
   cx += offset + (tweaks.offsetX * ratio)
   cy += offset + (tweaks.offsetY * ratio)
-  scale *= r
+
   const circle = { cx, cy, r }
   const origin = `${cx} ${cy}`
 
   // Define dimensions of square image
-  const x = cx - scale
-  const y = cy - scale
-  const width = scale* 2
+  const x = cx - r
+  const y = cy - r
+  const width = r * 2
   const square = { x, y, width }
 
 
@@ -60,7 +60,7 @@ export const Picture = ({
         href={href}
         {...square}
         {...cropPath}
-        transform={`rotate(${tweaks.rotation})`}
+        transform={`rotate(${rotation})`}
         transform-origin={origin}
       />
       { !isPreview &&

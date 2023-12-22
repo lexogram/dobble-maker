@@ -53,7 +53,7 @@ export const Card = ({ card, cardIndex, dimensions, isPreview }) => {
 
       const layoutData = layout[slotIndex]
 
-      let { cx, cy, r, fill } = layoutData
+      let { cx, cy, r } = layoutData
       cx *= ratio
       cx += cardX
       cy *= ratio

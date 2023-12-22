@@ -221,10 +221,12 @@ function setSunburst(state, useSunburst) {
 
 function tweakImage(state, payload) {
   switch (payload.type) {
-    case "rotation":
-      return setRotation(state, payload)
     case "offset":
       return setOffset(state, payload)
+    case "rotation":
+      return setRotation(state, payload)
+    case "scale":
+      return setScale(state, payload)
   }
 }
 
@@ -244,7 +246,17 @@ function setOffset( state, { value, cardIndex, slotIndex }) {
   const imageData = cardData.images
   const specificData = imageData[slotIndex]
   specificData.offsetX = value.offsetX
-  specificData.offsetY = value.offsetY  
+  specificData.offsetY = value.offsetY
+
+  return { ...state }
+}
+
+
+function setScale( state, { value, cardIndex, slotIndex }) {
+  const cardData = state.cardData[cardIndex]
+  const imageData = cardData.images
+  const specificData = imageData[slotIndex]
+  specificData.specificScale = value
 
   return { ...state }
 }

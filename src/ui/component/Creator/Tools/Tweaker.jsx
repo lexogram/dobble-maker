@@ -6,6 +6,8 @@
 import React, { useContext } from 'react'
 import { Context } from '../../../../api/context/Context'
 
+const MIN_R = 5
+const MAX_R = 50
 
 export const Tweaker = ({
   cx,
@@ -14,29 +16,24 @@ export const Tweaker = ({
   rotation,
   offsetX,
   offsetY,
+  specificScale,
   onMouseLeave,
   cardIndex,
   slotIndex
 }) => {
 
-  const { tweakImage } = useContext(Context)
+  const { tweakImage, useSunburst } = useContext(Context)
 
   function startTransform({
     target,
     clientX: clickX,
     clientY: clickY
   }) {
-    const action = target.classList[0] // move, rotate, scale
+    const action = target.classList[0] // move, rotate, resize
     const svg = target.closest("svg")
 
     const { left, top, width } = svg.getBoundingClientRect()
     const scale = width / 100
-
-    // Find the centre of rotation and zero angle
-    const centreX = left + cx * scale
-    const centreY = top  + cy * scale
-    const zeroAngle = getAngle(clickX - centreX, clickY - centreY)
-                    - rotation
 
     // Use closure to remember the initial values of offsetX & Y
     // The rendered instance where startTransform() was called
@@ -45,10 +42,22 @@ export const Tweaker = ({
     const startX = offsetX
     const startY = offsetY
 
+    // Find the centre of rotation and zero angle
+    const centreX = left + cx * scale
+    const centreY = top  + cy * scale
+    const deltaX = clickX - centreX
+    const deltaY = clickY - centreY
+    const zeroAngle = getAngle(deltaX, deltaY) - rotation
+
+    const startScale = specificScale
+    const assignedR = r / startScale
+    const minScale = MIN_R / assignedR
+    const maxScale = MAX_R / assignedR
+    const zeroDelta = getDelta(deltaX, deltaY)
+
     // Start treating the drag
     document.body.addEventListener("mousemove", transform, false)
     document.body.addEventListener("mouseup", stopTransform, false)
-
 
     // Update the image's transform as the mouse moves
     function transform({ clientX, clientY }) {
@@ -58,9 +67,10 @@ export const Tweaker = ({
       switch (action) {
         case "move":
           return move()
-        case "scale-rotate":
         case "rotate":
           return rotate()
+        case "resize":
+          return resize()
       }
 
       function move() {
@@ -80,6 +90,15 @@ export const Tweaker = ({
         const value = rotation
         tweakImage({ type, value, cardIndex, slotIndex })
       }
+
+      function resize() {
+        const newDelta = getDelta(centreX-clientX,centreY-clientY)
+        let scale = startScale * newDelta / zeroDelta
+        scale = Math.max(minScale, Math.min(scale, maxScale))
+        const type = "scale"
+        const value = scale
+        tweakImage({ type, value, cardIndex, slotIndex })
+      }
     }
 
 
@@ -97,16 +116,19 @@ export const Tweaker = ({
     return angle
   }
 
+  function getDelta(deltaX, deltaY) {
+    return Math.sqrt( deltaX * deltaX + deltaY * deltaY )
+  }
 
+
+  const R = r // * specificScale
   const X0 = cx
   const X1 = cx - 0.001
-  const Y0 = cy - r
-  const R1 = r * Math.cos(Math.PI / 6)
+  const Y0 = cy - R
+  const R1 = R * 0.866
   const Y1 = cy - R1
-  const R2 = r * Math.sqrt(0.5)
+  const R2 = R * 0.57735
   const Y2 = cy - R2
-  const R3 = r * 0.5
-  const Y3 = cy - R3
 
 
   return (
@@ -117,44 +139,38 @@ export const Tweaker = ({
       onMouseDown={startTransform}
     >
       <path
-        className="scale"
-        fill="#f00"
+        className="resize"
+        fill="#f80"
         d={`
           M ${X0} ${Y0}
-          A${r} ${r} 0 1 1 ${X1} ${Y0}
+          A${R} ${R} 0 1 1 ${X1} ${Y0}
           L ${X1} ${Y1}
           A${R1} ${R1} 0 1 0 ${X0} ${Y1}
         `}
+        cursor="zoom-in"
       />
-      <path
-        className="scale-rotate"
-        fill="#f80"
-        d={`
-          M ${X0} ${Y1}
-          A${R1} ${R1} 0 1 1 ${X1} ${Y1}
+      { !useSunburst &&
+        <path
+          className="rotate"
+          fill="#ff0"
+          d={`
+            M ${X0} ${Y1}
+            A${R1} ${R1} 0 1 1 ${X1} ${Y1}
 
-          L ${X1} ${Y2}
-          A${R2} ${R2} 0 1 0 ${X0} ${Y2}
-        `}
-      />
-      <path
-        className="rotate"
-        fill="#ff0"
-        d={`
-          M ${X0} ${Y2}
-          A${R2} ${R2} 0 1 1 ${X1} ${Y2}
-
-          L ${X1} ${Y3}
-          A${R3} ${R3} 0 1 0 ${X0} ${Y3}
-        `}
-      />
+            L ${X1} ${Y2}
+            A${R2} ${R2} 0 1 0 ${X0} ${Y2}
+          `}
+          cursor="pointer"
+        />
+      }
       <path
         className="move"
-        fill="#0f0"
-        d={`
-          M ${X1} ${Y3}
-          A${R3} ${R3} 0 1 0 ${X0} ${Y3}
+        fill="#8f0"
+          d={`
+          M ${X0} ${Y2}
+          A${R2} ${R2} 0 1 1 ${X1} ${Y2}
         `}
+        cursor="move"
       />
     </g>
   )
