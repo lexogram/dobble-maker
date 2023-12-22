@@ -28,13 +28,13 @@ import { useState, useEffect } from "react"
 
 
 export const useResize = () => {
-  const [ size, setSize ] = useState({ width: 0, height: 0 })
+  const [ size, setSize ] = useState([ 0, 0 ])
 
   const watchSize = () => {
     const resize = () => {
       const width = window.innerWidth
       const height = window.innerHeight
-      setSize({ width, height })
+      setSize([ width, height ])
     }
     window.addEventListener("resize", resize)
     resize()

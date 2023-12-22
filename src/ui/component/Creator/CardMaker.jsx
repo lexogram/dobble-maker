@@ -10,6 +10,8 @@ import React, {
   useState
 } from 'react'
 import { useResize } from '../../../api/hook/useResize'
+import { useScrollEnd } from '../../../api/hook/useScrollEnd'
+
 import { Context } from '../../../api/context/Context'
 import { SetTools } from './Tools/SetTools'
 import { CardTools } from './Tools/CardTools'
@@ -20,7 +22,7 @@ import { Card } from './Card'
 const OFFSET = 50
 
 export const CardMaker = () => {
-  const { cardData } = useContext(Context)
+  const { cardData, setCardNumber } = useContext(Context)
   // console.log("cardData:", cardData);
   // [ { "images": [ {
   //         "display": {
@@ -40,20 +42,38 @@ export const CardMaker = () => {
   //   }, ...
   // ]
 
-  const { width, height } = useResize()
+  const [ width, height ] = useResize()
   const [ style, setStyle ] = useState({})
 
   const cardsRef = useRef()
-  const makerRef = useRef()
+  const makerRef = useScrollEnd(snapToNearestCard)
 
-  const setMargin = () => {
+  const setPadding = () => {
     const { width } = cardsRef.current.getBoundingClientRect()
     const { height } = makerRef.current.getBoundingClientRect()
-    const margin = (Math.max(1, height / width) - 1) * width / 2 + "px 0"
-    setStyle({ margin })
+    let padding = (Math.max(1, height / width) - 1) * width / 2
+
+    padding += "px 0"
+    setStyle({ padding })
   }
 
-  useEffect(setMargin, [width, height])
+  useEffect(setPadding, [width, height])
+  useEffect(snapToNearestCard, [])
+
+
+  function snapToNearestCard() {
+    const target = makerRef.current
+    const diameter = target.scrollWidth
+
+    const { scrollTop } = target
+
+    const cardNumber = Math.round(scrollTop / diameter)
+    const top = cardNumber * diameter
+
+    setCardNumber(cardNumber)
+
+    target.scrollTo({ top, behavior: "smooth" })
+  }
 
 
   const cards = cardData.map(( card, index ) => {

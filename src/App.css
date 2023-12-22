@@ -261,6 +261,10 @@ article h1 {
   overflow: auto
 }
 
+.cards svg {
+  vertical-align: top; /* to remove gaps between cards */
+}
+
 div[id$="-tools"] {
   position: fixed;
   top: var(--controller-height);
@@ -302,6 +306,7 @@ div[id$="-tools"] button {
 #card-tools {
   right: 0;
   text-align: right;
+  margin-right: var(--scroll-size);
 }
 
 #card-scale {

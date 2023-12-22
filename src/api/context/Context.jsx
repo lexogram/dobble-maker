@@ -28,16 +28,17 @@ export const Provider = ({ children }) => {
     total,
     images,
     cardData,
-    layoutNames,
     layouts,
+    layoutNames,
+    layoutName,
+    cardNumber,
 
     customLayout,
     cropByDefault,
     useSunburst,
 
     // <<< Should become obsolete
-    sets,
-    layout,
+    // sets,
     imageSet,
     imageSets
     // >>>
@@ -125,6 +126,24 @@ export const Provider = ({ children }) => {
   }
 
 
+  const setCardNumber = value => {
+    const action = {
+      type: "SET_CARD_NUMBER",
+      payload: value
+    }
+    dispatch(action)
+  }
+
+
+  const setLayoutName = value => {
+    const action = {
+      type: "SET_LAYOUT_NAME",
+      payload: value
+    }
+    dispatch(action)
+  }
+
+
   const getURL = stringOrObject => {
     if (!stringOrObject) {
       return ""
@@ -164,26 +183,28 @@ export const Provider = ({ children }) => {
         total,
         images,
         cardData,
-        layoutNames,
         layouts,
-    
-        customLayout,
-        cropByDefault,
-        useSunburst,
+        layoutNames,
+        layoutName,
+        setLayoutName,
 
+        customLayout,
         setCustomLayout,
+
+        cropByDefault,
         setCropByDefault,
-        addImages,
-        setImagesPerCard,
+
+        useSunburst,
         setSunburst,
 
-        // <<< Should become obsolete
-        sets,
-        layout,
+        cardNumber,
+        setCardNumber,
+
+        addImages,
+        setImagesPerCard,
+
         imageSet,
         imageSets,
-        // >>>
-
         setImageSet,
 
         getURL,

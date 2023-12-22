@@ -3,28 +3,27 @@
  */
 
 
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 
+import { Context } from '../../../../api/context/Context'
 import { Selector } from '../../Widget/Selector'
 import { Slider } from '../../Widget/Slider'
-import allLayouts from '../../../../api/data/layout.json'
+import { CardNumber } from './CardNumber'
+
 
 
 export const CardTools = (props) => {
-  const imageCount = 57
+  const {
+    layoutNames,
+    layoutName,
+    setLayoutName
+  } = useContext(Context)
 
-  const selection  = (() => {
-    const layouts = allLayouts[imageCount]
-    const layoutNames = Object.keys(layouts)
-    return layoutNames
-  })()
-
-  const [ selected, setSelected ] = useState(selection[1])
   const [ scale, setScale ] = useState(1)
   
 
-  const setLayout = ({target}) => {
-    setSelected(target.value)
+  const selectLayout = ({target}) => {
+    setLayoutName(target.value)
   }
   
   const updateScale = value => {
@@ -50,11 +49,12 @@ export const CardTools = (props) => {
           ↺
         </button>
       </div>
-      <Selector
-        selected={selected}
-        selection={selection}
-        onChange={setLayout}
-      />
+      { layoutNames.length > 1 && <Selector
+        selected={layoutName}
+        selection={layoutNames}
+        onChange={selectLayout}
+      />}
+      <CardNumber />
     </div>
   )
 }

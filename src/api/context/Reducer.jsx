@@ -39,8 +39,18 @@ const initialState = (() => (
       customLayout: true,
       cropByDefault: true,
       useSunburst: false,
+      cardNumber: 0,
       imageSets
   }, "57_Animals"
+
+  // Will be added:
+  //   imagesPerCard,
+  //   total,
+  //   cardData,
+  //   layouts,
+  //   layoutNames,
+  //   layoutName,
+  //   imageSet
 
   // // Show an blank set of 57 cards
   // setImagesPerCard({
@@ -48,6 +58,7 @@ const initialState = (() => (
   //   customLayout: true,
   //   cropByDefault: true,
   //   useSunburst: false,
+  //   cardNumber: 0,
   //   imageSets
   // }, 8
 )))()
@@ -84,6 +95,12 @@ const reducer = (state, action) => {
 
     case "TWEAK_IMAGE":
       return tweakImage(state, payload)
+
+    case "SET_CARD_NUMBER":
+      return setCardNumber(state, payload)
+
+    case "SET_LAYOUT_NAME":
+      return setLayout(state, payload)
 
     default:
       return {...state}
@@ -259,6 +276,21 @@ function setScale( state, { value, cardIndex, slotIndex }) {
   specificData.specificScale = value
 
   return { ...state }
+}
+
+
+function setCardNumber(state, cardNumber) {
+  const { cardData } = state
+  const { layoutName } = cardData[cardNumber]
+  return { ...state, cardNumber, layoutName }
+}
+
+
+function setLayout(state, layoutName ) {
+  const { cardNumber, cardData } = state
+  const dataForThisCard = cardData[cardNumber]
+  dataForThisCard.layoutName = layoutName
+  return { ...state, layoutName }
 }
 
 
