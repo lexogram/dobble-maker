@@ -64,6 +64,10 @@
     vertical-align: top; /* to remove gaps between cards */
   }
 
+  .crop-circle {
+    opacity: 0;
+  }
+
   #preview {
     position: fixed;
     bottom: 1em;

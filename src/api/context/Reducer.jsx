@@ -37,7 +37,7 @@ const initialState = (() => (
   // Preload animals while developing
   setImageSet({
       customLayout: true,
-      cropByDefault: true,
+      cropByDefault: false,
       useSunburst: false,
       cardNumber: 0,
       imageSets

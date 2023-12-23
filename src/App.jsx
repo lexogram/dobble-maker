@@ -14,7 +14,7 @@ import { Base } from './ui/component/Base';
 import { Home } from './ui/component/Home';
 import { Create } from './ui/component/Creator';
 import { Preview } from './ui/component/Preview';
-import { Account } from './ui/Account';
+import { Account } from './ui/component/Account';
 
 import {
   HashRouter as Router,

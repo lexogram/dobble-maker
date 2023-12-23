@@ -68,7 +68,6 @@ export const Picture = ({
         className="crop-circle"
         {...circle}
         fill={fill}
-        opacity={.0}
         onMouseEnter={toggleTweaker}
       />}
       { showTweaker && <Tweaker 

@@ -49,7 +49,7 @@ export const SizeChooser = () => {
     )
     })()
 
-  const imagesPerCardArray = [3, 4, 6, 8] //, 12]
+  const imagesPerCardArray = [3, 4, 5, 6, 8] //, 12]
   const radioButtons = imagesPerCardArray.map( perCard => (
     <label
       key={perCard}
