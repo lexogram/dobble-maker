@@ -3,8 +3,7 @@
  */
 
 
-import React, { useState, useContext } from 'react'
-import { Context } from '../../../api/context/Context'
+import React from 'react'
 
 
 export const PreviewButtons = () => {

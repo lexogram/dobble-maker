@@ -97,8 +97,8 @@ export const ImageStore = () => {
     // place) on all the preview cards. Show it with a thin border
     // not a background
     const className = index
-      ? "image"
-      : "image on-all-preview-cards"
+      ? "square"
+      : "square on-all-preview-cards"
 
     const key = size
       ? `${name}_${size}_${lastModified}`

@@ -1,0 +1,106 @@
+#images-in-cards {
+  height: var(--image-store-height);
+  overflow: auto;
+
+  .one-card {
+    margin: var(--one-card-margin) 0;
+
+    &.orange {
+      background-color: #840c;
+    }
+
+    &.yellow {
+      background-color: #880c;
+    }
+
+    &.green {
+      background-color: #080c;
+    }
+
+    &.teal {
+      background-color: #088c;
+    }
+
+    &.blue {
+      background-color: #059c;
+    }
+
+    &.royal {
+      background-color: #007c;
+    }
+
+    &.purple {
+      background-color: #407c;
+    }
+
+    &.pink {
+      background-color: #704c;
+    }
+
+    &.grey {
+      background-color: #444c;
+    }
+
+    &:first-child,
+    &:last-child {
+      margin: 0
+    }
+
+    .square {
+      display: inline-block;
+      position: relative;
+      width: var(--image-size);
+      height: var(--image-size);
+      overflow: hidden;
+      vertical-align: top; /* to leave no gaps between rows */
+      cursor: pointer;
+
+
+      .gap {
+        border: 100vmax solid var( --gap-border-color);
+      }
+
+      /* Show repeated image as unchangeable */
+      &.on-all-preview-cards {
+        cursor: default;
+
+        .gap {
+          border: 1px var(--image-bg-color) solid;
+          box-sizing: border-box;
+        }
+      }
+
+      .gap,
+      .circle {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 100%;
+        z-index: 1;
+        /* Explicitly set content-box, in case another rule set
+          box-sizing to something different.
+        */
+        box-sizing: content-box;
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        opacity: 0.75;
+        object-fit: contain;
+
+      }
+
+      &.hilite img {
+        opacity: 1;
+      }
+    }
+  }
+
+  .extra img {
+    opacity: 0.25
+  }
+}

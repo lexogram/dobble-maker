@@ -4,16 +4,17 @@
 
 
 import React from 'react'
-import './App.css'
+import './SCSS/App.scss'
 
 import { useScrollSize } from './api/hook/useScrollSize'
 
 import { Provider } from './api/context/Context';
 
 import { Base } from './ui/component/Base';
-import { Home } from './ui/component/Home/Home';
-import { Create } from './ui/component/Creator/Create';
+import { Home } from './ui/component/Home';
+import { Create } from './ui/component/Creator';
 import { Preview } from './ui/component/Preview';
+import { Account } from './ui/Account';
 
 import {
   HashRouter as Router,
@@ -41,6 +42,7 @@ const App = () => {
             <Route path="/create" element={<Create />} />
             <Route path="/preview" element={<Preview />} />
             <Route path="/home" element={<Home />} />
+            <Route path="/account" element={<Account />} />
 
           </Route>
         </Routes>

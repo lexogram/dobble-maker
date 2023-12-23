@@ -89,7 +89,8 @@ export const StoreImage = ({ src, name, className, index }) => {
 
 
   return (
-    <div className="square"
+    <div 
+     className={className}
       draggable
       onDragStart={startDrag}
       onDragEnter={dragEnter}
@@ -97,13 +98,13 @@ export const StoreImage = ({ src, name, className, index }) => {
       onDragOver={allowDrop}
       onDrop={drop}
     > 
-      <div className="gap"
+      <div
+        className="gap"
       />
       <div className="circle"
       />
 
       {src && (<img
-        className={className}
         src={src}
         alt={name}
         title={name}
