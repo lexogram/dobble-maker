@@ -41,7 +41,7 @@ export const CreateButtons = () => {
     <>
       <div className="image-count">
         <h1>{images.length} images</h1>
-        <p>Use 7, 13, 31, 57, or 133 images</p>
+        <p>Use 7, 13, 21, 31, 57, or 73 images</p>
       </div>
 
       <div className="file-picker">
