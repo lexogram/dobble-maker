@@ -8,13 +8,13 @@ import { Context } from '../../../../api/context/Context'
 
 
 export const CardNumber = () => {
-  const { cardNumber } = useContext(Context)
+  const { cardNumber, total } = useContext(Context)
 
   return (
     <h1
       id="card-number"
     >
-      Card {cardNumber + 1}
+      Card {cardNumber + 1}/{total}
     </h1>
   )
 }
