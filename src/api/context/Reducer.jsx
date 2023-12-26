@@ -33,15 +33,17 @@ const getTotalFrom = imagesPerCard => (
 
 
 
-const initialState = (() => (
+const initialState = (() => {
   // Preload animals while developing
-  setImageSet({
+  const state = setImageSet({
       customLayout: true,
       cropByDefault: false,
       useSunburst: false,
       cardNumber: 0,
       imageSets
-  }, "57_Animals"
+  }, "111_Animals")
+
+  return setImagesPerCard( state, 6 ) 
 
   // Will be added:
   //   imagesPerCard,
@@ -61,7 +63,7 @@ const initialState = (() => (
   //   cardNumber: 0,
   //   imageSets
   // }, 8
-)))()
+})()
 
 
 
@@ -162,7 +164,7 @@ function addImages( state, imageFiles ) {
 
 function setImagesPerCard( state, imagesPerCard ) {
   const total = getTotalFrom(imagesPerCard)
-  const layouts = allLayouts[total]
+  const layouts = allLayouts[imagesPerCard]
   const layoutNames = Object.keys(layouts)
   const cardData = createCards(
     total,
