@@ -2,7 +2,8 @@
  * Picture.jsx
  */
 
-import React, { useState } from "react";
+import React, { useContext } from "react";
+import { Context } from "../../../api/context/Context";
 import { Tweaker } from "./Tools/Tweaker";
 
 
@@ -22,6 +23,8 @@ export const Picture = ({
   indices,
   ratio
 }) => {
+  const { showTweaker, tweakIndices } = useContext(Context)
+
   // Define dimensions of crop-circle
   cx += offset + (tweaks.offsetX * ratio)
   cy += offset + (tweaks.offsetY * ratio)
@@ -35,18 +38,32 @@ export const Picture = ({
   const width = r * 2
   const square = { x, y, width }
 
+  // Tweaker
+  const toggleTweaker = ({ type, target }) => {
+    const tweakIndices = (type === "mouseenter")
+     ? indices
+     : 0
 
-  const [ showTweaker, setShowTweaker ] = useState(false)
-
-  const toggleTweaker = ({ type }) => {
-    setShowTweaker(type === "mouseenter")
+    showTweaker(tweakIndices)
   }
+
+  const displayTweaker = tweakIndices
+    && tweakIndices.cardIndex === indices.cardIndex
+    && tweakIndices.slotIndex === indices.slotIndex
 
   // Create a clipPath prop that can be ignored if unneeded
   const cropPath = crop ? { clipPath: `url(#${defId})` } : {}
 
+  // SNEAKY: use className to pass indices to the Tweaker
+  // component if a mouseDown on the Tweaker is released over
+  // this Picture
+  const { cardIndex, slotIndex} = indices
+  const className = `picture card-${cardIndex} slot-${slotIndex}`
+
   return (
-    <g>
+    <g
+      className={className}
+    >
       <defs>
         <clipPath
           id={defId}
@@ -70,7 +87,7 @@ export const Picture = ({
         fill={fill}
         onMouseEnter={toggleTweaker}
       />}
-      { showTweaker && <Tweaker 
+      { displayTweaker && <Tweaker
         {...circle}
         {...indices}
         {...tweaks}

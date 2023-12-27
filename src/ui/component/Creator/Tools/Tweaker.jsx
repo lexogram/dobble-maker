@@ -33,7 +33,13 @@ export const Tweaker = ({
   cardIndex,
   slotIndex
 }) => {
-  const { tweakImage, useSunburst } = useContext(Context)
+  const {
+    useSunburst,
+    tweakImage,
+    showTweaker,
+    activeImage,
+    setActiveImage
+  } = useContext(Context)
 
   const [ cropping, setCropping ] = useState(false)
   // Use `let` to set the styleFor state, because a mouseleave
@@ -50,9 +56,19 @@ export const Tweaker = ({
     rotate: { fill },
     resize: { fill },
     crop:   { fill },
-    rect:   NO_STROKE,
-    circle: NO_STROKE
+    rect:         NO_STROKE,
+    circle:       NO_STROKE,
+    moveArrows:   NO_STROKE,
+    rotateArrows: NO_STROKE,
+    resizeArrows: NO_STROKE
   })
+
+
+  const filterMouseLeave = event => {
+    if (!activeImage) {
+      onMouseLeave(event)
+    }
+  }
 
 
   function startTransform({
@@ -60,6 +76,8 @@ export const Tweaker = ({
     clientX: clickX,
     clientY: clickY
   }) {
+    setActiveImage(true)
+
     const action = target.classList[0] // move, rotate, resize
     const svg = target.closest("svg")
 
@@ -133,9 +151,46 @@ export const Tweaker = ({
     }
 
 
-    function stopTransform() {
+    function stopTransform(event) {
       document.body.removeEventListener("mousemove", transform, false)
       document.body.removeEventListener("mouseup",stopTransform,false)
+
+      setActiveImage(false)
+
+      const eventTarget = event.target
+
+      if (eventTarget.closest(".tweaker")) {
+        const ring = eventTarget.classList[0];
+        // crop, resize, rotate, move
+
+        if (ring !== action) {
+          // The mouse is over a different ring now
+          toggleFill({ target, type: "mouseleave" })
+          toggleFill({ target: eventTarget, type: "mouseenter" })
+        }
+
+      } else {
+        // The mouse was released outside the tweaker. Hide it
+        // for this picture...
+        let indices = 0
+
+        // ... or show it over the picture now under the mouse
+        const isOverPicture =  eventTarget.closest(".picture")
+
+        if (isOverPicture) {
+          // SNEAKY: short-circuit a mouseenter event from the
+          // picture under the mouse
+          const classes = Array.from(isOverPicture.classList).join(" ");
+          // "picture card-0 slot-2"
+          const match = /card-(\d+)\s+slot-(\d+)/.exec(classes)
+          indices = {
+            cardIndex: parseInt(match[1], 10),
+            slotIndex:  parseInt(match[2], 10)
+          }
+        }
+
+        showTweaker(indices)
+      }
     }
   }
 
@@ -239,6 +294,10 @@ export const Tweaker = ({
 
 
   const toggleFill = ({ target, type }) => {
+    if (activeImage) {
+      return
+    }
+
     const isMouseEnter = type === "mouseenter"
     const className = target.classList[0]
 
@@ -273,7 +332,7 @@ export const Tweaker = ({
     <g
       className="tweaker"
       opacity="0.5"
-      onMouseLeave={onMouseLeave}
+      onMouseLeave={filterMouseLeave}
       onMouseDown={startTransform}
     >
       <defs>

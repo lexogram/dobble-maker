@@ -37,11 +37,11 @@ export const Provider = ({ children }) => {
     cropByDefault,
     useSunburst,
 
-    // <<< Should become obsolete
-    // sets,
     imageSet,
-    imageSets
-    // >>>
+    imageSets,
+
+    tweakIndices,
+    activeImage
   } = state
 
 
@@ -126,6 +126,15 @@ export const Provider = ({ children }) => {
   }
 
 
+  const setActiveImage = value => {
+    const action = {
+      type: "SET_ACTIVE_IMAGE",
+      payload: value
+    }
+    dispatch(action)
+  }
+
+
   const setCardNumber = value => {
     const action = {
       type: "SET_CARD_NUMBER",
@@ -138,6 +147,15 @@ export const Provider = ({ children }) => {
   const setLayoutName = value => {
     const action = {
       type: "SET_LAYOUT_NAME",
+      payload: value
+    }
+    dispatch(action)
+  }
+
+
+  const showTweaker = value => {
+    const action = {
+      type: "SHOW_TWEAKER",
       payload: value
     }
     dispatch(action)
@@ -219,7 +237,12 @@ export const Provider = ({ children }) => {
 
         swapImages,
         clearImages,
-        tweakImage
+
+        tweakIndices,
+        showTweaker,
+        tweakImage,
+        activeImage,
+        setActiveImage
       }}
     >
       {children}

@@ -18,6 +18,7 @@ export const Card = ({ card, cardIndex, dimensions, isPreview }) => {
     cropByDefault,
     useSunburst,
     getSunburstAngle,
+    tweakIndices
 } = useContext(Context)
   const { cx: cardX, cy: cardY, r: cardR } = dimensions
   const ratio = cardR / 50 // 1 for Creator | 9.8 for Preview
@@ -27,6 +28,7 @@ export const Card = ({ card, cardIndex, dimensions, isPreview }) => {
     ? layouts[layoutName]
     : layouts[Object.keys(layouts)[0]]
 
+  let tweakIndex
   const pictures = cardImages.map(( imageData, slotIndex ) => {
     const { imageIndex, specificScale } = imageData
     const display = images[imageIndex]
@@ -79,6 +81,13 @@ export const Card = ({ card, cardIndex, dimensions, isPreview }) => {
         slotIndex
       }
 
+      if ( tweakIndices
+        && tweakIndices.cardIndex === cardIndex
+        && tweakIndices.slotIndex === slotIndex
+        ) {
+        tweakIndex = slotIndex
+      }
+
       const pictureData = {
         ...imageData, // offsetX, offsetY, zIndex
         indices,
@@ -103,6 +112,12 @@ export const Card = ({ card, cardIndex, dimensions, isPreview }) => {
       )
     }
   })
+
+
+
+  if (tweakIndex !== undefined) {
+    pictures.push(pictures.splice(tweakIndex, 1)[0])
+  }
 
   if (isPreview) {
     return (

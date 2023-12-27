@@ -40,10 +40,12 @@ const initialState = (() => {
       cropByDefault: false,
       useSunburst: false,
       cardNumber: 0,
-      imageSets
+      imageSets,
+      tweakIndices: 0,
+      activeImage: false
   }, "111_Animals")
 
-  return setImagesPerCard( state, 6 ) 
+  return setImagesPerCard( state, 6 )
 
   // Will be added:
   //   imagesPerCard,
@@ -103,6 +105,12 @@ const reducer = (state, action) => {
 
     case "SET_LAYOUT_NAME":
       return setLayout(state, payload)
+
+    case "SHOW_TWEAKER":
+      return showTweaker(state, payload)
+
+    case "SET_ACTIVE_IMAGE":
+      return setActiveImage(state, payload)
 
     default:
       return {...state}
@@ -250,6 +258,11 @@ function tweakImage(state, payload) {
 }
 
 
+const setActiveImage = (state, activeImage) => {
+  return { ...state, activeImage }
+}
+
+
 function setRotation( state, { value, cardIndex, slotIndex }) {
   const cardData = state.cardData[cardIndex]
   const imageData = cardData.images
@@ -295,6 +308,14 @@ function setLayout(state, layoutName ) {
   return { ...state, layoutName }
 }
 
+
+const showTweaker = ( state, tweakIndices ) => {
+  if (state.activeImage) {
+    return state
+  }
+
+  return { ...state, tweakIndices }
+}
 
 
 export { initialState, reducer }
