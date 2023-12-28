@@ -224,7 +224,7 @@ function setImagesPerCard( state, imagesPerCard ) {
 
 function setImageSet( state, imageSet ) {
   const images = getImageSet(imageSet) // [ <url>, ... ]
-    .map( source => ({ source, selfScale: 1 }))
+    .map( source => createDisplay(source))
   const { sets } = getSets(images.length)
   const imagesPerCard = sets[0].length
 
@@ -284,6 +284,8 @@ function tweakImage(state, payload) {
       return setRotation(state, payload)
     case "scale":
       return setScale(state, payload)
+    case "crop":
+      return setCrop(state, payload)
   }
 }
 
@@ -319,6 +321,33 @@ function setScale( state, { value, cardIndex, slotIndex }) {
   const imageData = cardData.images
   const specificData = imageData[slotIndex]
   specificData.specificScale = value
+
+  return { ...state }
+}
+
+
+function setCrop (state, { cardIndex, slotIndex, index }) {
+  const { cardData, images } = state
+  let imageData
+
+  if (index === undefined) {
+    // The call came from the Tweaker
+    const imagesData = cardData[cardIndex].images
+    const { imageIndex } = imagesData[slotIndex]
+    imageData = images[imageIndex]
+
+  } else {
+    // The call came from a StoreImage
+    imageData = images[index]
+  }
+
+  let crop = imageData.crop
+  if (crop === 0) {
+    crop = !state.cropByDefault
+  } else {
+    crop = !crop
+  }
+  imageData.crop = crop
 
   return { ...state }
 }

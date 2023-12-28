@@ -92,6 +92,7 @@ export const Picture = ({
         {...indices}
         {...tweaks}
         rotation={rotation}
+        crop={crop}
         onMouseLeave={toggleTweaker}
       />}
     </g>

@@ -21,14 +21,16 @@ const NO_STROKE = { stroke: "none", fill: "none" }
 const WHITE_ARROWS = { fill: "#fff"}
 
 
+
 export const Tweaker = ({
   cx,
   cy,
   r,
-  rotation,
   offsetX,
   offsetY,
+  rotation,
   specificScale,
+  crop,
   onMouseLeave,
   cardIndex,
   slotIndex
@@ -41,7 +43,6 @@ export const Tweaker = ({
     setActiveImage
   } = useContext(Context)
 
-  const [ cropping, setCropping ] = useState(false)
   // Use `let` to set the styleFor state, because a mouseleave
   // event from one element and a mouseenter event from another
   // element may both occur before React updates the state. It
@@ -172,7 +173,7 @@ export const Tweaker = ({
       } else {
         // The mouse was released outside the tweaker. Hide it
         // for this picture...
-        let indices = 0
+        let dropIndices = 0
 
         // ... or show it over the picture now under the mouse
         const isOverPicture =  eventTarget.closest(".picture")
@@ -183,13 +184,13 @@ export const Tweaker = ({
           const classes = Array.from(isOverPicture.classList).join(" ");
           // "picture card-0 slot-2"
           const match = /card-(\d+)\s+slot-(\d+)/.exec(classes)
-          indices = {
+          dropIndices = {
             cardIndex: parseInt(match[1], 10),
             slotIndex:  parseInt(match[2], 10)
           }
         }
 
-        showTweaker(indices)
+        showTweaker(dropIndices)
       }
     }
   }
@@ -202,6 +203,7 @@ export const Tweaker = ({
     }
     return angle
   }
+
 
   function getDelta(deltaX, deltaY) {
     return Math.sqrt( deltaX * deltaX + deltaY * deltaY )
@@ -272,9 +274,9 @@ export const Tweaker = ({
   const percent = 50 / r + "%"
 
 
-  const getCropStyles = (isMouseEnter, cropping) => {
+  const getCropStyles = (isMouseEnter, crop) => {
     if (isMouseEnter) {
-      return cropping
+      return crop
         ? { crop:   { fill: HOVER },
             rect:   NO_STROKE,
             circle: CROP_CIRCLE
@@ -293,8 +295,12 @@ export const Tweaker = ({
   }
 
 
-  const toggleFill = ({ target, type }) => {
-    if (activeImage) {
+  const toggleFill = ({ target, type, override }) => {
+    // override will be undefined UNLESS the call came from
+    // toggleCrop, in which case we want to change the fill of
+    // the .crop element while it is active, and we need to show
+    // the opposite value of crop.
+    if (activeImage && !override) {
       return
     }
 
@@ -302,7 +308,13 @@ export const Tweaker = ({
     const className = target.classList[0]
 
     if (className === "crop") {
-      const cropStyles = getCropStyles(isMouseEnter, cropping)
+      // XOR crop and override. If override is undefined (because
+      // the call came from a mouseenter or mouseleave event, then
+      // the value of crop will be used. If the call came from
+      // toggle crop, then override will be true, and crop will
+      // be switched to its opposite value.
+      const cropStyles = getCropStyles(isMouseEnter, crop^override)
+
       // Update stylesFor _locally_ because a mouseenter event may
       // be triggered on another SVG element before React has had
       // time to update the state internally.
@@ -321,11 +333,14 @@ export const Tweaker = ({
   }
 
 
-  const toggleCrop = () => {
-    setCropping(!cropping)
-    const cropStyles = getCropStyles(true, !cropping)
-    setStyleFor({ ...styleFor, ...cropStyles })
+  const toggleCrop = ({ target }) => {
+    const type = "crop"
+    tweakImage({type, cardIndex, slotIndex })
+
+    // Use override to set crop to its opposite value
+    toggleFill({ target, type: "mouseenter", override: true })
   }
+
 
 
   return (

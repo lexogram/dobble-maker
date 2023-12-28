@@ -30,7 +30,8 @@ export const ImageStore = () => {
     images,
     imagesPerCard,
     total,
-    getURL
+    getURL,
+    cropByDefault
   } = useContext(Context)
 
   /**
@@ -47,14 +48,12 @@ export const ImageStore = () => {
    * This will be one long array, not yet divided up into cards.
    */
   const imageMapper = (_, index) => {
-    const imageData = images[index]
-    // console.log("ImageStore > imageMapper, imageData:", index, imageData);
-    // { source, selfScale }
+    const display = images[index]
 
-    if (!imageData) {
+    if (!display) {
       // If there is no image (neither File object nor string URL)
       // create an empty div.
-      // console.log("No imageData:", index);
+      // console.log("No display:", index);
 
       return (
         <StoreImage
@@ -63,7 +62,10 @@ export const ImageStore = () => {
       )
     }
 
-    const { source, selfScale } = imageData
+    const { source, crop: imageCrop, selfScale } = display
+    const crop = (imageCrop === 0)
+      ? cropByDefault
+      : imageCrop
 
     if (!source) {
       // If there is no image (neither File object nor string URL)
@@ -96,9 +98,15 @@ export const ImageStore = () => {
     // The first image (index === 0) will appear (in a different
     // place) on all the preview cards. Show it with a thin border
     // not a background
-    const className = index
+    const className = (index
       ? "square"
       : "square on-all-preview-cards"
+    )
+
+    const gapClass = (crop
+      ? "gap crop"
+      : "gap"
+    )
 
     const key = size
       ? `${name}_${size}_${lastModified}`
@@ -109,9 +117,11 @@ export const ImageStore = () => {
       <StoreImage
         key={key}
         className={className}
+        gapClass={gapClass}
         src={src}
         name={trimmedName}
         index={index}
+        crop={crop}
       />
     )
   }

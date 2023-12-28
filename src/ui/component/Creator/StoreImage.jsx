@@ -12,8 +12,8 @@ const DEV_HACK = location.host.startsWith("127.0.0.1:")
   : ""
 
 
-export const StoreImage = ({ src, name, className, index }) => {
-  const { swapImages } = useContext(Context)
+export const StoreImage = ({ src, name, className, gapClass, index }) => {
+  const { swapImages, tweakImage } = useContext(Context)
 
   const pinned = IS_FIRST_CLASS.test(className)
 
@@ -94,6 +94,13 @@ export const StoreImage = ({ src, name, className, index }) => {
     }
   }
 
+
+  const toggleCrop = () => {
+    const type = "crop"
+    tweakImage({ type, index })
+  }
+
+
   return (
     <div
       className={className}
@@ -103,9 +110,10 @@ export const StoreImage = ({ src, name, className, index }) => {
       onDragLeave={dragLeave}
       onDragOver={allowDrop}
       onDrop={drop}
+      onClick={toggleCrop}
     >
       <div
-        className="gap"
+        className={gapClass}
       />
       <div className="circle"
       />

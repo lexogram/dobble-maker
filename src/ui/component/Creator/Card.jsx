@@ -35,7 +35,7 @@ export const Card = ({ card, cardIndex, dimensions, isPreview }) => {
 
     if (display) {
       // { source: <string | File object>, selfcale: <number> }
-      const { source, selfScale } = display
+      const { source, selfScale, crop: imageCrop } = display
 
       // console.log("source:", source)
       // <string url>
@@ -69,9 +69,9 @@ export const Card = ({ card, cardIndex, dimensions, isPreview }) => {
         ? getSunburstAngle(layoutData)
         : imageData.rotation
 
-      const crop = imageData.crop === 0
+      const crop = imageCrop === 0
         ? cropByDefault
-        : imageData.crop
+        : imageCrop
 
       // We need to use `total` here, because all SVGs might be in
       // the same scope
