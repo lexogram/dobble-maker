@@ -47,14 +47,44 @@ const initialState = (() => {
 
   return setImagesPerCard( state, 6 )
 
-  // Will be added:
-  //   imagesPerCard,
-  //   total,
-  //   cardData,
-  //   layouts,
-  //   layoutNames,
-  //   layoutName,
-  //   imageSet
+  // // Pack properties //
+  //  * Creator id
+  //  * Name
+  //    layouts { <Name>: [ { cx, cy, r }, ... ], ... }
+  //    customLayout
+  //    cropByDefault
+  //    useSunburst
+
+  // // Image data
+  //    images: { source, selfScale, crop }
+
+  // // Card data //
+  //    cardData [ [ { imageIndex,
+  //                   specificScale,
+  //                   rotation,
+  //                   offsetX,
+  //                   offsetY,
+  //                   zIndex,
+  //                   applySunburst,
+  //                   zIndex,
+  //                 }, ... <more placements on this card>
+  //               ], ... <more cards>
+  //             ]
+
+  // // Run-time data
+  //    total
+  //    imagesPerCard
+  //    layoutNames
+  //    layoutName,
+  //    imageSet
+  //    cardNumber
+  //
+  //    imageSet
+  //    imageSets
+  //
+  //    tweakIndices
+  //    activeImage
+
 
   // // Show an blank set of 57 cards
   // setImagesPerCard({

@@ -105,7 +105,8 @@ const getRandomItem = (array, random) => {
 export const createDisplay = (source) => {
   return {
     source,
-    selfScale: 1
+    crop: 0,
+    selfScale: 1 // not used yet
   }
 }
 

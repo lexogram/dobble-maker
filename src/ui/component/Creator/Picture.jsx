@@ -91,6 +91,7 @@ export const Picture = ({
         {...circle}
         {...indices}
         {...tweaks}
+        rotation={rotation}
         onMouseLeave={toggleTweaker}
       />}
     </g>

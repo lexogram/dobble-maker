@@ -52,23 +52,28 @@
     position: relative;
     width: var(--image-size);
     height: var(--image-size);
-    overflow: hidden;
+    overflow: hidden; /* to hide excess border of .gap */
     vertical-align: top; /* to leave no gaps between rows */
     cursor: pointer;
 
     .gap {
-      border: 100vmax solid var( --gap-border-color);
+      border: 100vmax solid var(--uncropped-border-color);
+      box-sizing: content-box;
+
+      &.crop {
+        border-color: var(--crop-border-color);
+      }
+
+      &.dragging {
+        border: none;
+      }
     }
 
     /* Show repeated image as unchangeable */
     &.on-all-preview-cards {
       cursor: default;
-
-      .gap {
-        border: 1px var(--image-bg-color) solid;
-        box-sizing: border-box;
-      }
     }
+
 
     .gap,
     .circle {
@@ -98,6 +103,10 @@
     object-fit: contain;
   }
 
+  img.dragging {
+    opacity: 0.125
+  }
+
   .extra {
     div {
       display: inline-block
@@ -105,5 +114,14 @@
     img {
       opacity: 0.25
     }
+  }
+
+  .pin {
+    position: absolute;
+    top: 2px;
+    left: calc(50% - 8px);
+    width: 20px;
+    height: 30px;
+    opacity: 1;
   }
 }

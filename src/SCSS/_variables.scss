@@ -20,5 +20,7 @@
   --one-card-margin: 1em;
   --size-chooser-height: 8em;
   --image-store-height: calc(100% - var(--size-chooser-height));
-  --gap-border-color: #0006;
+
+  --crop-border-color: #0009;
+  --uncropped-border-color: #fff1;
 }

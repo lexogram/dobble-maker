@@ -7,33 +7,49 @@ import React, { useContext } from 'react'
 import { Context } from '../../../api/context/Context'
 
 const IS_FIRST_CLASS = /\bon-all-preview-cards\b/
+const DEV_HACK = location.host.startsWith("127.0.0.1:")
+  ? "/dobble-maker/"
+  : ""
 
 
 export const StoreImage = ({ src, name, className, index }) => {
   const { swapImages } = useContext(Context)
+
+  const pinned = IS_FIRST_CLASS.test(className)
 
   const getDragIndex = event => {
     const dragIndex = event.dataTransfer.getData("text/plain")
     return parseInt(dragIndex, 10)
   }
 
-  const ignoreSelf = event => {    
+  const ignoreSelf = event => {
     return index === getDragIndex(event)
   }
 
   const startDrag = event => {
-    if (!index || IS_FIRST_CLASS.test(className)) {
+    if (!index || pinned) {
       // Can't drag the first image or an empty slot
       return event.preventDefault()
     }
 
     const { target, dataTransfer } = event
-
-    // const image = target.getElementsByTagName("img")[0]
-    // dataTransfer.setDragImage(image, 0, 0)
-    // TODO: create <canvas> element of the appropriate size
-
     dataTransfer.setData("text/plain", index)
+
+    // <<< HACK: If gap has a border, then no drag image is shown.
+    // Remove the border while dragging and restore it after.
+    const gap = target.querySelector(".gap")
+    const img = target.querySelector("img:not(.pin)")
+    gap.classList.add("dragging")
+    img.classList.add("dragging")
+
+    // The drop event will (probably) be on a different element.
+    // Listen for dragend everywhere, and restore gap to what it
+    // was. It may take a moment before dragend is called.
+    document.body.addEventListener("dragend", () => {
+      gap.classList.remove("dragging")
+      img.classList.remove("dragging")
+    }, { once: true })
+    // HACK >>>
   }
 
   const dragEnter = event => {
@@ -44,8 +60,6 @@ export const StoreImage = ({ src, name, className, index }) => {
 
     if (target.className === "circle"){
       event.target.parentNode.classList.add("hilite")
-    } else {
-      // Check if this is the left or the right side
     }
   }
 
@@ -58,8 +72,6 @@ export const StoreImage = ({ src, name, className, index }) => {
 
     if (target.className === "circle"){
       target.parentNode.classList.remove("hilite")
-    } else {
-      // Undo whatever we did on dragEnter
     }
   }
 
@@ -71,33 +83,27 @@ export const StoreImage = ({ src, name, className, index }) => {
   }
 
   const drop = event => {
-
+    // Received by the drop target
     const { target } = event
-    if (target.className === "circle"){
-      // console.log("drop on", name, event.target.className);
 
+    if (target.className === "circle"){
       target.parentNode.classList.remove("hilite")
       const dragIndex = getDragIndex(event)
 
       swapImages({ dragIndex, dropIndex: index })
-
-
-    } else {
-      // console.log("ignored")
     }
   }
 
-
   return (
-    <div 
-     className={className}
-      draggable
+    <div
+      className={className}
+      draggable={!pinned}
       onDragStart={startDrag}
       onDragEnter={dragEnter}
       onDragLeave={dragLeave}
       onDragOver={allowDrop}
       onDrop={drop}
-    > 
+    >
       <div
         className="gap"
       />
@@ -108,6 +114,12 @@ export const StoreImage = ({ src, name, className, index }) => {
         src={src}
         alt={name}
         title={name}
+      />)}
+
+      { pinned && (<img
+        src={`${DEV_HACK}ui/pin.svg`}
+        alt="pinned"
+        className="pin"
       />)}
     </div>
   )
