@@ -55,13 +55,14 @@
   }
 
   #image-tools {
+    display: flex;
+    display: none;
+    justify-content: end;
     top: auto;
     bottom: 0;
     right: 0;
     width: fit-content;
-    display: flex;
-    justify-content: end;
-  
+
     #reset-offset {
       font-size: 2em;
     }

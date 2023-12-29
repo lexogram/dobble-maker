@@ -7,7 +7,7 @@
   --controller-height: 5em;
   --card-height: calc(100vh - var(--controller-height));
   --card-width: calc(var(--card-height) + var(--scroll-size));
-  --store-width: max(33vw, calc(100vw - var(--card-width)));
+  --store-width: max(250px, calc(100vw - var(--card-width)));
   --maker-width: min(
     var(--card-width),
     calc(100vw - var(--store-width))

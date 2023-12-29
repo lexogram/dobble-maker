@@ -21,7 +21,7 @@
     position: relative;
     margin: 0.5em 0 0.2em;
   }
-  
+
   button {
     background-color: #111;
     padding: 0.25em 0.5em;
@@ -29,28 +29,48 @@
     border-radius: 0.5em;
     color: inherit;
   }
-  
+
   .image-count {
     text-align: center;
   }
-  
+
   .file-picker {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
- 
+
     label  {
       margin-top: 1em;
     }
-    
+
     label span {
       font-size: 0.75em;
     }
-    
+
     input[type="file"] {
       font-size: 1em;
       width: 18em;
+    }
+  }
+
+  @media (max-width:785px) {
+    .image-count {
+      display:none;
+    }
+    #page {
+      width: 250px;
+      font-size: 11.5px;
+    }
+  }
+
+  @media (max-width:555px) {
+    #page {
+      font-size: 1.8vw;
+
+      button {
+        font-size: inherit;
+      }
     }
   }
 }
