@@ -4,7 +4,7 @@ import { Context } from '../../../../api/context/Context'
 
 const MIN_R = 5
 const MAX_R = 50
-const fill = "#0001"
+const fill = "#0002"
 const HOVER = "#000"
 const PATTERN = "url(#check)"
 const CROP_CIRCLE = {
@@ -37,6 +37,7 @@ export const Tweaker = ({
 }) => {
   const {
     useSunburst,
+    customLayout,
     tweakImage,
     showTweaker,
     activeImage,
@@ -63,6 +64,19 @@ export const Tweaker = ({
     rotateArrows: NO_STROKE,
     resizeArrows: NO_STROKE
   })
+
+  const allowRotation = customLayout && !useSunburst
+  const rotateRingStyle = allowRotation
+    ? styleFor.rotate
+    : { fill: "#f003" }
+
+  const rotateStyle = allowRotation
+    ? { fill: "#0000",
+        cursor: "pointer"
+      }
+    : { fill: "#0000",
+        pointerEvents: "none",
+      }
 
 
   const filterMouseLeave = event => {
@@ -396,17 +410,13 @@ export const Tweaker = ({
         </pattern>
       </defs>
 
-      <g
-        className="tweaker"
-        // onMouseDown={startTransform}
-        cursor="pointer"
-      >
         <g
           transform-origin={`${cx} ${cy}`}
           transform={`rotate(${rotation})`}
           onMouseEnter={toggleFill}
           onMouseLeave={toggleFill}
           onMouseUp={toggleCrop}
+          cursor="pointer"
         >
           <path
             className="crop"
@@ -524,6 +534,7 @@ export const Tweaker = ({
             onMouseEnter={toggleFill}
             onMouseLeave={toggleFill}
             fill="#0000" // must have a fill to trigger events
+            cursor="pointer"
             d={`
               M ${X0} ${Y0}
               A${R} ${R} 0 1 1 ${X1} ${Y0}
@@ -533,12 +544,12 @@ export const Tweaker = ({
           />
         </g>
 
-        { !useSunburst && <g
+        <g
           transform-origin={`${cx} ${cy}`}
           transform={`rotate(${rotation})`}
         >
           <path
-            style={styleFor.rotate}
+            style={rotateRingStyle}
             d={`
               M ${X0} ${Y1}
               A ${R1} ${R1} 0 1 1 ${X1} ${Y1}
@@ -581,7 +592,11 @@ export const Tweaker = ({
             `}
           />
           <path
-            style={styleFor.rotateArrows}
+            style={
+              allowRotation
+              ? styleFor.rotateArrows
+              : NO_STROKE
+            }
             d={`
               M ${X0 + r1} ${cy + r2}
               L ${X0 + r3} ${cy + r4}
@@ -620,9 +635,9 @@ export const Tweaker = ({
           />
           <path
             className="rotate"
-            onMouseEnter={toggleFill}
-            onMouseLeave={toggleFill}
-            fill="#0000"
+            onMouseEnter={allowRotation ? toggleFill : ()=>{}}
+            onMouseLeave={allowRotation ? toggleFill : ()=>{}}
+            style={rotateStyle}
             d={`
               M ${X0} ${Y1}
               A ${R1} ${R1} 0 1 1 ${X1} ${Y1}
@@ -630,7 +645,7 @@ export const Tweaker = ({
               A${R2} ${R2} 0 1 0 ${X0} ${Y2}
             `}
           />
-        </g> }
+        </g>
 
         <g>
           <path
@@ -700,6 +715,7 @@ export const Tweaker = ({
             onMouseEnter={toggleFill}
             onMouseLeave={toggleFill}
             fill="#0000"
+            cursor="pointer"
             d={`
               M ${X0} ${Y2}
               A${R2} ${R2} 0 1 1 ${X1} ${Y2}
@@ -707,6 +723,5 @@ export const Tweaker = ({
           />
         </g>
       </g>
-    </g>
   )
 }

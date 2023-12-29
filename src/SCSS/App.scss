@@ -75,6 +75,23 @@
   }
 }
 
+
+
+@media (max-width:512px) {
+  body {
+    font-size: 3vw !important;
+  }
+  #image-store {
+    width: 50vw !important;
+  }
+  :root {
+    --maker-width: 50vw;
+  }
+  #card-maker #set-tools {
+    left: 50vw;
+  }
+}
+
 /* Main */
 
 article h1 {
@@ -96,6 +113,10 @@ main {
   margin: 0 auto;
   overflow: auto;
   background-color: #fff;
+
+  .tweaker {
+    display: none;
+  }
 }
 
 /* LOGIN/REGISTER // LOGIN/REGISTER // LOGIN/REGISTER */
