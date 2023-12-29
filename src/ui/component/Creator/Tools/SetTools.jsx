@@ -36,17 +36,6 @@ export const SetTools = () => {
 
   return (
     <div id="set-tools">
-      <label htmlFor="custom-layout">
-        <input
-          id="custom-layout"
-          type="radio"
-          name="fix-layout"
-          value="custom"
-          checked={customLayout}
-          onChange={toggleCustom }
-        />
-        <span>Custom layout for each card</span>
-      </label>
       <label htmlFor="fixed-layout">
         <input
           id="fixed-layout"
@@ -59,6 +48,29 @@ export const SetTools = () => {
         <span>Uniform layout for all cards</span>
       </label>
 
+      <label htmlFor="custom-layout">
+        <input
+          id="custom-layout"
+          type="radio"
+          name="fix-layout"
+          value="custom"
+          checked={customLayout}
+          onChange={toggleCustom }
+        />
+        <span>Custom layout for each card</span>
+      </label>
+
+      <label htmlFor="use-sunburst">
+        <input
+          id="use-sunburst"
+          type="checkbox"
+          checked={useSunburst || !customLayout}
+          disabled={!customLayout}
+          onChange={toggleSunburst}
+        />
+        <span>Fixed rotation</span>
+      </label>
+
       <label htmlFor="apply-crop-paths">
         <input
           id="apply-crop-paths"
@@ -67,16 +79,6 @@ export const SetTools = () => {
           onChange={toggleCropByDefault}
         />
         <span>Crop images by default</span>
-      </label>
-
-      <label htmlFor="use-sunburst">
-        <input
-          id="use-sunburst"
-          type="checkbox"
-          checked={useSunburst}
-          onChange={toggleSunburst}
-        />
-        <span>Fixed rotation</span>
       </label>
     </div>
   )

@@ -5,40 +5,48 @@
   .one-card {
     margin: var(--one-card-margin) 0;
 
-    &.orange {
-      background-color: #840c;
+    &.yellow {
+      background-color: #ffd;
     }
 
-    &.yellow {
-      background-color: #880c;
+    &.lime {
+      background-color: #efd;
     }
 
     &.green {
-      background-color: #080c;
+      background-color: #dfd;
     }
 
     &.teal {
-      background-color: #088c;
+      background-color: #dfe;
+    }
+
+    &.cyan {
+      background-color: #dff;
     }
 
     &.blue {
-      background-color: #059c;
+      background-color: #def;
     }
 
     &.royal {
-      background-color: #007c;
+      background-color: #ddf;
     }
 
     &.purple {
-      background-color: #407c;
+      background-color: #edf;
+    }
+
+    &.violet {
+      background-color: #fde;
     }
 
     &.pink {
-      background-color: #704c;
+      background-color: #fdd;
     }
 
     &.grey {
-      background-color: #444c;
+      background-color: #eee;
     }
 
     &:first-child,

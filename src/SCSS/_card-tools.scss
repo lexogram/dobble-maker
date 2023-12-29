@@ -1,5 +1,3 @@
-
-
 #card-tools {
   right: 0;
   text-align: right;
@@ -7,6 +5,7 @@
 
   #card-scale {
     display: flex;
+    display: none;
   
     .slider {
       flex-grow: 1;

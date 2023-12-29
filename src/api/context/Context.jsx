@@ -61,6 +61,26 @@ export const Provider = ({ children }) => {
       payload: value
     }
     dispatch(action)
+
+    // Side-effect: change --image-size so that ImageStore is neat  
+    const imageSize = (() => {
+      switch (value) {
+        case 3:
+        case 6:
+        case 9:
+          return 100/3 + "%"
+        case 4:
+        case 8:
+        case 12:
+          return "25%"
+        case 5:
+        case 10:
+          return "20%"
+      }
+    })()
+    document.documentElement.style.setProperty(
+      '--image-size', imageSize
+    );
   }
 
 

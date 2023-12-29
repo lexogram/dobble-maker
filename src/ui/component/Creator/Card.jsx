@@ -65,7 +65,7 @@ export const Card = ({ card, cardIndex, dimensions, isPreview }) => {
       // console.log("layoutData", layoutData);
       // { "cx": 17.054, "cy": 34.442, "r": 11.566, fill: #080 }
 
-      const rotation = useSunburst
+      const rotation = (useSunburst || !customLayout)
         ? getSunburstAngle(layoutData, imageData)
         : imageData.rotation
 

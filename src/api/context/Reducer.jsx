@@ -36,9 +36,9 @@ const getTotalFrom = imagesPerCard => (
 const initialState = (() => {
   // Preload animals while developing
   const state = setImageSet({
-      customLayout: true,
-      cropByDefault: false,
+      customLayout: false,
       useSunburst: false,
+      cropByDefault: false,
       cardNumber: 0,
       imageSets,
       tweakIndices: 0,

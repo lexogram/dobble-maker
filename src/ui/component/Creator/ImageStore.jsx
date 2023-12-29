@@ -129,13 +129,15 @@ export const ImageStore = () => {
   const slotCount = Math.max(total, images.length)
   const store = Array.from({length: slotCount}, imageMapper)
   const colours = [
-    "orange",
     "yellow",
+    "lime",
     "green",
     "teal",
+    "cyan",
     "blue",
     "royal",
     "purple",
+    "violet",
     "pink"
   ]
 

@@ -9,7 +9,7 @@ import { Context } from '../../../api/context/Context'
 
 export const CreateButtons = () => {
   const { images, addImages } = useContext(Context)
-  const [ directory, setDirectory ] = useState(true)
+  const [ directory, setDirectory ] = useState(false)
 
   const filePicker = directory
     ? <input
@@ -41,7 +41,7 @@ export const CreateButtons = () => {
     <>
       <div className="image-count">
         <h1>{images.length} images</h1>
-        <p>Use 7, 13, 21, 31, 57, or 73 images</p>
+        <p>Use 7, 13, 21, 31, 57, 73, 91 images</p>
       </div>
 
       <div className="file-picker">

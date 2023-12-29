@@ -1,6 +1,10 @@
 :root {
+  /* <<< Will be changed programmatically */
+  --scroll-size: 20px;      /* depends on OS and browser */
+  --image-size: 33.33333% ; /* depends on images per card */
+  /* >>> */
+
   --controller-height: 5em;
-  --scroll-size: 20px;
   --card-height: calc(100vh - var(--controller-height));
   --card-width: calc(var(--card-height) + var(--scroll-size));
   --store-width: max(33vw, calc(100vw - var(--card-width)));
@@ -9,8 +13,6 @@
     calc(100vw - var(--store-width))
   );
   --store-size: calc(var(--store-width) - var(--scroll-size));
-  --image-size: calc(var(--store-size) / 4);
-  --image-bg-color: #222;
   --tool-width: min(
     calc(var(--maker-width) / 2),
     max(
@@ -22,5 +24,8 @@
   --image-store-height: calc(100% - var(--size-chooser-height));
 
   --crop-border-color: #000c;
-  --uncropped-border-color: #fff1;
+  --uncropped-border-color: #0001;
+
+  --inactive-color: #aaa;
+  --disabled-color: #666
 }

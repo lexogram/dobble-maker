@@ -36,14 +36,21 @@
     top: var(--controller-height);
     left: var(--store-width);
     background-color: #0008;
-  
 
     label {
       display: block;
     }
 
+    label:disabled span {
+      color: #666;
+    }
+
     input:not(:checked) ~ span {
-      color: #666
+      color: var(--inactive-color);
+    }
+
+    input:disabled ~ span {
+      color: var(--disabled-color);
     }
   }
 
