@@ -117,6 +117,23 @@ export const Provider = ({ children }) => {
   }
 
 
+  const getSunburstAngle = ({ cx, cy }, { offsetX, offsetY }) => {
+    const x = cx + offsetX
+    const y = cy + offsetY
+
+    let angle = x || y
+      ? (Math.atan(y / x) / Math.PI * 180) - 90
+      : 0
+
+    // Tweak for images on the left
+    if (x < 0) {
+      angle += 180
+    }
+
+    return angle
+  }
+
+
   const tweakImage = value => {
     const action = {
       type: "TWEAK_IMAGE",
@@ -177,20 +194,6 @@ export const Provider = ({ children }) => {
     }
 
     return URL.createObjectURL(stringOrObject)
-  }
-
-
-  const getSunburstAngle = ({ cx, cy }) => {
-    let angle = cx || cy
-      ? (Math.atan(cy / cx) / Math.PI * 180) - 90
-      : 0
-
-    // Tweak for images on the left
-    if (cx < 0) {
-      angle += 180
-    }
-
-    return angle
   }
 
 

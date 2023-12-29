@@ -66,7 +66,7 @@ export const Card = ({ card, cardIndex, dimensions, isPreview }) => {
       // { "cx": 17.054, "cy": 34.442, "r": 11.566, fill: #080 }
 
       const rotation = useSunburst
-        ? getSunburstAngle(layoutData)
+        ? getSunburstAngle(layoutData, imageData)
         : imageData.rotation
 
       const crop = imageCrop === 0
