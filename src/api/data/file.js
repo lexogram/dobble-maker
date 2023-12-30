@@ -1,4 +1,11 @@
-import savedData from './testSave.json' assert { type: "json" }
+/**
+ * file.js
+ *
+ * Exports sanitize(json) which return eithers
+ * + A valid JSON object
+ * + false (if sanitization failed)
+ */
+
 
 const subFormats = {
   "layoutsFormat": {
@@ -55,6 +62,7 @@ const subFormats = {
   }
 }
 
+
 const jsonFormat = {
   "creatorId"      : "string",
   "name"           : "string",
@@ -69,9 +77,7 @@ const jsonFormat = {
 }
 
 
-
 const getDefaultRegex = /(\w+)\|([a-z0-9]+)/
-
 
 
 const checkType = (type, value) => {
@@ -151,7 +157,6 @@ const verifySubFormat = (json, subFormatToUse) => {
 }
 
 
-
 const verifyFormat = ( json, format ) => {
   const entries = Object.entries(format)
 
@@ -163,9 +168,14 @@ const verifyFormat = ( json, format ) => {
     if (hasDefault) {
       type = hasDefault[1]
       defaultValue = hasDefault[2]
+
+      // Convert string default to the appropriate type
       if (!isNaN(defaultValue)) {
         defaultValue = parseFloat(defaultValue)
+      } else if (type === "boolean") {
+        defaultValue = defaultValue !== "false"
       }
+
       hasDefault = true
     }
 
@@ -219,7 +229,6 @@ const verifyFormat = ( json, format ) => {
 
   return valid && json
 }
-
 
 
 const imagesUsed = cardData => (
@@ -293,7 +302,13 @@ export const sanitize = json => {
           ))
         }
 
+        if (valid) {
+          validJSON.total = total
+          validJSON.imagesPerCard = imagesPerCard
+        }
+
         return valid && validJSON
+
       } else {
         return false
       }
@@ -302,141 +317,3 @@ export const sanitize = json => {
 
   return false
 }
-
-
-const result = sanitize(savedData)
-console.log("typeof result:", typeof result);
-// if (typeof result === "object") {
-//   console.log("result", JSON.stringify(result.images, null, '  '));
-// }
-
-
-// const testFormat = {
-//   // "abc": "string",
-//   // "UPPERCASE": /ABC/,
-//   // "optional?": "string|0",
-//   // "optionalButInvalid?": "number",
-//   // "images": "imagesFormat",
-//   // "layouts": "layoutsFormat",
-//   "cardData": "cardDataFormat"
-// }
-
-// const testJSON = {
-//   // "abc": "abc",
-//   // "UPPERCASE": "ABC",
-//   // "optional": 1,
-//   // "optionalButInvalid": "number",
-//   // "unExpected": "still around",
-//   // "images": [
-//   //   { "source": "string", "crop": true },
-//   //   { "source": "string", "crop": false },
-//   //   { "source": "string", "crop": "not a boolean" },
-//   // ],
-//   // "layouts": {
-//   //   "Triangle 64.60": [
-//   //     {
-//   //       "cx": 0,
-//   //       "cy": -26.796,
-//   //       "r": 23.203,
-//   //       "fill": "#800"
-//   //     },
-//   //     {
-//   //       "cx": 23.204,
-//   //       "cy": 13.402,
-//   //       "r": 23.203,
-//   //       "fill": "#0808"
-//   //     },
-//   //     {
-//   //       "cx": -23.204,
-//   //       "cy": 13.402,
-//   //       "r": 23.203,
-//   //       "fill": "#008800"
-//   //     },
-//   //     {
-//   //       "cx": -23.204,
-//   //       "cy": 13.402,
-//   //       "r": 23.203,
-//   //       "fill": "#0088008"
-//   //     }
-//   //   ]
-//   // },
-//   "cardData": [
-//     {
-//       "images": [
-//         {
-//           "imageIndex": 0,
-//           "specificScale": 1,
-//           "rotation": 75.71391084,
-//           "offsetX": 0,
-//           "offsetY": 0,
-//           "zIndex": 0,
-//           "crop": 0
-//         },
-//         {
-//           "imageIndex": 1,
-//           "specificScale": 1,
-//           "rotation": 149.45027112,
-//           "offsetX": 0,
-//           "offsetY": 0,
-//           "zIndex": 0,
-//           "crop": 0
-//         },
-//         {
-//           "imageIndex": 2,
-//           "specificScale": 1,
-//           "rotation": 265.22386164000005,
-//           "offsetX": 0,
-//           "offsetY": 0,
-//           "zIndex": 0,
-//           "crop": true
-//         },
-//         {
-//           "imageIndex": 3,
-//           "specificScale": 1,
-//           "rotation": 92.27404943999997,
-//           "offsetX": 0,
-//           "offsetY": 0,
-//           "zIndex": 0,
-//           "crop": false
-//         }
-//       ],
-//       "layoutName": "Hexagon 66.37",
-//     },
-//     {
-//       "images": [
-//         {
-//           "imageIndex": 6,
-//           "specificScale": 1,
-//           "rotation": 276.11574047999994,
-//           "offsetX": 0,
-//           "offsetY": 0,
-//           "zIndex": 0,
-//           "crop": 0
-//         },
-//         {
-//           "imageIndex": 0,
-//           "specificScale": 1,
-//           "rotation": 217.18869516000004,
-//           "offsetX": 0,
-//           "offsetY": 0,
-//           "zIndex": 0,
-//           "crop": 0
-//         },
-//         {
-//           "imageIndex": 7,
-//           "specificScale": 1,
-//           "rotation": 134.61444936,
-//           "offsetX": 0,
-//           "offsetY": 0,
-//           "zIndex": 0,
-//           "crop": 0
-//         }
-//       ],
-//       "layoutName": "Way Out 70.96",
-//     }
-//   ]
-// }
-
-// const result = verifyFormat(testJSON, testFormat)
-// console.log("result", JSON.stringify(result, null, '  '));
-

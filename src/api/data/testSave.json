@@ -3,8 +3,8 @@
   "name": "Test",
   "total": 31,
   "imagesPerCard": 6,
-  "useSunburst": false,
-  "customLayout": false,
+  "useSunburst": true,
+  "customLayout": true,
   "cropByDefault": false,
   "layouts": {
     "Hexagon 66.37": [
@@ -97,6 +97,7 @@
     ]
   },
   "images": [
+    { "source": "https://lexogram.com/motos.jpg", "crop": true, "selfScale": 1 },
     { "source": "111_Animals/anteater.png", "crop": 0, "selfScale": 1 },
     { "source": "111_Animals/badger.png", "crop": 0, "selfScale": 1 },
     { "source": "111_Animals/bear.png", "crop": 0, "selfScale": 1 },
@@ -128,6 +129,7 @@
     { "source": "111_Animals/starfish.png", "crop": 0, "selfScale": 1 },
     { "source": "111_Animals/stork.png", "crop": 0, "selfScale": 1 },
     { "source": "111_Animals/swallow.png", "crop": 0, "selfScale": 1 },
+
     { "source": "111_Animals/wolf.png", "crop": 0, "selfScale": 1 },
     { "source": "111_Animals/ant.png", "crop": 0, "selfScale": 1 },
     { "source": "111_Animals/antelope.png", "crop": 0, "selfScale": 1 },

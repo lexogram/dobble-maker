@@ -1,7 +1,7 @@
 :root {
   /* <<< Will be changed programmatically */
   --scroll-size: 20px;      /* depends on OS and browser */
-  --image-size: 33.33333% ; /* depends on images per card */
+  --line-count: 3;
   /* >>> */
 
   --controller-height: 5em;
@@ -13,6 +13,8 @@
     calc(100vw - var(--store-width))
   );
   --store-size: calc(var(--store-width) - var(--scroll-size));
+  --image-size: calc(var(--store-size) / var(--line-count));
+
   --tool-width: min(
     calc(var(--maker-width) / 2),
     max(

@@ -36,7 +36,7 @@ export const Picture = ({
   const x = cx - r
   const y = cy - r
   const width = r * 2
-  const square = { x, y, width }
+  const square = { x, y, width, height: width }
 
   // Tweaker
   const toggleTweaker = ({ type, target }) => {

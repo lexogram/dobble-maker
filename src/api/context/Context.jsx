@@ -41,7 +41,9 @@ export const Provider = ({ children }) => {
     imageSets,
 
     tweakIndices,
-    activeImage
+    activeImage,
+
+    showLoadDialog
   } = state
 
 
@@ -60,8 +62,21 @@ export const Provider = ({ children }) => {
   }
 
 
-  const loadFromJSON = () => {
+  const loadFrom = (json) => {
+    const action = {
+      type: "LOAD_FROM_JSON",
+      payload: json
+    }
+    dispatch(action)
+  }
 
+
+  const toggleLoadDialog = value => {
+    const action = {
+      type: "TOGGLE_LOAD_DIALOG",
+      payload: value === true // may be an event or undefined
+    }
+    dispatch(action)
   }
 
 
@@ -72,24 +87,24 @@ export const Provider = ({ children }) => {
     }
     dispatch(action)
 
-    // Side-effect: change --image-size so that ImageStore is neat
-    const imageSize = (() => {
+    // Side-effect: change --line-count so that ImageStore is neat
+    const lineCount = (() => {
       switch (value) {
         case 3:
         case 6:
         case 9:
-          return 100/3 + "%"
+          return 3
         case 4:
         case 8:
         case 12:
-          return "25%"
+          return 4
         case 5:
         case 10:
-          return "20%"
+          return 5
       }
     })()
     document.documentElement.style.setProperty(
-      '--image-size', imageSize
+      '--line-count', lineCount
     );
   }
 
@@ -209,14 +224,32 @@ export const Provider = ({ children }) => {
   }
 
 
+  const httpRegExp = /(https?:\/\/.*)/
+  const tweakForLocalHost = url => {
+    // Check for a url from somewhere on the Internet
+    const match = httpRegExp.exec(url)
+    if (match) {
+      // Use just the remote address 
+      url = match[1]
+
+    } else if (
+       location.host.startsWith("127.0.0.1:")
+    && !(url.startsWith("http"))
+    ) {
+      // We're working locally and Vite serves from /dobble-maker/
+      url = `/dobble-maker/${url}`
+    }
+
+    return url
+  }
+
+
   const getURL = stringOrObject => {
     if (!stringOrObject) {
       return ""
     } else if (typeof stringOrObject === "string") {
       // <<< HACK for testing during development
-      if (location.host.startsWith("127.0.0.1:")) {
-        stringOrObject = `/dobble-maker/${stringOrObject}`
-      }
+      stringOrObject = tweakForLocalHost(stringOrObject)
       // console.log("stringOrObject:", stringOrObject);
       // HACK >>>
 
@@ -253,7 +286,9 @@ export const Provider = ({ children }) => {
 
         addImages,
         saveAsJSON,
-        loadFromJSON,
+        loadFrom,
+        showLoadDialog,
+        toggleLoadDialog,
         setImagesPerCard,
 
         imageSet,
@@ -277,7 +312,9 @@ export const Provider = ({ children }) => {
         showTweaker,
         tweakImage,
         activeImage,
-        setActiveImage
+        setActiveImage,
+
+        tweakForLocalHost
       }}
     >
       {children}

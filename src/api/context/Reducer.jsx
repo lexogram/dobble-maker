@@ -42,7 +42,8 @@ const initialState = (() => {
       cardNumber: 0,
       imageSets,
       tweakIndices: 0,
-      activeImage: false
+      activeImage: false,
+      showLoadDialog: false
   }, "111_Animals")
 
   return setImagesPerCard( state, 6 )
@@ -127,7 +128,7 @@ const json = {
   "images"         : initialState.images,
   "cardData"       : initialState.cardData
 }
-console.log("json", JSON.stringify(json));
+// console.log("json", JSON.stringify(json));
 // TEMP >>>
 
 
@@ -173,6 +174,12 @@ const reducer = (state, action) => {
 
     case "SET_ACTIVE_IMAGE":
       return setActiveImage(state, payload)
+
+    case "TOGGLE_LOAD_DIALOG":
+      return toggleLoadDialog(state, payload)
+
+    case "LOAD_FROM_JSON":
+      return loadFromJSON(state, payload)
 
     default:
       return {...state}
@@ -400,12 +407,21 @@ function setLayout(state, layoutName ) {
 }
 
 
-const showTweaker = ( state, tweakIndices ) => {
+function showTweaker( state, tweakIndices ) {
   if (state.activeImage) {
     return state
   }
 
   return { ...state, tweakIndices }
+}
+
+function toggleLoadDialog(state, showLoadDialog) {
+  return { ...state, showLoadDialog }
+}
+
+
+function loadFromJSON(state, json) {
+  return { ...state, ...json }
 }
 
 

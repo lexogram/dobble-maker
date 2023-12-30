@@ -63,14 +63,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-  
+
     .outline {
       position: relative;
       padding: 1em;
       border: 2px outset #888;
       border-radius: 5px;
     }
-  
+
     .close {
       font-size: 2em;
       position: absolute;
@@ -79,17 +79,24 @@
       right: 0;
       padding: 0;
       margin: 0; /* to counteract margin: 0 auto */
-      
+
       width: 1em;
       height: 1em;
       line-height: 1em;
-      
+
       border: none;
       background-color: transparent;
+
+      pointer-events: all;
     }
-  
+
     input {
       pointer-events: all;
+    }
+
+    p.feedback {
+      color: #900;
+      margin-bottom: 0;
     }
   }
 
@@ -115,16 +122,17 @@
 }
 
 @media (max-width:512px) {
-  body {
+  body * {
     font-size: 3vw !important;
   }
-  #image-store {
-    width: 50vw !important;
-  }
   :root {
+    --store-width: 50vw;
     --maker-width: 50vw;
   }
-  #card-maker #set-tools {
+  #size-chooser span {
+    box-sizing: border-box;
+  }
+  #card-maker  #set-tools {
     left: 50vw;
   }
 }

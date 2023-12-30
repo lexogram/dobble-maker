@@ -5,11 +5,12 @@
 
 import React, { useContext } from 'react'
 import { Context } from '../../../api/context/Context'
+
 import { FileDialog } from "../Widget/FileOpen";
 
 
 export const PreviewButtons = () => {
-  const { saveAsJSON, loadFromJSON } = useContext(Context)
+  const { saveAsJSON, toggleLoadDialog } = useContext(Context)
   
 
   return (
@@ -20,7 +21,7 @@ export const PreviewButtons = () => {
       Save...
     </button>
       <button
-        onClick={loadFromJSON}
+        onClick={() => toggleLoadDialog(true)}
       >
         Load...
       </button>

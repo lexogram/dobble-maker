@@ -7,13 +7,15 @@ import React, { useContext } from 'react'
 import { Context } from '../../../api/context/Context'
 
 const IS_FIRST_CLASS = /\bon-all-preview-cards\b/
-const DEV_HACK = location.host.startsWith("127.0.0.1:")
-  ? "/dobble-maker/"
-  : ""
+
 
 
 export const StoreImage = ({ src, name, className, gapClass, index }) => {
-  const { swapImages, tweakImage } = useContext(Context)
+  const {
+    swapImages,
+    tweakImage,
+    tweakForLocalHost
+  } = useContext(Context)
 
   const pinned = IS_FIRST_CLASS.test(className)
 
@@ -125,7 +127,7 @@ export const StoreImage = ({ src, name, className, gapClass, index }) => {
       />)}
 
       { pinned && (<img
-        src={`${DEV_HACK}ui/pin.svg`}
+        src={tweakForLocalHost('ui/pin.svg')}
         alt="pinned"
         className="pin"
       />)}
