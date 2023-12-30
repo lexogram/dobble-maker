@@ -97,6 +97,38 @@ const initialState = (() => {
   // }, 8
 })()
 
+// <<< TEMP // TEMP // TEMP // TEMP // TEMP // TEMP // TEMP //
+// Filter out only the images that have in fact been used
+const imagesUsed = cardData => (
+  Array.from(cardData.reduce(
+    ( set, card ) => {
+      const { images } = card
+      set.add( // add only imageIndex's not seen before
+        ...images.map(
+          ({ imageIndex }) => imageIndex
+        )
+      )
+      return set
+    }, new Set())
+  )
+  .sort((a, b) => a - b) // not strictly necessary
+  .map( index => initialState.images[index])
+)
+
+const json = {
+  "creatorId"      : "blackslate",
+  "name"           : "Test",
+  "total"          : initialState.total,
+  "imagesPerCard"  : initialState.imagesPerCard,
+  "useSunburst"    : initialState.useSunburst,
+  "customLayout"   : initialState.customLayout,
+  "cropByDefault"  : initialState.cropByDefault,
+  "layouts"        : initialState.layouts,
+  "images"         : imagesUsed(initialState.cardData),
+  "cardData"       : initialState.cardData
+}
+console.log("json", JSON.stringify(json));
+// TEMP >>>
 
 
 const reducer = (state, action) => {

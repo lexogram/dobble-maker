@@ -1,0 +1,130 @@
+#controller {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: var(--controller-height);
+
+  #page {
+    font-size: 0.8em;
+    text-align: center;
+    width: 24em;
+    margin: 1em;
+    border: 1px inset #666;
+    background-color: #222;
+  }
+
+  h1 {
+    position: relative;
+    margin: 0.5em 0 0.2em;
+  }
+
+  button {
+    display: block;
+    margin: 0 auto;
+    background-color: #111;
+    padding: 0.25em 0.5em;
+    border: 2px outset #666;
+    border-radius: 0.5em;
+    color: inherit;
+  }
+
+  .image-count {
+    text-align: center;
+  }
+
+  .file-picker {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    label  {
+      margin-top: 1em;
+    }
+
+    label span {
+      font-size: 0.75em;
+    }
+
+    input[type="file"] {
+      font-size: 1em;
+      width: 18em;
+    }
+  }
+
+  .file-dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #000e;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    .outline {
+      position: relative;
+      padding: 1em;
+      border: 2px outset #888;
+      border-radius: 5px;
+    }
+  
+    .close {
+      font-size: 2em;
+      position: absolute;
+
+      top: -0.1em;
+      right: 0;
+      padding: 0;
+      margin: 0; /* to counteract margin: 0 auto */
+      
+      width: 1em;
+      height: 1em;
+      line-height: 1em;
+      
+      border: none;
+      background-color: transparent;
+    }
+  
+    input {
+      pointer-events: all;
+    }
+  }
+
+  @media (max-width:785px) {
+    .image-count {
+      display:none;
+    }
+    #page {
+      width: 250px;
+      font-size: 11.5px;
+    }
+  }
+
+  @media (max-width:555px) {
+    #page {
+      font-size: 1.8vw;
+
+      button {
+        font-size: inherit;
+      }
+    }
+  }
+}
+
+@media (max-width:512px) {
+  body {
+    font-size: 3vw !important;
+  }
+  #image-store {
+    width: 50vw !important;
+  }
+  :root {
+    --maker-width: 50vw;
+  }
+  #card-maker #set-tools {
+    left: 50vw;
+  }
+}

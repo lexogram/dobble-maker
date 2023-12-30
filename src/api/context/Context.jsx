@@ -55,6 +55,16 @@ export const Provider = ({ children }) => {
   }
 
 
+  const saveAsJSON = () => {
+
+  }
+
+
+  const loadFromJSON = () => {
+
+  }
+
+
   const setImagesPerCard = value => {
     const action = {
       type: "SET_IMAGES_PER_CARD",
@@ -62,7 +72,7 @@ export const Provider = ({ children }) => {
     }
     dispatch(action)
 
-    // Side-effect: change --image-size so that ImageStore is neat  
+    // Side-effect: change --image-size so that ImageStore is neat
     const imageSize = (() => {
       switch (value) {
         case 3:
@@ -242,6 +252,8 @@ export const Provider = ({ children }) => {
         setCardNumber,
 
         addImages,
+        saveAsJSON,
+        loadFromJSON,
         setImagesPerCard,
 
         imageSet,
