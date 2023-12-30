@@ -45,7 +45,7 @@ const subFormats = {
     "type"   : "array",
     "values" : "imageFormat"
   },
-    
+
   "imageFormat": {
     "imageIndex"    : "integer", // 0 - images.length - 1
     "specificScale" : "number",
@@ -138,7 +138,7 @@ const verifySubFormat = (json, subFormatToUse) => {
       return false
     }
 
-    return Object.values(json).every( value => { 
+    return Object.values(json).every( value => {
       if (formatToUse) {
         return verifySubFormat(value, formatToUse)
       }
@@ -222,6 +222,19 @@ const verifyFormat = ( json, format ) => {
 
 
 
+const imagesUsed = cardData => (
+  Array.from(cardData.reduce(
+    ( set, card ) => {
+      const { images } = card
+      const indices = images.map(({ imageIndex }) => imageIndex)
+      indices.forEach(set.add, set)
+      return set
+    }, new Set())
+  )
+)
+
+
+
 export const sanitize = json => {
   const validJSON = verifyFormat(json, jsonFormat)
 
@@ -231,47 +244,59 @@ export const sanitize = json => {
     // 2. Every layout has the right number of entries for images
     // 3. There are the same number of cards as images
     // 4. There are the right number of image entries on each card
+    // 5. All the image indices used in cardData are valid
 
     const { layouts, images, cardData } = validJSON
+
+    const imageIndices = imagesUsed(cardData)    
+
+    const totalImages = images.length
+    let valid = false
+
     // 1. The right number of images
-    // const total = (() => {
-      let total = images.length
-    //   const totals = [ 7, 13, 21, 31, 57, 73, 91, 133, 999 ]
-    //   const index = totals.findIndex( total => total > temp )
-    //   return totals[index - 1]
-    // })()
+    const total = imageIndices.length
+    valid = total <= totalImages
 
-    const imagesPerCard = (() => {
-      let temp = Math.floor(Math.sqrt(total))
+    if (valid) {
+      const imagesPerCard = (() => {
+        let temp = Math.floor(Math.sqrt(total))
 
-      if (temp * temp + 1 > total) {
+        if (temp * temp + 1 > total) {
+          return false
+        }
+
+        return temp + 1
+      })()
+
+      if (imagesPerCard) {
+        // 2. All layouts have the right number of placements
+        valid = Object.values(layouts).every( layout => (
+          layout.length === imagesPerCard
+        ))
+
+        if (valid) {
+          // 3. Same number of cards as images
+          valid = cardData.length === total
+        }
+
+        if (valid) {
+          // 4. Right number of image entries on each card
+          valid = cardData.every(({ images }) => (
+            images.length === imagesPerCard
+          ))
+        }
+
+        if (valid) {
+          // 5. All the image indices are valid
+          valid = imageIndices.every( imageIndex => (
+            !!(images[imageIndex])
+          ))
+        }
+
+        return valid && validJSON
+      } else {
         return false
       }
-
-      return temp + 1
-    })()
-
-    if (imagesPerCard) {
-      // 2. All layouts have the right number of placements
-      let valid = Object.values(layouts).every( layout => (
-        layout.length === imagesPerCard
-      ))
-
-      if (valid) {
-        // 3. Same number of cards as images
-        valid = cardData.length === total
-      }
-
-      if (valid) {
-        // 4. Right number of image entries on each card
-        valid = cardData.every(({ images }) => (
-          images.length === imagesPerCard
-        ))
-      }
-
-      return valid && validJSON
-    } else {
-      return false
     }
   }
 
@@ -281,10 +306,9 @@ export const sanitize = json => {
 
 const result = sanitize(savedData)
 console.log("typeof result:", typeof result);
-if (typeof result === "object") {
-  console.log("result", JSON.stringify(result.images, null, '  '));
-  
-}
+// if (typeof result === "object") {
+//   console.log("result", JSON.stringify(result.images, null, '  '));
+// }
 
 
 // const testFormat = {
