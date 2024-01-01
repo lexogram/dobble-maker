@@ -90,7 +90,28 @@
       pointer-events: all;
     }
 
-    input {
+    a.save {
+      position: absolute;
+      visibility: hidden;
+    }
+
+    button.save {
+      margin: 2em auto 0;
+      padding: 0.25em 2em;
+      border: 2px outset #080;
+      background-color: #060;
+      color: #ddd;
+      text-decoration: none;
+    }
+
+    button.save[disabled] {
+      background-color: #777;
+      border-color: #888;
+      color: #999;
+    }
+
+    input,
+    button {
       pointer-events: all;
     }
 

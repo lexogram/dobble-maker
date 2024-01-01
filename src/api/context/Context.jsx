@@ -43,7 +43,8 @@ export const Provider = ({ children }) => {
     tweakIndices,
     activeImage,
 
-    showLoadDialog
+    showSaveDialog,
+    showOpenDialog
   } = state
 
 
@@ -62,6 +63,15 @@ export const Provider = ({ children }) => {
   }
 
 
+  const toggleSaveDialog = value => {
+    const action = {
+      type: "TOGGLE_SAVE_DIALOG",
+      payload: value === true // may be an event or undefined
+    }
+    dispatch(action)
+  }
+
+
   const loadFrom = (json) => {
     const action = {
       type: "LOAD_FROM_JSON",
@@ -71,9 +81,9 @@ export const Provider = ({ children }) => {
   }
 
 
-  const toggleLoadDialog = value => {
+  const toggleOpenDialog = value => {
     const action = {
-      type: "TOGGLE_LOAD_DIALOG",
+      type: "TOGGLE_OPEN_DIALOG",
       payload: value === true // may be an event or undefined
     }
     dispatch(action)
@@ -229,7 +239,7 @@ export const Provider = ({ children }) => {
     // Check for a url from somewhere on the Internet
     const match = httpRegExp.exec(url)
     if (match) {
-      // Use just the remote address 
+      // Use just the remote address
       url = match[1]
 
     } else if (
@@ -260,6 +270,27 @@ export const Provider = ({ children }) => {
   }
 
 
+  const getHREF = () => {
+    const dataToSave = {
+      creatorId: "blackslate",
+      // total,
+      // imagesPerCard,
+      useSunburst,
+      customLayout,
+      cropByDefault,
+      layouts,
+      images,
+      cardData
+    }
+    const json = JSON.stringify(dataToSave, null, '  ')
+    const options = {type: 'application/json'}
+    const blob = new Blob([ json ], options )
+    const href = URL.createObjectURL(blob)
+
+    return href
+  }
+
+
   return (
     <Context.Provider
       value ={{
@@ -286,9 +317,11 @@ export const Provider = ({ children }) => {
 
         addImages,
         saveAsJSON,
+        showSaveDialog,
+        toggleSaveDialog,
+        showOpenDialog,
+        toggleOpenDialog,
         loadFrom,
-        showLoadDialog,
-        toggleLoadDialog,
         setImagesPerCard,
 
         imageSet,
@@ -314,7 +347,8 @@ export const Provider = ({ children }) => {
         activeImage,
         setActiveImage,
 
-        tweakForLocalHost
+        tweakForLocalHost,
+        getHREF
       }}
     >
       {children}

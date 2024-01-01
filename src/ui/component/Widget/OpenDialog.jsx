@@ -1,5 +1,5 @@
 /**
- * FileDialog.jsx
+ * OpenDialog.jsx
  */
 
 
@@ -12,10 +12,10 @@ const INVALID_FORMAT = "Invalid file format. Choose a different file."
 
 
 
-export const FileDialog = () => {
+export const OpenDialog = () => {
   const {
-    showLoadDialog,
-    toggleLoadDialog,
+    showOpenDialog,
+    toggleOpenDialog,
     loadFrom
   } = useContext(Context)
   const [ feedback, setFeedback ] = useState(" ")
@@ -32,7 +32,7 @@ export const FileDialog = () => {
       }
 
       loadFrom(json);
-      toggleLoadDialog()
+      toggleOpenDialog()
 
     } catch {
       setFeedback(INVALID_FORMAT)
@@ -66,10 +66,10 @@ export const FileDialog = () => {
 
   useEffect(() => {
     setFeedback("")
-  }, [showLoadDialog])
+  }, [showOpenDialog])
 
 
-  if (showLoadDialog) {
+  if (showOpenDialog) {
     return (
       <div className="file-dialog">
         <div className="outline">
@@ -84,7 +84,7 @@ export const FileDialog = () => {
           </label>
           <button
             className="close"
-            onClick={toggleLoadDialog} // event treated as false
+            onClick={toggleOpenDialog} // event treated as false
           >
             &times;
           </button>

@@ -65,7 +65,7 @@ const subFormats = {
 
 const jsonFormat = {
   "creatorId"      : "string",
-  "name"           : "string",
+  // "name"           : "string",
   "total?"         : "integer",
   "imagesPerCard?" : "integer",
   "useSunburst"    : "boolean|false",

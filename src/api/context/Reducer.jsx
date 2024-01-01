@@ -43,7 +43,8 @@ const initialState = (() => {
       imageSets,
       tweakIndices: 0,
       activeImage: false,
-      showLoadDialog: false
+      showSaveDialog: false,
+      showOpenDialog: false
   }, "111_Animals")
 
   return setImagesPerCard( state, 6 )
@@ -175,8 +176,11 @@ const reducer = (state, action) => {
     case "SET_ACTIVE_IMAGE":
       return setActiveImage(state, payload)
 
-    case "TOGGLE_LOAD_DIALOG":
-      return toggleLoadDialog(state, payload)
+    case "TOGGLE_SAVE_DIALOG":
+      return toggleSaveDialog(state, payload)
+
+    case "TOGGLE_OPEN_DIALOG":
+      return toggleOpenDialog(state, payload)
 
     case "LOAD_FROM_JSON":
       return loadFromJSON(state, payload)
@@ -415,8 +419,12 @@ function showTweaker( state, tweakIndices ) {
   return { ...state, tweakIndices }
 }
 
-function toggleLoadDialog(state, showLoadDialog) {
-  return { ...state, showLoadDialog }
+function toggleSaveDialog(state, showSaveDialog) {
+  return { ...state, showSaveDialog }
+}
+
+function toggleOpenDialog(state, showOpenDialog) {
+  return { ...state, showOpenDialog }
 }
 
 
