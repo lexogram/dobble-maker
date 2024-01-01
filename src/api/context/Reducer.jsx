@@ -37,10 +37,11 @@ const initialState = (() => {
   // Preload animals while developing
   const state = setImageSet({
       customLayout: false,
-      useSunburst: false,
       cropByDefault: false,
-      cardNumber: 0,
+      useSunburst: false,
+
       imageSets,
+      cardNumber: 0,
       tweakIndices: 0,
       activeImage: false,
       showSaveDialog: false
@@ -51,14 +52,15 @@ const initialState = (() => {
   // // Pack properties //
   //  * Creator id
   //  * Name
-  //    layouts { <Name>: [ { cx, cy, r }, ... ], ... }
   //    customLayout
   //    cropByDefault
   //    useSunburst
-
+  //
   // // Image data
   //    images: { source, selfScale, crop }
-
+  //
+  //    layouts { <Name>: [ { cx, cy, r }, ... ], ... }
+  //
   // // Card data //
   //    cardData [ [ { imageIndex,
   //                   specificScale,
@@ -71,7 +73,7 @@ const initialState = (() => {
   //                 }, ... <more placements on this card>
   //               ], ... <more cards>
   //             ]
-
+  //
   // // Run-time data
   //    total
   //    imagesPerCard
@@ -85,51 +87,10 @@ const initialState = (() => {
   //
   //    tweakIndices
   //    activeImage
-
-
-  // // Show an blank set of 57 cards
-  // setImagesPerCard({
-  //   images: [],
-  //   customLayout: true,
-  //   cropByDefault: true,
-  //   useSunburst: false,
-  //   cardNumber: 0,
-  //   imageSets
-  // }, 8
+  //
+  //    showSaveDialog
 })()
 
-// <<< TEMP // TEMP // TEMP // TEMP // TEMP // TEMP // TEMP //
-// Filter out only the images that have in fact been used
-// const imagesUsed = cardData => (
-//   Array.from(cardData.reduce(
-//     ( set, card ) => {
-//       const { images } = card
-//       set.add( // add only imageIndex's not seen before
-//         ...images.map(
-//           ({ imageIndex }) => imageIndex
-//         )
-//       )
-//       return set
-//     }, new Set())
-//   )
-//   .sort((a, b) => a - b) // not strictly necessary
-//   .map( index => initialState.images[index])
-// )
-
-const json = {
-  "creatorId"      : "blackslate",
-  "name"           : "Test",
-  "total"          : initialState.total,
-  "imagesPerCard"  : initialState.imagesPerCard,
-  "useSunburst"    : initialState.useSunburst,
-  "customLayout"   : initialState.customLayout,
-  "cropByDefault"  : initialState.cropByDefault,
-  "layouts"        : initialState.layouts,
-  "images"         : initialState.images,
-  "cardData"       : initialState.cardData
-}
-// console.log("json", JSON.stringify(json));
-// TEMP >>>
 
 
 const reducer = (state, action) => {

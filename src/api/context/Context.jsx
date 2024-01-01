@@ -2,7 +2,7 @@
  * Context.jsx
  */
 
-import React, { createContext, useReducer } from 'react'
+import React, { createContext, useReducer, useEffect } from 'react'
 import { reducer, initialState } from './Reducer'
 
 const VIEW_WIDTH = 2100
@@ -24,18 +24,20 @@ export const Context = createContext()
 export const Provider = ({ children }) => {
   const [ state, dispatch ] = useReducer(reducer, initialState)
   const {
-    imagesPerCard,
-    total,
-    images,
-    cardData,
-    layouts,
-    layoutNames,
-    layoutName,
-    cardNumber,
-
+    // Data to save
     customLayout,
     cropByDefault,
     useSunburst,
+    images,
+    layouts,
+    cardData,
+
+    // Author-time data
+    total,
+    imagesPerCard,
+    layoutNames,
+    layoutName,
+    cardNumber,
 
     imageSet,
     imageSets,
@@ -57,11 +59,6 @@ export const Provider = ({ children }) => {
   }
 
 
-  const saveAsJSON = () => {
-
-  }
-
-
   const toggleSaveDialog = value => {
     const action = {
       type: "TOGGLE_SAVE_DIALOG",
@@ -77,6 +74,9 @@ export const Provider = ({ children }) => {
       payload: json
     }
     dispatch(action)
+
+    // --line-count will be updated in a useEffect so that
+    // ImageStore is neat
   }
 
 
@@ -87,25 +87,8 @@ export const Provider = ({ children }) => {
     }
     dispatch(action)
 
-    // Side-effect: change --line-count so that ImageStore is neat
-    const lineCount = (() => {
-      switch (value) {
-        case 3:
-        case 6:
-        case 9:
-          return 3
-        case 4:
-        case 8:
-        case 12:
-          return 4
-        case 5:
-        case 10:
-          return 5
-      }
-    })()
-    document.documentElement.style.setProperty(
-      '--line-count', lineCount
-    );
+    // --line-count will be updated in a useEffect so that
+    // ImageStore is neat
   }
 
 
@@ -265,11 +248,11 @@ export const Provider = ({ children }) => {
       creatorId: "blackslate",
       // total,
       // imagesPerCard,
-      useSunburst,
       customLayout,
       cropByDefault,
-      layouts,
+      useSunburst,
       images,
+      layouts,
       cardData
     }
     const json = JSON.stringify(dataToSave)
@@ -279,6 +262,32 @@ export const Provider = ({ children }) => {
 
     return href
   }
+
+
+  const setLineCount = () => {
+
+    const lineCount = (() => {
+      switch (imagesPerCard) {
+        case 3:
+        case 6:
+        case 9:
+          return 3
+        case 4:
+        case 8:
+        case 12:
+          return 4
+        case 5:
+        case 10:
+          return 5
+      }
+    })()
+    document.documentElement.style.setProperty(
+      '--line-count', lineCount
+    );
+  }
+
+
+  useEffect(setLineCount, [imagesPerCard])
 
 
   return (
@@ -306,7 +315,6 @@ export const Provider = ({ children }) => {
         setCardNumber,
 
         addImages,
-        saveAsJSON,
         showSaveDialog,
         toggleSaveDialog,
         loadFrom,
