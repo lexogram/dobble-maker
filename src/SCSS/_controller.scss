@@ -4,6 +4,13 @@
   align-items: center;
   height: var(--controller-height);
 
+
+
+  .hidden {
+    position: absolute;
+    visibility: hidden;
+  }
+
   #page {
     font-size: 0.8em;
     text-align: center;
@@ -88,11 +95,6 @@
       background-color: transparent;
 
       pointer-events: all;
-    }
-
-    a.save {
-      position: absolute;
-      visibility: hidden;
     }
 
     button.save {

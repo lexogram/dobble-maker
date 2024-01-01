@@ -95,7 +95,7 @@ export const SaveDialog = () => {
             Save
           </button>
           <a
-            className="save"
+            className="hidden"
             href={href}
             download={fullName}
             ref={linkRef}

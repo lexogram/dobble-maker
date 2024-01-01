@@ -43,8 +43,7 @@ export const Provider = ({ children }) => {
     tweakIndices,
     activeImage,
 
-    showSaveDialog,
-    showOpenDialog
+    showSaveDialog
   } = state
 
 
@@ -76,15 +75,6 @@ export const Provider = ({ children }) => {
     const action = {
       type: "LOAD_FROM_JSON",
       payload: json
-    }
-    dispatch(action)
-  }
-
-
-  const toggleOpenDialog = value => {
-    const action = {
-      type: "TOGGLE_OPEN_DIALOG",
-      payload: value === true // may be an event or undefined
     }
     dispatch(action)
   }
@@ -282,7 +272,7 @@ export const Provider = ({ children }) => {
       images,
       cardData
     }
-    const json = JSON.stringify(dataToSave, null, '  ')
+    const json = JSON.stringify(dataToSave)
     const options = {type: 'application/json'}
     const blob = new Blob([ json ], options )
     const href = URL.createObjectURL(blob)
@@ -319,8 +309,6 @@ export const Provider = ({ children }) => {
         saveAsJSON,
         showSaveDialog,
         toggleSaveDialog,
-        showOpenDialog,
-        toggleOpenDialog,
         loadFrom,
         setImagesPerCard,
 
